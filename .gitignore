@@ -3,7 +3,16 @@
 .build*
 .settings
 
-## obsolete files
+## phpunit reports
+.reports
+
+## dirs
 src_ns
 tests/shop
 data/
+vendor/
+public/
+
+## files
+composer.lock
+

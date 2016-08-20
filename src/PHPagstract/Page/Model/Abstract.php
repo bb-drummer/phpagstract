@@ -1,6 +1,6 @@
 <?php
 
-namespace PHPagstract;
+namespace PHPagstract\Page;
 
 /**
  * page-model object abstract

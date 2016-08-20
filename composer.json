@@ -5,7 +5,7 @@
   "require" : {
     "composer/installers": "~1.0",
     "php" : "^5.2 || ^7.0",
-    "phpunit" : "~5.1.4"
+    "phpunit/phpunit" : "~5"
   },
   "license" : "Apache2.0",
   "keywords" : [ "xml", "template", "engine", "pagstract", "templating", "framework" ],

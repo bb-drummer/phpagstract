@@ -2,7 +2,7 @@
 
 namespace PHPagstract\Page;
 
-use PHPagstract\PageModelAbstract;
+use PHPagstract\Page\PageModelAbstract;
 
 /**
  * page-model object class 

@@ -23,7 +23,7 @@ abstract class TokenAbstract {
 	 * end of token
 	 * @var string
 	 */
-	protected $endTag = "<";
+	protected $endTag = ">";
 	
 	/**
 	 * token namespace
