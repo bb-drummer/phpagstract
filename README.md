@@ -38,7 +38,13 @@ then pass it to `tar`:
 
 ## Status
 
-...
+[![Build Status](https://travis-ci.org/bb-drummer/phpagstract.svg?branch=master)](https://travis-ci.org/bb-drummer/phpagstract)
+
+[![build status](https://gitlab.com/php.bjoernbartels.earth/phpagstract/badges/master/build.svg)](https://gitlab.com/php.bjoernbartels.earth/phpagstract/commits/master)
+
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/bb-drummer/phpagstract/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/bb-drummer/phpagstract/?branch=master)
+[![Code Coverage](https://scrutinizer-ci.com/g/bb-drummer/phpagstract/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/bb-drummer/phpagstract/?branch=master)
+[![Build Status](https://scrutinizer-ci.com/g/bb-drummer/phpagstract/badges/build.png?b=master)](https://scrutinizer-ci.com/g/bb-drummer/phpagstract/build-status/master)
 
 
 ## LICENSE
