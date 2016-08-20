@@ -22,7 +22,7 @@ build:
             - php composer.phar install
         override:
             -
-                command: 'phpunit -c ./tests/phpunit.xml --coverage-clover=phpagstarct.clover'
+                command: 'phpunit -c ./tests/phpunit.xml --coverage-clover=phpagstract.clover'
                 coverage:
                     file: 'phpagstract.clover'
                     format: 'php-clover'
