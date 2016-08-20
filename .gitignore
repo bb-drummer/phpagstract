@@ -5,4 +5,5 @@
 
 ## obsolete files
 src_ns
-test/shop
+tests/shop
+data/

@@ -4,7 +4,8 @@
   "version" : "0.0.1",
   "require" : {
     "composer/installers": "~1.0",
-    "php" : "^5.2 || ^7.0"
+    "php" : "^5.2 || ^7.0",
+    "phpunit" : "~5.1.4"
   },
   "license" : "Apache2.0",
   "keywords" : [ "xml", "template", "engine", "pagstract", "templating", "framework" ],
@@ -14,7 +15,7 @@
       "0.0.1" : "1.0.x-dev"
     }
   },
-  "type" : "project",
+  "type" : "library",
   "homepage" : "https://gitlab.bjoernbartels.earth/php/phpagstract",
   "authors" : [ {
     "name" : "Björn Bartels",
