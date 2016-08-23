@@ -3,7 +3,7 @@
 namespace PHPagstract;
 
 /**
- * parser token/tag object class 
+ * page generator object abstract
  *
  * @package   PHPagstract
  * @author    Björn Bartels <coding@bjoernbartels.earth>
@@ -11,18 +11,12 @@ namespace PHPagstract;
  * @license   http://www.apache.org/licenses/LICENSE-2.0 Apache License, Version 2.0
  * @copyright copyright (c) 2016 Björn Bartels <coding@bjoernbartels.earth>
  */
-class Token extends TokenAbstract {
-	
-	/**
-	 *
-	 * @param string $token        	
-	 *
-	 * @param array $attributes
-	 *        	(optional)
-	 *        	
-	 */
-	public function __construct($token, $attributes) {
-		parent::__construct ( $token, $attributes );
+abstract class ParserAbstract  {
+  
+    /**
+     * 
+     */
+	public function __construct() {
 	}
 }
 

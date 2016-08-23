@@ -13,16 +13,15 @@ namespace PHPagstractTest;
 
 use PHPUnit_Framework_TestCase as TestCase;
 
-use \PHPagstract\Page;
-use \PHPagstract\PageAbstract;
+use \PHPagstract\Parser;
 
-class PageTest extends TestCase
+class ParserTest extends TestCase
 {
 	
-    public function testInstantiateObject()
+    public function testInstanciateObject()
     {
     	try {
-    		$tpl = new Page();
+    		$tpl = new Parser();
     		$className = get_class($tpl);
     	} catch (Exception $e) {
     		$tpl = null;

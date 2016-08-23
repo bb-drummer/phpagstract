@@ -39,7 +39,7 @@ abstract class PageModelAbstract {
 	
 	/**
 	 * pagemodel data
-	 * @var mixed
+	 * @var stdClass|string|mixed
 	 */
 	protected $data = null;
 	
@@ -53,11 +53,26 @@ abstract class PageModelAbstract {
 	 * 
 	 * @param string $name
 	 * @param string $sourcespath
-	 * @param mixed $data
+	 * @param stdClass|string|mixed $data
 	 * @param string $resources
 	 * @param string $resources_ext
 	 */
 	public function __construct( $name, $sourcespath, $data = array(), $resources = "./", $resources_ext = "./") {
+		if (!empty($name)) {
+			$this->setName($name);
+		}
+		if (!empty($sourcespath)) { 
+			$this->setSourcespath($sourcespath);
+		}
+		if (!empty($resources)) {
+			$this->setResources($resources);
+		}
+		if (!empty($resources_ext)) {
+			$this->setResources_ext($resources_ext);
+		}
+		if (!empty($data)) {
+			$this->setData($data);
+		}
 	}
 	
 	/**
@@ -124,10 +139,18 @@ abstract class PageModelAbstract {
 	}
 
 	/**
-	 * @param mixed $data
+	 * @param stdClass|string|mixed $data
 	 */
 	public function setData($data) {
-		$this->data = $data;
+		if (is_string($data)) {
+			$obj = json_decode($data);
+			$this->data = ($obj);
+		} else if (is_array($data)) {
+			$obj = json_decode(json_encode($data));
+			$this->data = ($obj);
+		} else if (is_object($data)) {
+			$this->data = ($data);
+		}
 	}
 
 	/**
@@ -138,7 +161,7 @@ abstract class PageModelAbstract {
 	}
 
 	/**
-	 * @param number $mandantId
+	 * @param int $mandantId
 	 */
 	public function setMandantId($mandantId) {
 		$this->mandantId = $mandantId;
