@@ -2,6 +2,15 @@
 
 namespace PHPagstract\Token\Tokens;
 
+/**
+ * token abstract class
+ *
+ * @package   PHPagstract
+ * @author    Björn Bartels <coding@bjoernbartels.earth>
+ * @link      https://gitlab.bjoernbartels.earth/php/phpagstract
+ * @license   http://www.apache.org/licenses/LICENSE-2.0 Apache License, Version 2.0
+ * @copyright copyright (c) 2016 Björn Bartels <coding@bjoernbartels.earth>
+ */
 abstract class AbstractToken implements Token
 {
     /** @var int */
@@ -134,6 +143,11 @@ abstract class AbstractToken implements Token
         return $this->type === Token::ELEMENT;
     }
 
+    public function isPagstract()
+    {
+        return $this->type === Token::PAGSTRACT;
+    }
+
     public function isPhp()
     {
         return $this->type === Token::PHP;
@@ -149,6 +163,7 @@ abstract class AbstractToken implements Token
         return $type === Token::CDATA
             || $type === Token::COMMENT
             || $type === Token::DOCTYPE
+            || $type === Token::PAGSTRACT
             || $type === Token::ELEMENT
             || $type === Token::PHP
             || $type === Token::TEXT;

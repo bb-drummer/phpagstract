@@ -4,28 +4,18 @@ namespace PHPagstract\Token\Tokens;
 
 use PHPagstract\Token\MarkupTokenizer;
 use PHPagstract\Token\Exception\ParseException;
-use phpDocumentor\Reflection\Types\Boolean;
 
-/**
- * (generic/HTML) 'Element' token object class
- *
- * @package   PHPagstract
- * @author    Björn Bartels <coding@bjoernbartels.earth>
- * @link      https://gitlab.bjoernbartels.earth/php/phpagstract
- * @license   http://www.apache.org/licenses/LICENSE-2.0 Apache License, Version 2.0
- * @copyright copyright (c) 2016 Björn Bartels <coding@bjoernbartels.earth>
- */
-class Element extends AbstractToken
+class Pagstract extends AbstractToken
 {
 	/**
 	 * @var array the $matching
 	 */
 	public static $matching = array(
-			"start" => "/^\s*<[a-z]|^\s*<(?!(\/pma))/i", 
+			"start" => "/^\s*<pma|^\s*<object |^\s*<a |^\s*<area |^\s*<input |^\s*<select /i", 
 			"end" => ">"
 	);
 	
-	/** @var array */
+    /** @var array */
     private $attributes;
 
     /** @var array[Token] */
@@ -34,12 +24,9 @@ class Element extends AbstractToken
     /** @var string */
     private $name;
 
-    /** @var boolean */
-    public $nested = false;
-
     public function __construct(Token $parent = null, $throwOnError = false)
     {
-        parent::__construct(Token::ELEMENT, $parent, $throwOnError);
+        parent::__construct(Token::PAGSTRACT, $parent, $throwOnError);
 
         $this->attributes = array();
         $this->children = array();
@@ -187,7 +174,7 @@ class Element extends AbstractToken
             return $remainingHtml;
         }
 
-        if (!$this->nested) return $remainingHtml;
+        //return $remainingHtml;
         // Open element.
         return $this->parseContents($remainingHtml);
     }
@@ -476,7 +463,7 @@ class Element extends AbstractToken
     public function toArray()
     {
         $result = array(
-            'type' => 'element',
+            'type' => 'pagstract',
             'name' => $this->name,
             'line' => $this->getLine(),
             'position' => $this->getPosition()

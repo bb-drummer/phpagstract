@@ -4,10 +4,9 @@ namespace PHPagstract\Token\Tokens;
 
 use PHPagstract\Token\MarkupTokenizer;
 use PHPagstract\Token\Exception\ParseException;
-use phpDocumentor\Reflection\Types\Boolean;
 
 /**
- * (generic/HTML) 'Element' token object class
+ * 'Element' close-tag token object class
  *
  * @package   PHPagstract
  * @author    Björn Bartels <coding@bjoernbartels.earth>
@@ -15,17 +14,9 @@ use phpDocumentor\Reflection\Types\Boolean;
  * @license   http://www.apache.org/licenses/LICENSE-2.0 Apache License, Version 2.0
  * @copyright copyright (c) 2016 Björn Bartels <coding@bjoernbartels.earth>
  */
-class Element extends AbstractToken
+class TagClose extends AbstractToken
 {
-	/**
-	 * @var array the $matching
-	 */
-	public static $matching = array(
-			"start" => "/^\s*<[a-z]|^\s*<(?!(\/pma))/i", 
-			"end" => ">"
-	);
-	
-	/** @var array */
+    /** @var array */
     private $attributes;
 
     /** @var array[Token] */
@@ -33,9 +24,6 @@ class Element extends AbstractToken
 
     /** @var string */
     private $name;
-
-    /** @var boolean */
-    public $nested = false;
 
     public function __construct(Token $parent = null, $throwOnError = false)
     {
@@ -187,7 +175,7 @@ class Element extends AbstractToken
             return $remainingHtml;
         }
 
-        if (!$this->nested) return $remainingHtml;
+        return $remainingHtml;
         // Open element.
         return $this->parseContents($remainingHtml);
     }
@@ -476,7 +464,7 @@ class Element extends AbstractToken
     public function toArray()
     {
         $result = array(
-            'type' => 'element',
+            'type' => 'tagclose',
             'name' => $this->name,
             'line' => $this->getLine(),
             'position' => $this->getPosition()

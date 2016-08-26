@@ -2,11 +2,28 @@
 
 namespace PHPagstract\Token\Tokens;
 
-use PHPagstract\Token\HtmlTokenizer;
+use PHPagstract\Token\MarkupTokenizer;
 
+/**
+ * 'Text' token object class
+ *
+ * @package   PHPagstract
+ * @author    Björn Bartels <coding@bjoernbartels.earth>
+ * @link      https://gitlab.bjoernbartels.earth/php/phpagstract
+ * @license   http://www.apache.org/licenses/LICENSE-2.0 Apache License, Version 2.0
+ * @copyright copyright (c) 2016 Björn Bartels <coding@bjoernbartels.earth>
+ */
 class Text extends AbstractToken
 {
-    /** @var string */
+	/**
+	 * @var array the $matching
+	 */
+	public static $matching = array(
+			"start" => "/^[^<]/", 
+			"end" => PHP_EOL
+	);
+	
+	/** @var string */
     private $value;
 
     public function __construct(Token $parent = null, $throwOnError = false, $forcedValue = null)
@@ -19,7 +36,7 @@ class Text extends AbstractToken
     public function parse($html)
     {
         // Get token position.
-        $positionArray = HtmlTokenizer::getPosition($html);
+        $positionArray = MarkupTokenizer::getPosition($html);
         $this->setLine($positionArray['line']);
         $this->setPosition($positionArray['position']);
 
