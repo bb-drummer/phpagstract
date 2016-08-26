@@ -49,7 +49,7 @@ class DocTypeTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @expectedException PHPagstract\Token\Exceptions\ParseException
+     * @expectedException PHPagstract\Token\Exception\ParseException
      */
     public function testExceptionInParse()
     {

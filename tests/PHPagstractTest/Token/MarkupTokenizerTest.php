@@ -2,16 +2,16 @@
 
 namespace PHPagstractTest\Token;
 
-use PHPagstract\Token\HtmlTokenizer;
+use PHPagstract\Token\MarkupTokenizer;
 
-class HtmlTokenizerTest extends \PHPUnit_Framework_TestCase
+class MarkupTokenizerTest extends \PHPUnit_Framework_TestCase
 {
     /**
      * @dataProvider parseDataProvider
      */
     public function testParse($html, array $expectedTokenArray, $debug = false)
     {
-        $htmlTokenizer = new HtmlTokenizer();
+        $htmlTokenizer = new MarkupTokenizer();
         $tokens = $htmlTokenizer->parse($html);
         if ($debug) {
             var_dump($html, $tokens->toArray());
@@ -84,9 +84,9 @@ class HtmlTokenizerTest extends \PHPUnit_Framework_TestCase
      */
     public function testGetPosition($html, $partialHtml, $expectedLine, $expectedPosition)
     {
-        $htmlTokenizer = new HtmlTokenizer();
+        $htmlTokenizer = new MarkupTokenizer();
         $tokens = $htmlTokenizer->parse($html);
-        $positionArray = HtmlTokenizer::getPosition($partialHtml);
+        $positionArray = MarkupTokenizer::getPosition($partialHtml);
         $this->assertEquals($expectedLine, $positionArray['line']);
         $this->assertEquals($expectedPosition, $positionArray['position']);
     }

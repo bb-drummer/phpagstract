@@ -2,7 +2,7 @@
 
 namespace PHPagstractTest\Token\Html;
 
-use PHPagstract\Token\HtmlTokenizer;
+use PHPagstract\Token\MarkupTokenizer;
 
 class BootstrapComTest extends \PHPUnit_Framework_TestCase
 {
@@ -12,7 +12,7 @@ class BootstrapComTest extends \PHPUnit_Framework_TestCase
     public function testBootstrapCom()
     {
         $bootstrapHtml = file_get_contents(__DIR__ . '/bootstrap-com.html');
-        $htmlTokenizer = new HtmlTokenizer();
+        $htmlTokenizer = new MarkupTokenizer();
         $tokens = $htmlTokenizer->parse($bootstrapHtml);
         $this->assertEquals(
             array (

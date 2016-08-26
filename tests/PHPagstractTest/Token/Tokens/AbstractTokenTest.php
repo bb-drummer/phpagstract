@@ -18,6 +18,7 @@ class AbstractTokenTest extends \PHPUnit_Framework_TestCase
         $this->assertFalse($abstractTokenMock->isCDATA());
         $this->assertFalse($abstractTokenMock->isComment());
         $this->assertFalse($abstractTokenMock->isDocType());
+        $this->assertFalse($abstractTokenMock->isPagstract());
         $this->assertTrue($abstractTokenMock->isElement());
         $this->assertFalse($abstractTokenMock->isPhp());
         $this->assertFalse($abstractTokenMock->isText());

@@ -55,7 +55,7 @@ class TokenFactoryTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @expectedException PHPagstract\Token\Exceptions\TokenMatchingException
+     * @expectedException PHPagstract\Token\Exception\TokenFactoryException
      */
     public function testExceptionInBuildFromHtml()
     {
