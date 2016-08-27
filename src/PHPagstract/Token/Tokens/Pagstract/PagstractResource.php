@@ -51,7 +51,8 @@ class PagstractResource extends PagstractAbstractToken
         $this->setLine($positionArray['line']);
         $this->setPosition($positionArray['position']);
 
-        $match = preg_match((get_class($this))::$matching["start"], $html);
+        $classname = get_class($this);
+        $match = preg_match($classname::$matching["start"], $html);
         echo '<pre>'.htmlentities(print_r($match, true)).'</pre>';
         
         // Parse token.

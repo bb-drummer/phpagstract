@@ -45,7 +45,8 @@ class Text extends AbstractToken
         if (preg_match("/(^\s)/", $html) === 1) {
             $startingWhitespace = ' ';
         }
-		$textEnd = (get_class($this))::$matching["end"];
+        $classname = get_class($this);
+		$textEnd = $classname::$matching["end"];
         $posOfNextElement = mb_strpos($html, $textEnd);
         if ($posOfNextElement === false) {
             $this->value = $startingWhitespace . trim($html);
