@@ -29,7 +29,7 @@
         </listener>
     </listeners>
     <filter>
-        <whitelist processUncoveredFilesFromWhitelist="true">
+        <whitelist processUncoveredFilesFromWhitelist="false">
             <directory suffix=".php">../src/</directory>
         </whitelist>
     </filter>

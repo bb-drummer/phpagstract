@@ -38,7 +38,6 @@ class PagstractPropertyReference extends PagstractAbstractToken
     {
         $html = ltrim($html);
 
-        //echo '.pos. '.htmlentities(print_r($html, true)).' - '; flush();
         // Get token position.
         $positionArray = MarkupTokenizer::getPosition($html);
         $this->setLine($positionArray['line']);
@@ -46,8 +45,6 @@ class PagstractPropertyReference extends PagstractAbstractToken
 
         // Parse token.
         $posOfEndOfCData = mb_strpos($html, '}');
-        //echo '.pos. '.htmlentities(print_r($positionArray, true)).' - '; flush();
-        //echo '.pos. '.htmlentities(print_r($posOfEndOfCData, true)).' - '; flush();
         if ($posOfEndOfCData === false) {
             if ($this->getThrowOnError()) {
                 throw new TokenizerException('Invalid Property');
@@ -56,7 +53,7 @@ class PagstractPropertyReference extends PagstractAbstractToken
             return '';
         }
 		$propertyReference = mb_substr($html, 2, $posOfEndOfCData-2);
-        //echo '.pos. '.htmlentities(print_r($propertyReference, true)).' - '; flush();
+        
         $this->name = ($propertyReference);
         $this->value = ($propertyReference);
 

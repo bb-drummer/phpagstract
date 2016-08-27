@@ -17,7 +17,7 @@ class PagstractMessage extends PagstractAbstractToken
 	 * @var array the $matching
 	 */
 	public static $matching = array(
-			"start" => "/^\s*msg:\/\//i", 
+			"start" => "/(msg):\/\/(.*)[\"|\'|\s|\n|\ ]/i", 
 			"end" => PHP_EOL
 	);
 

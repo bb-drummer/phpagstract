@@ -17,7 +17,7 @@ class PagstractResource extends PagstractAbstractToken
 	 * @var array the $matching
 	 */
 	public static $matching = array(
-			"start" => "/^\s*resource(_ext)?:\/\//i", 
+			"start" => "/(resource_ext:\/\/|resource:\/\/)(.*)[\"|\'|\s|\n|\ ]/iU", 
 			"end" => PHP_EOL
 	);
 
@@ -41,4 +41,33 @@ class PagstractResource extends PagstractAbstractToken
         $this->children = array();
     }
 
+    public function parse($html)
+    {
+        $html = ltrim($html);
+
+        //echo '.pos. '.htmlentities(print_r($html, true)).' - '; flush();
+        // Get token position.
+        $positionArray = MarkupTokenizer::getPosition($html);
+        $this->setLine($positionArray['line']);
+        $this->setPosition($positionArray['position']);
+
+        $match = preg_match((get_class($this))::$matching["start"], $html);
+        echo '<pre>'.htmlentities(print_r($match, true)).'</pre>';
+        
+        // Parse token.
+        $posOfEndOfCData = mb_strpos($html, '}');
+        //echo '.pos. '.htmlentities(print_r($positionArray, true)).' - '; flush();
+        //echo '.pos. '.htmlentities(print_r($posOfEndOfCData, true)).' - '; flush();
+        if ($posOfEndOfCData === false) {
+            if ($this->getThrowOnError()) {
+                throw new TokenizerException('Invalid Property');
+            }
+
+            return '';
+        }
+		$propertyReference = mb_substr($html, 2, $posOfEndOfCData-2);
+        $this->value = ($propertyReference);
+
+        return mb_substr($html, $posOfEndOfCData + 1);
+    }
 }
