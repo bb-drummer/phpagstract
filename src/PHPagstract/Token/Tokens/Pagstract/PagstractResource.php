@@ -3,6 +3,7 @@
 namespace PHPagstract\Token\Tokens;
 
 use PHPagstract\Token\Exception\TokenizerException;
+use PHPagstract\Token\MarkupTokenizer;
 use PHPagstract\Token\Tokens\PagstractMarkup;
 
 /**
