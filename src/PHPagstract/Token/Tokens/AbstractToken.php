@@ -13,7 +13,18 @@ namespace PHPagstract\Token\Tokens;
  */
 abstract class AbstractToken implements Token
 {
-    /** @var int */
+	/**
+	 * @var array the $matching
+	 */
+	public static $matching = array(
+			"start" => "/^\s*<[a-z]/i", 
+			"end" => ">"
+	);
+
+    /** @var boolean */
+    public static $nested = false;
+	
+	/** @var int */
     private $depth;
 
     /** @var int */
@@ -143,11 +154,6 @@ abstract class AbstractToken implements Token
         return $this->type === Token::ELEMENT;
     }
 
-    public function isPagstract()
-    {
-        return $this->type === Token::PAGSTRACT;
-    }
-
     public function isPhp()
     {
         return $this->type === Token::PHP;
@@ -158,12 +164,21 @@ abstract class AbstractToken implements Token
         return $this->type === Token::TEXT;
     }
 
+    public function isPagstract()
+    {
+        return $this->type === Token::PAGSTRACT;
+    }
+
+    public function isContenido()
+    {
+        return $this->type === Token::CONTENIDO;
+    }
+
     protected function isValidType($type)
     {
         return $type === Token::CDATA
             || $type === Token::COMMENT
             || $type === Token::DOCTYPE
-            || $type === Token::PAGSTRACT
             || $type === Token::ELEMENT
             || $type === Token::PHP
             || $type === Token::TEXT;

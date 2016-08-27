@@ -54,7 +54,7 @@ class CommentTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @expectedException PHPagstract\Token\Exception\ParseException
+     * @expectedException PHPagstract\Token\Exception\TokenizerException
      */
     public function testExceptionInParse()
     {

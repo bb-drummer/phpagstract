@@ -3,7 +3,7 @@
 namespace PHPagstract\Token\Tokens;
 
 use PHPagstract\Token\MarkupTokenizer;
-use PHPagstract\Token\Exception\ParseException;
+use PHPagstract\Token\Exception\TokenizerException;
 
 /**
  * 'DocType' token object class
@@ -47,7 +47,7 @@ class DocType extends AbstractToken
         $posOfEndOfDocType = mb_strpos($html, '>');
         if ($posOfEndOfDocType === false) {
             if ($this->getThrowOnError()) {
-                throw new ParseException('Invalid DOCTYPE.');
+                throw new TokenizerException('Invalid DOCTYPE.');
             }
 
             return '';

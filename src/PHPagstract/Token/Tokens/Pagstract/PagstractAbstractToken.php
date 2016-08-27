@@ -3,19 +3,21 @@
 namespace PHPagstract\Token\Tokens;
 
 use PHPagstract\Token\MarkupTokenizer;
-use PHPagstract\Token\Exception\ParseException;
+use PHPagstract\Token\Exception\TokenizerException;
 
-/**
- * 'Element' close-tag token object class
- *
- * @package   PHPagstract
- * @author    Björn Bartels <coding@bjoernbartels.earth>
- * @link      https://gitlab.bjoernbartels.earth/php/phpagstract
- * @license   http://www.apache.org/licenses/LICENSE-2.0 Apache License, Version 2.0
- * @copyright copyright (c) 2016 Björn Bartels <coding@bjoernbartels.earth>
- */
-class TagClose extends AbstractToken
+class PagstractAbstractToken extends AbstractToken
 {
+	/**
+	 * @var array the $matching
+	 */
+	public static $matching = array(
+			"start" => "/^\s*<pma|^\s*<object |^\s*<a |^\s*<area |^\s*<input |^\s*<select /i", 
+			"end" => ">"
+	);
+
+    /** @var boolean */
+    public static $nested = true;
+	
     /** @var array */
     private $attributes;
 
@@ -24,15 +26,63 @@ class TagClose extends AbstractToken
 
     /** @var string */
     private $name;
+	
+	/** @var string */
+    private $value;
+    
+    /** @var array */
+    private $validTypes = array(
+        Token::CDATA,
+        Token::COMMENT,
+        Token::DOCTYPE,
+        Token::ELEMENT,
+        Token::PHP,
+        Token::TEXT,
 
-    public function __construct(Token $parent = null, $throwOnError = false)
-    {
-        parent::__construct(Token::ELEMENT, $parent, $throwOnError);
+        Token::CONTENIDO,
 
-        $this->attributes = array();
-        $this->children = array();
-        $this->name = null;
-    }
+        Token::PAGSTRACT,
+        Token::PAGSTRACTSIMPLEVALUE,
+            
+        Token::PAGSTRACTVALUE,
+        Token::PAGSTRACTCOMMENT,
+        Token::PAGSTRACTRESOURCE,
+        Token::PAGSTRACTMESSAGE,
+            
+        Token::PAGSTRACTTILE,
+        Token::PAGSTRACTTILEVARIABLE,
+            
+        Token::PAGSTRACTBEAN,
+        Token::PAGSTRACTIFVISIBLE,
+            
+        Token::PAGSTRACTLIST,
+        Token::PAGSTRACTLISTHEADER,
+        Token::PAGSTRACTLISTFOOTER,
+        Token::PAGSTRACTLISTCONTENT,
+        Token::PAGSTRACTLISTNOCONTENT,
+        Token::PAGSTRACTLISTSEPERATOR,
+        Token::PAGSTRACTLISTEVEN,
+        Token::PAGSTRACTLISTODD,
+        Token::PAGSTRACTLISTFIRST,
+        Token::PAGSTRACTLISTLAST,
+            
+        Token::PAGSTRACTMODLIST,
+        Token::PAGSTRACTMODSEPERATOR,
+        Token::PAGSTRACTMODCONTENT,
+            
+        Token::PAGSTRACTSWITCH,
+        Token::PAGSTRACTOBJECT,
+        Token::PAGSTRACTFORM,
+            
+        Token::PAGSTRACTTESTIMG,
+            
+        Token::PAGSTRACTLINK,
+        Token::PAGSTRACTAREA,
+        Token::PAGSTRACTINPUT,
+        Token::PAGSTRACTSELECT,
+    		
+        Token::PAGSTRACTDEBUG,
+    );
 
     /**
      * Does the parent have an implied closing tag?
@@ -140,7 +190,7 @@ class TagClose extends AbstractToken
         $posOfClosingBracket = mb_strpos($remainingHtml, '>');
         if ($posOfClosingBracket === false) {
             if ($this->getThrowOnError()) {
-                throw new ParseException('Invalid element: missing closing bracket.');
+                throw new TokenizerException('Invalid element: missing closing bracket.');
             }
 
             return '';
@@ -157,25 +207,15 @@ class TagClose extends AbstractToken
         // Lets close those closed-only elements that are left open.
         $closedOnlyElements = array(
             'area',
-            'base',
-            'br',
-            'col',
-            'embed',
-            'hr',
-            'img',
-            'input',
-            'link',
-            'meta',
-            'param',
-            'source',
-            'track',
-            'wbr'
+            'pma:debug'
         );
         if (array_search($this->name, $closedOnlyElements) !== false) {
             return $remainingHtml;
         }
 
-        return $remainingHtml;
+        if (!self::$nested) { 
+        	return $remainingHtml;
+        }
         // Open element.
         return $this->parseContents($remainingHtml);
     }
@@ -214,7 +254,7 @@ class TagClose extends AbstractToken
                 );
                 if ($valueMatchSuccessful !== 1) {
                     if ($this->getThrowOnError()) {
-                        throw new ParseException('Invalid value encapsulation.');
+                        throw new TokenizerException('Invalid value encapsulation.');
                     }
 
                     return '';
@@ -328,7 +368,7 @@ class TagClose extends AbstractToken
         );
         if ($elementMatchSuccessful !== 1) {
             if ($this->getThrowOnError()) {
-                throw new ParseException('Invalid element name.');
+                throw new TokenizerException('Invalid element name.');
             }
 
             return '';
@@ -461,10 +501,34 @@ class TagClose extends AbstractToken
         return $this->name;
     }
 
+    /**
+     * Getter for 'value'.
+     *
+     * @return string
+     */
+    public function getValue()
+    {
+        return $this->value;
+    }
+
+    /**
+     * Getter/Setter for 'nested'.
+     *
+     * @return boolean
+     * @return string
+     */
+    public function nested($nested = null)
+    {
+    	if ($nested !== null) {
+    		self::$nested = !!$nested;
+    	}
+        return self::$nested;
+    }
+
     public function toArray()
     {
         $result = array(
-            'type' => 'tagclose',
+            'type' => $this->getType(),
             'name' => $this->name,
             'line' => $this->getLine(),
             'position' => $this->getPosition()
@@ -485,5 +549,10 @@ class TagClose extends AbstractToken
         }
 
         return $result;
+    }
+
+    protected function isValidType($type)
+    {
+        return (in_array($type, $this->validTypes));
     }
 }

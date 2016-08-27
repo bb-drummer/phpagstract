@@ -4,6 +4,7 @@ namespace PHPagstract\Token;
 
 use PHPagstract\Token\Tokens\TokenCollection;
 use PHPagstract\Token\Tokens\TokenFactory;
+use PHPagstract\Token\Tokens\Element;
 
 /**
  * markup tokenizer object class
@@ -29,12 +30,13 @@ class MarkupTokenizer
     {
         $this->throwOnError = (boolean) $throwOnError;
 
+        Element::$nested = true;
+        TokenFactory::clearMatchings();
         TokenFactory::registerMatching("Php");
         TokenFactory::registerMatching("Comment");
         TokenFactory::registerMatching("CData");
         TokenFactory::registerMatching("DocType");
-        TokenFactory::registerMatching("Pagstract", "/^\s*<pma|^\s*<object |^\s*<a |^\s*<area |^\s*<input |^\s*<select /i", ">");
-        TokenFactory::registerMatching("Element", "/^\s*<[a-z]|^\s*<(?!(\/pma))/i", ">");
+        TokenFactory::registerMatching("Element");
         TokenFactory::registerMatching("Text");
     }
 

@@ -3,9 +3,9 @@
 namespace PHPagstract\Token\Tokens;
 
 use PHPagstract\Token\MarkupTokenizer;
-use PHPagstract\Token\Exception\ParseException;
+use PHPagstract\Token\Exception\TokenizerException;
 
-class Pagstract extends AbstractToken
+class Pagstract extends PagstractAbstractToken
 {
 	/**
 	 * @var array the $matching
@@ -14,15 +14,6 @@ class Pagstract extends AbstractToken
 			"start" => "/^\s*<pma|^\s*<object |^\s*<a |^\s*<area |^\s*<input |^\s*<select /i", 
 			"end" => ">"
 	);
-	
-    /** @var array */
-    private $attributes;
-
-    /** @var array[Token] */
-    private $children;
-
-    /** @var string */
-    private $name;
 
     public function __construct(Token $parent = null, $throwOnError = false)
     {
@@ -139,7 +130,7 @@ class Pagstract extends AbstractToken
         $posOfClosingBracket = mb_strpos($remainingHtml, '>');
         if ($posOfClosingBracket === false) {
             if ($this->getThrowOnError()) {
-                throw new ParseException('Invalid element: missing closing bracket.');
+                throw new TokenizerException('Invalid element: missing closing bracket.');
             }
 
             return '';
@@ -156,25 +147,15 @@ class Pagstract extends AbstractToken
         // Lets close those closed-only elements that are left open.
         $closedOnlyElements = array(
             'area',
-            'base',
-            'br',
-            'col',
-            'embed',
-            'hr',
-            'img',
-            'input',
-            'link',
-            'meta',
-            'param',
-            'source',
-            'track',
-            'wbr'
+            'input'
         );
         if (array_search($this->name, $closedOnlyElements) !== false) {
             return $remainingHtml;
         }
 
-        //return $remainingHtml;
+        if (!$this->nested()) { 
+        	return $remainingHtml;
+        }
         // Open element.
         return $this->parseContents($remainingHtml);
     }
@@ -213,7 +194,7 @@ class Pagstract extends AbstractToken
                 );
                 if ($valueMatchSuccessful !== 1) {
                     if ($this->getThrowOnError()) {
-                        throw new ParseException('Invalid value encapsulation.');
+                        throw new TokenizerException('Invalid value encapsulation.');
                     }
 
                     return '';
@@ -327,7 +308,7 @@ class Pagstract extends AbstractToken
         );
         if ($elementMatchSuccessful !== 1) {
             if ($this->getThrowOnError()) {
-                throw new ParseException('Invalid element name.');
+                throw new TokenizerException('Invalid element name.');
             }
 
             return '';

@@ -3,7 +3,7 @@
 namespace PHPagstract\Token\Tokens;
 
 use PHPagstract\Token\MarkupTokenizer;
-use PHPagstract\Token\Exception\ParseException;
+use PHPagstract\Token\Exception\TokenizerException;
 
 /**
  * 'Comment' token object class
@@ -47,7 +47,7 @@ class Comment extends AbstractToken
         $posOfEndOfComment = mb_strpos($html, '-->');
         if ($posOfEndOfComment === false) {
             if ($this->getThrowOnError()) {
-                throw new ParseException('Invalid comment.');
+                throw new TokenizerException('Invalid comment.');
             }
 
             return '';

@@ -33,7 +33,7 @@ class TokenFactory
                 		throw new TokenFactoryException("No token class found for '.$className.'");
                 	}
                 }
-
+                $fullClassName::$matching = $regex;
                 return new $fullClassName($parent, $throwOnError);
             }
         }
@@ -69,6 +69,13 @@ class TokenFactory
 			return $fullClassName::$matching;
         }
         return false;
+	}
+
+	/**
+	 * remove all tokens from registry
+	 */
+	public static function clearMatchings() {
+		self::$matchings = array();
 	}
 
 	/**

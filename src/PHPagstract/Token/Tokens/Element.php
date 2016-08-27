@@ -3,7 +3,7 @@
 namespace PHPagstract\Token\Tokens;
 
 use PHPagstract\Token\MarkupTokenizer;
-use PHPagstract\Token\Exception\ParseException;
+use PHPagstract\Token\Exception\TokenizerException;
 use phpDocumentor\Reflection\Types\Boolean;
 
 /**
@@ -21,7 +21,7 @@ class Element extends AbstractToken
 	 * @var array the $matching
 	 */
 	public static $matching = array(
-			"start" => "/^\s*<[a-z]|^\s*<(?!(\/pma))/i", 
+			"start" => "/^\s*<[a-z]/i", 
 			"end" => ">"
 	);
 	
@@ -35,7 +35,7 @@ class Element extends AbstractToken
     private $name;
 
     /** @var boolean */
-    public $nested = false;
+    public static $nested = true;
 
     public function __construct(Token $parent = null, $throwOnError = false)
     {
@@ -144,7 +144,8 @@ class Element extends AbstractToken
 
         // Parse attributes.
         $remainingHtml = mb_substr($html, mb_strlen($this->name) + 1);
-        while (mb_strpos($remainingHtml, '>') !== false && preg_match("/^\s*[\/]?>/", $remainingHtml) === 0) {
+        $endSequence = "/^\s*[\/]?".self::$matching["end"]."/";
+        while (mb_strpos($remainingHtml, self::$matching["end"]) !== false && preg_match($endSequence, $remainingHtml) === 0) {
             $remainingHtml = $this->parseAttribute($remainingHtml);
         }
 
@@ -152,7 +153,7 @@ class Element extends AbstractToken
         $posOfClosingBracket = mb_strpos($remainingHtml, '>');
         if ($posOfClosingBracket === false) {
             if ($this->getThrowOnError()) {
-                throw new ParseException('Invalid element: missing closing bracket.');
+                throw new TokenizerException('Invalid element: missing closing bracket.');
             }
 
             return '';
@@ -187,7 +188,9 @@ class Element extends AbstractToken
             return $remainingHtml;
         }
 
-        if (!$this->nested) return $remainingHtml;
+        if (!self::$nested) {
+        	return $remainingHtml;
+        }
         // Open element.
         return $this->parseContents($remainingHtml);
     }
@@ -226,7 +229,7 @@ class Element extends AbstractToken
                 );
                 if ($valueMatchSuccessful !== 1) {
                     if ($this->getThrowOnError()) {
-                        throw new ParseException('Invalid value encapsulation.');
+                        throw new TokenizerException('Invalid value encapsulation.');
                     }
 
                     return '';
@@ -340,7 +343,7 @@ class Element extends AbstractToken
         );
         if ($elementMatchSuccessful !== 1) {
             if ($this->getThrowOnError()) {
-                throw new ParseException('Invalid element name.');
+                throw new TokenizerException('Invalid element name.');
             }
 
             return '';

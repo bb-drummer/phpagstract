@@ -20,9 +20,50 @@ interface Token
     const PHP       = 'php';
     const TEXT      = 'text';
     
-    const PAGSTRACT = 'pagstract';
-    const TAGCLOSE  = 'tagclose';
+    const CONTENIDO = 'contenido';
+    
+    const PAGSTRACT              = 'Pagstract';
+    const PAGSTRACTSIMPLEVALUE   = 'PagstractSimpleValue';
 
+    const PAGSTRACTVALUE         = 'PagstractValue';
+    const PAGSTRACTCOMMENT       = 'PagstractComment';
+    const PAGSTRACTRESOURCE      = 'PagstractResource';
+    const PAGSTRACTMESSAGE       = 'PagstractMessage';
+    
+    const PAGSTRACTTILE          = 'PagstractTile';
+    const PAGSTRACTTILEVARIABLE  = 'PagstractTileVariable';
+    
+    const PAGSTRACTBEAN          = 'PagstractBean';
+    const PAGSTRACTIFVISIBLE     = 'PagstractIfVisible';
+    
+    const PAGSTRACTLIST          = 'PagstractList';
+    const PAGSTRACTLISTHEADER    = 'PagstractListHeader';
+    const PAGSTRACTLISTFOOTER    = 'PagstractListFooter';
+    const PAGSTRACTLISTCONTENT   = 'PagstractListVontent';
+    const PAGSTRACTLISTNOCONTENT = 'PagstractListNoContent';
+    const PAGSTRACTLISTSEPERATOR = 'PagstractListSeperator';
+    const PAGSTRACTLISTEVEN      = 'PagstractListEven';
+    const PAGSTRACTLISTODD       = 'PagstractListOdd';
+    const PAGSTRACTLISTFIRST     = 'PagstractListFirst';
+    const PAGSTRACTLISTLAST      = 'PagstractListLast';
+    
+    const PAGSTRACTMODLIST       = 'PagstractModlist';
+    const PAGSTRACTMODSEPERATOR  = 'PagstractModseperator';
+    const PAGSTRACTMODCONTENT    = 'PagstractModcontent';
+    
+    const PAGSTRACTSWITCH        = 'PagstractSwitch';
+    const PAGSTRACTOBJECT        = 'PagstractObject';
+    const PAGSTRACTFORM          = 'PagstractForm';
+
+    const PAGSTRACTTESTIMG       = 'PagstractTextImg';
+    
+    const PAGSTRACTLINK          = 'PagstractLink';
+    const PAGSTRACTAREA          = 'PagstractArea';
+    const PAGSTRACTINPUT         = 'PagstractInput';
+    const PAGSTRACTSELECT        = 'PagstractSelect';
+
+    const PAGSTRACTDEBUG         = 'PagstractDebug';
+    
     /**
      * Will return the nesting depth of the token.
      *
