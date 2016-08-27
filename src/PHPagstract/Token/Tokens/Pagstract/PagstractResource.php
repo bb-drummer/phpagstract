@@ -2,6 +2,9 @@
 
 namespace PHPagstract\Token\Tokens;
 
+use PHPagstract\Token\Exception\TokenizerException;
+use PHPagstract\Token\Tokens\PagstractMarkup;
+
 /**
  * PagstractSimpleValue 'pma:value' token object class
  *
