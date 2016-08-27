@@ -17,7 +17,7 @@ class PagstractSelect extends PagstractAbstractToken
 	 * @var array the $matching
 	 */
 	public static $matching = array(
-			"start" => "/^\s*<select /i", 
+			"start" => "/^\s*<select[ ]/i", 
 			"end" => ">"
 	);
 

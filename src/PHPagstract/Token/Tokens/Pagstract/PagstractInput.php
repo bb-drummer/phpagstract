@@ -17,7 +17,7 @@ class PagstractInput extends PagstractAbstractToken
 	 * @var array the $matching
 	 */
 	public static $matching = array(
-			"start" => "/^\s*<input /i", 
+			"start" => "/^\s*<input[ ]/i", 
 			"end" => ">"
 	);
 

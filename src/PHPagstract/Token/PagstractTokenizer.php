@@ -3,7 +3,6 @@
 namespace PHPagstract\Token;
 
 use PHPagstract\Token\Tokens\TokenFactory;
-use PHPagstract\Token\Tokens\Element;
 use PHPagstract\Token\Tokens\Token;
 use PHPagstract\Token\Tokens\PagstractMarkup;
 
@@ -34,12 +33,13 @@ class PagstractTokenizer extends MarkupTokenizer
         PagstractMarkup::$nested = false;
         
         TokenFactory::clearMatchings();
+
         TokenFactory::registerMatching("Php");
-        TokenFactory::registerMatching("Comment");
         TokenFactory::registerMatching("CData");
         TokenFactory::registerMatching("DocType");
         
         TokenFactory::registerMatching(Token::PAGSTRACTCOMMENT);
+        TokenFactory::registerMatching("Comment");
         TokenFactory::registerMatching(Token::PAGSTRACTSIMPLEVALUE);
         
         TokenFactory::registerMatching(Token::PAGSTRACTTILE);
@@ -78,7 +78,7 @@ class PagstractTokenizer extends MarkupTokenizer
         TokenFactory::registerMatching(Token::PAGSTRACTDEBUG);
         
         TokenFactory::registerMatching(Token::PAGSTRACTMARKUP);
-        
+
         TokenFactory::registerMatching("Text");
     }
 

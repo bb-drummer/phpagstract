@@ -17,7 +17,7 @@ class PagstractLink extends PagstractAbstractToken
 	 * @var array the $matching
 	 */
 	public static $matching = array(
-			"start" => "/^\s*<a /i", 
+			"start" => "/^\s*<a[ ]/i", 
 			"end" => ">"
 	);
 

@@ -30,7 +30,7 @@ class MarkupTokenizer
     {
         $this->throwOnError = (boolean) $throwOnError;
 
-        Element::$nested = true;
+        //Element::$nested = true;
         TokenFactory::clearMatchings();
         TokenFactory::registerMatching("Php");
         TokenFactory::registerMatching("Comment");

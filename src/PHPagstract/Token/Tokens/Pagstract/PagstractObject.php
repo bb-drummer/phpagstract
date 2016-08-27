@@ -17,7 +17,7 @@ class PagstractObject extends PagstractAbstractToken
 	 * @var array the $matching
 	 */
 	public static $matching = array(
-			"start" => "/^\s*<object /i", 
+			"start" => "/^\s*<object[ ]/i", 
 			"end" => ">"
 	);
 

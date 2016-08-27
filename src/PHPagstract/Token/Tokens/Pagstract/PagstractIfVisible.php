@@ -17,7 +17,7 @@ class PagstractIfVisible extends PagstractAbstractToken
 	 * @var array the $matching
 	 */
 	public static $matching = array(
-			"start" => "/^\s*<pma:if-visible /i", 
+			"start" => "/^\s*<pma:if-visible[ ]/i", 
 			"end" => ">"
 	);
 

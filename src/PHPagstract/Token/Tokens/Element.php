@@ -35,7 +35,7 @@ class Element extends AbstractToken
     private $name;
 
     /** @var boolean */
-    public static $nested = true;
+    //public static $nested = true;
 
     public function __construct(Token $parent = null, $throwOnError = false)
     {
@@ -188,9 +188,9 @@ class Element extends AbstractToken
             return $remainingHtml;
         }
 
-        if (!self::$nested) {
+        /*if (!self::$nested) {
         	return $remainingHtml;
-        }
+        }*/
         // Open element.
         return $this->parseContents($remainingHtml);
     }

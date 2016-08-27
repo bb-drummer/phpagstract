@@ -17,7 +17,7 @@ class PagstractSwitch extends PagstractAbstractToken
 	 * @var array the $matching
 	 */
 	public static $matching = array(
-			"start" => "/^\s*<pma:switch /i", 
+			"start" => "/^\s*<pma:switch[ ]/i", 
 			"end" => ">"
 	);
 

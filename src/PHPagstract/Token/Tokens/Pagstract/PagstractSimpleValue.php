@@ -17,7 +17,7 @@ class PagstractSimpleValue extends PagstractAbstractToken
 	 * @var array the $matching
 	 */
 	public static $matching = array(
-			"start" => "/^\s*<pma:value /i", 
+			"start" => "/^\s*<pma:value[ ]/i", 
 			"end" => ">"
 	);
 

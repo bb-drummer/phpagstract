@@ -19,7 +19,7 @@ class TokenFactory
 	 * the matching registry
 	 * @var array
 	 */
-	private static $matchings = array();
+	public static $matchings = array();
 	
     public static function buildFromHtml($html, Token $parent = null, $throwOnError = false)
     {

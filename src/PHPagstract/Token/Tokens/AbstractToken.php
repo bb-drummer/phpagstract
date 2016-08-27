@@ -235,16 +235,6 @@ abstract class AbstractToken implements Token
     }
 
     /**
-     * Check for 'CDATA' type.
-     *
-     * @return boolean
-     */
-    public function isContenido()
-    {
-        return $this->type === Token::CONTENIDO;
-    }
-
-    /**
      * Check for a valid given type.
      *
      * @param string

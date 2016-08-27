@@ -17,7 +17,7 @@ class PagstractBean extends PagstractAbstractToken
 	 * @var array the $matching
 	 */
 	public static $matching = array(
-			"start" => "/^\s*<pma:bean /i", 
+			"start" => "/^\s*<pma:bean[ ]/i", 
 			"end" => ">"
 	);
 

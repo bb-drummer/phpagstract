@@ -17,7 +17,7 @@ class PagstractForm extends PagstractAbstractToken
 	 * @var array the $matching
 	 */
 	public static $matching = array(
-			"start" => "/^\s*<pma:form /i", 
+			"start" => "/^\s*<pma:form[ ]/i", 
 			"end" => ">"
 	);
 

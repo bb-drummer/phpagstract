@@ -17,7 +17,7 @@ class PagstractTile extends PagstractAbstractToken
 	 * @var array the $matching
 	 */
 	public static $matching = array(
-			"start" => "/^\s*<pma:tile /i", 
+			"start" => "/^\s*<pma:tile[ ]/i", 
 			"end" => ">"
 	);
 

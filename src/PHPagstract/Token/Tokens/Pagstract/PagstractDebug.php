@@ -17,7 +17,7 @@ class PagstractDebug extends PagstractAbstractToken
 	 * @var array the $matching
 	 */
 	public static $matching = array(
-			"start" => "/^\s*<pma:debug /i", 
+			"start" => "/^\s*<pma:debug[ ]/i", 
 			"end" => ">"
 	);
 
