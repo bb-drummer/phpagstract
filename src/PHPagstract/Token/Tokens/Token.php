@@ -22,47 +22,50 @@ interface Token
     
     const CONTENIDO = 'contenido';
     
-    const PAGSTRACT              = 'Pagstract';
-    const PAGSTRACTSIMPLEVALUE   = 'PagstractSimpleValue';
+    const PAGSTRACT                  = 'Pagstract';
+    const PAGSTRACTMARKUP            = 'PagstractMarkup'; // any other markup than pagstract markup ('<pma:...', '<a pma:name...' etc)
 
-    const PAGSTRACTVALUE         = 'PagstractValue';
-    const PAGSTRACTCOMMENT       = 'PagstractComment';
-    const PAGSTRACTRESOURCE      = 'PagstractResource';
-    const PAGSTRACTMESSAGE       = 'PagstractMessage';
-    
-    const PAGSTRACTTILE          = 'PagstractTile';
-    const PAGSTRACTTILEVARIABLE  = 'PagstractTileVariable';
-    
-    const PAGSTRACTBEAN          = 'PagstractBean';
-    const PAGSTRACTIFVISIBLE     = 'PagstractIfVisible';
-    
-    const PAGSTRACTLIST          = 'PagstractList';
-    const PAGSTRACTLISTHEADER    = 'PagstractListHeader';
-    const PAGSTRACTLISTFOOTER    = 'PagstractListFooter';
-    const PAGSTRACTLISTCONTENT   = 'PagstractListVontent';
-    const PAGSTRACTLISTNOCONTENT = 'PagstractListNoContent';
-    const PAGSTRACTLISTSEPERATOR = 'PagstractListSeperator';
-    const PAGSTRACTLISTEVEN      = 'PagstractListEven';
-    const PAGSTRACTLISTODD       = 'PagstractListOdd';
-    const PAGSTRACTLISTFIRST     = 'PagstractListFirst';
-    const PAGSTRACTLISTLAST      = 'PagstractListLast';
-    
-    const PAGSTRACTMODLIST       = 'PagstractModlist';
-    const PAGSTRACTMODSEPERATOR  = 'PagstractModseperator';
-    const PAGSTRACTMODCONTENT    = 'PagstractModcontent';
-    
-    const PAGSTRACTSWITCH        = 'PagstractSwitch';
-    const PAGSTRACTOBJECT        = 'PagstractObject';
-    const PAGSTRACTFORM          = 'PagstractForm';
+    const PAGSTRACTPROPERTYREFERENCE = 'PagstractPropertyReference'; // special '${...}' handling
+    const PAGSTRACTCOMMENT           = 'PagstractComment'; // special '<!--- ... -->' handling
+    const PAGSTRACTRESOURCE          = 'PagstractResource'; // special 'resource(_ext)://...' handling
+    const PAGSTRACTMESSAGE           = 'PagstractMessage'; // special 'msg://...' handling
 
-    const PAGSTRACTTESTIMG       = 'PagstractTextImg';
+    const PAGSTRACTSIMPLEVALUE       = 'PagstractSimpleValue'; // '<pma:value...'
     
-    const PAGSTRACTLINK          = 'PagstractLink';
-    const PAGSTRACTAREA          = 'PagstractArea';
-    const PAGSTRACTINPUT         = 'PagstractInput';
-    const PAGSTRACTSELECT        = 'PagstractSelect';
+    const PAGSTRACTTILE              = 'PagstractTile'; // '<pma:tile filename...'
+    const PAGSTRACTTILEVARIABLE      = 'PagstractTileVariable'; // '<pma:tileVariable>{...[json-data]...}</pma:tileVariable>'
+    
+    const PAGSTRACTBEAN              = 'PagstractBean'; // '<pma:bean...'
+    const PAGSTRACTIFVISIBLE         = 'PagstractIfVisible'; // '<pma:if-visible...'
+    
+    const PAGSTRACTLIST              = 'PagstractList'; // '<pma:list...'
+    const PAGSTRACTLISTHEADER        = 'PagstractListHeader'; // '<pma:header...'
+    const PAGSTRACTLISTFOOTER        = 'PagstractListFooter'; // '<pma:footer...'
+    const PAGSTRACTLISTCONTENT       = 'PagstractListContent'; // '<pma:content...'
+    const PAGSTRACTLISTNOCONTENT     = 'PagstractListNoContent'; // '<pma:no-content...'
+    const PAGSTRACTLISTSEPERATOR     = 'PagstractListSeperator'; // '<pma:seperator...'
+    const PAGSTRACTLISTEVEN          = 'PagstractListEven'; // '<pma:even...'
+    const PAGSTRACTLISTODD           = 'PagstractListOdd'; // '<pma:odd...'
+    const PAGSTRACTLISTFIRST         = 'PagstractListFirst'; // '<pma:first...'
+    const PAGSTRACTLISTLAST          = 'PagstractListLast'; // '<pma:last...'
+    
+    const PAGSTRACTMODLIST           = 'PagstractModList'; // '<pma:modList...'
+    const PAGSTRACTMODSEPERATOR      = 'PagstractModSeperator'; // '<pma:modSeperator...'
+    const PAGSTRACTMODCONTENT        = 'PagstractModContent'; // '<pma:modContent...'
+    
+    const PAGSTRACTSWITCH            = 'PagstractSwitch'; // '<pma:switch...'
+    const PAGSTRACTOBJECT            = 'PagstractObject'; // '<object pma:case...'
+    
+    const PAGSTRACTFORM              = 'PagstractForm'; // '<pma:form...'
 
-    const PAGSTRACTDEBUG         = 'PagstractDebug';
+    const PAGSTRACTTEXTIMG           = 'PagstractTextImg'; // '<pma:text-img...'
+    
+    const PAGSTRACTLINK              = 'PagstractLink'; // '<a pma:value...'
+    const PAGSTRACTAREA              = 'PagstractArea'; // '<area pma:value...'
+    const PAGSTRACTINPUT             = 'PagstractInput'; // '<input pma:value...'
+    const PAGSTRACTSELECT            = 'PagstractSelect'; // '<select pma:name...'
+
+    const PAGSTRACTDEBUG             = 'PagstractDebug'; // '<pma:debug...'
     
     /**
      * Will return the nesting depth of the token.

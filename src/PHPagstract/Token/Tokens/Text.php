@@ -20,7 +20,7 @@ class Text extends AbstractToken
 	 */
 	public static $matching = array(
 			"start" => "/^[^<]/", 
-			"end" => PHP_EOL
+			"end" => "<"
 	);
 	
 	/** @var string */
@@ -45,8 +45,8 @@ class Text extends AbstractToken
         if (preg_match("/(^\s)/", $html) === 1) {
             $startingWhitespace = ' ';
         }
-
-        $posOfNextElement = mb_strpos($html, '<');
+		$textEnd = (get_class($this))::$matching["end"];
+        $posOfNextElement = mb_strpos($html, $textEnd);
         if ($posOfNextElement === false) {
             $this->value = $startingWhitespace . trim($html);
 

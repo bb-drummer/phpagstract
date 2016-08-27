@@ -24,6 +24,9 @@ class PagstractComment extends PagstractAbstractToken
 			"end" => "-->"
 	);
 
+    /** @var boolean */
+    public static $nested = false;
+
     public function __construct(Token $parent = null, $throwOnError = false)
     {
         parent::__construct(Token::PAGSTRACTCOMMENT, $parent, $throwOnError);
@@ -50,7 +53,7 @@ class PagstractComment extends PagstractAbstractToken
             return '';
         }
 
-        $this->value = trim(mb_substr($html, 4, $posOfEndOfComment - 4));
+        $this->value = trim(mb_substr($html, 5, $posOfEndOfComment - 5));
 
         return mb_substr($html, $posOfEndOfComment + 3);
     }

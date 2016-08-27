@@ -14,19 +14,22 @@ use PHPagstract\Token\Exception\TokenizerException;
  * @license   http://www.apache.org/licenses/LICENSE-2.0 Apache License, Version 2.0
  * @copyright copyright (c) 2016 Björn Bartels <coding@bjoernbartels.earth>
  */
-class PagstractValue extends PagstractAbstractToken
+class PagstractPropertyReference extends PagstractAbstractToken
 {
 	/**
 	 * @var array the $matching
 	 */
 	public static $matching = array(
-			"start" => "/^\s*\$\{", 
+			"start" => "/([$][{])/i", 
 			"end" => "}"
 	);
 
+    /** @var boolean */
+    public static $nested = false;
+
     public function __construct(Token $parent = null, $throwOnError = false)
     {
-        parent::__construct(Token::PAGSTRACTVALUE, $parent, $throwOnError);
+        parent::__construct(Token::PAGSTRACTPROPERTYREFERENCE, null, $throwOnError);
 
         $this->value = null;
     }
@@ -35,6 +38,7 @@ class PagstractValue extends PagstractAbstractToken
     {
         $html = ltrim($html);
 
+        //echo '.pos. '.htmlentities(print_r($html, true)).' - '; flush();
         // Get token position.
         $positionArray = MarkupTokenizer::getPosition($html);
         $this->setLine($positionArray['line']);
@@ -42,6 +46,8 @@ class PagstractValue extends PagstractAbstractToken
 
         // Parse token.
         $posOfEndOfCData = mb_strpos($html, '}');
+        //echo '.pos. '.htmlentities(print_r($positionArray, true)).' - '; flush();
+        //echo '.pos. '.htmlentities(print_r($posOfEndOfCData, true)).' - '; flush();
         if ($posOfEndOfCData === false) {
             if ($this->getThrowOnError()) {
                 throw new TokenizerException('Invalid Property');
@@ -49,9 +55,11 @@ class PagstractValue extends PagstractAbstractToken
 
             return '';
         }
+		$propertyReference = mb_substr($html, 2, $posOfEndOfCData-2);
+        //echo '.pos. '.htmlentities(print_r($propertyReference, true)).' - '; flush();
+        $this->name = ($propertyReference);
+        $this->value = ($propertyReference);
 
-        $this->value = trim(mb_substr($html, 9, $posOfEndOfCData - 9));
-
-        return mb_substr($html, $posOfEndOfCData + 3);
+        return mb_substr($html, $posOfEndOfCData + 1);
     }
 }

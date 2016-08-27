@@ -19,19 +19,19 @@ class PagstractAbstractToken extends AbstractToken
     public static $nested = true;
 	
     /** @var array */
-    private $attributes;
+    protected $attributes;
 
     /** @var array[Token] */
-    private $children;
+    protected $children;
 
     /** @var string */
-    private $name;
+    protected $name;
 	
 	/** @var string */
-    private $value;
+    protected $value;
     
     /** @var array */
-    private $validTypes = array(
+    protected $validTypes = array(
         Token::CDATA,
         Token::COMMENT,
         Token::DOCTYPE,
@@ -41,15 +41,17 @@ class PagstractAbstractToken extends AbstractToken
 
         Token::CONTENIDO,
 
-        Token::PAGSTRACT,
+    	Token::PAGSTRACT,
+        Token::PAGSTRACTMARKUP, // any other markup than pagstract markup ('<pma:...', '<a pma:name...' etc)
+    		
+        Token::PAGSTRACTPROPERTYREFERENCE, // special '${...}' handling
+        Token::PAGSTRACTCOMMENT, // special '<!--- ... -->' handling
+        Token::PAGSTRACTRESOURCE, // special 'resource(_ext)://...' handling
+        Token::PAGSTRACTMESSAGE, // special 'msg://...' handling
+            
         Token::PAGSTRACTSIMPLEVALUE,
-            
-        Token::PAGSTRACTVALUE,
-        Token::PAGSTRACTCOMMENT,
-        Token::PAGSTRACTRESOURCE,
-        Token::PAGSTRACTMESSAGE,
-            
-        Token::PAGSTRACTTILE,
+    		
+    	Token::PAGSTRACTTILE,
         Token::PAGSTRACTTILEVARIABLE,
             
         Token::PAGSTRACTBEAN,
@@ -72,9 +74,10 @@ class PagstractAbstractToken extends AbstractToken
             
         Token::PAGSTRACTSWITCH,
         Token::PAGSTRACTOBJECT,
+    		
         Token::PAGSTRACTFORM,
             
-        Token::PAGSTRACTTESTIMG,
+        Token::PAGSTRACTTEXTIMG,
             
         Token::PAGSTRACTLINK,
         Token::PAGSTRACTAREA,
@@ -82,6 +85,7 @@ class PagstractAbstractToken extends AbstractToken
         Token::PAGSTRACTSELECT,
     		
         Token::PAGSTRACTDEBUG,
+    		
     );
 
     /**
@@ -207,13 +211,13 @@ class PagstractAbstractToken extends AbstractToken
         // Lets close those closed-only elements that are left open.
         $closedOnlyElements = array(
             'area',
-            'pma:debug'
+            'input'
         );
         if (array_search($this->name, $closedOnlyElements) !== false) {
             return $remainingHtml;
         }
 
-        if (!self::$nested) { 
+        if (!$this->nested()) { 
         	return $remainingHtml;
         }
         // Open element.
@@ -519,17 +523,19 @@ class PagstractAbstractToken extends AbstractToken
      */
     public function nested($nested = null)
     {
+    	$className = get_class($this);
     	if ($nested !== null) {
-    		self::$nested = !!$nested;
+    		$className::$nested = !!$nested;
     	}
-        return self::$nested;
+        return $className::$nested;
     }
 
     public function toArray()
     {
         $result = array(
             'type' => $this->getType(),
-            'name' => $this->name,
+            'name' => $this->getName(),
+            'value' => $this->getValue(),
             'line' => $this->getLine(),
             'position' => $this->getPosition()
         );

@@ -44,6 +44,10 @@ abstract class AbstractToken implements Token
 
     /**
      * Constructor
+     * 
+     * @param string $type
+     * @param Token $type
+     * @param boolean $type
      */
     public function __construct($type, Token $parent = null, $throwOnError = false)
     {
@@ -63,6 +67,11 @@ abstract class AbstractToken implements Token
         $this->type = $type;
     }
 
+    /**
+     * Getter for 'depth'.
+     * 
+     * @return int the $depth
+     */
     public function getDepth()
     {
         return $this->depth;
@@ -70,6 +79,8 @@ abstract class AbstractToken implements Token
 
     /**
      * Getter for 'line'.
+     * 
+     * @return int the $depth
      */
     public function getLine()
     {
@@ -78,6 +89,9 @@ abstract class AbstractToken implements Token
 
     /**
      * Chainable setter for 'line'.
+     * 
+     * @param int $line
+     * @return self
      */
     public function setLine($line)
     {
@@ -86,11 +100,22 @@ abstract class AbstractToken implements Token
         return $this;
     }
 
+    /**
+     * Check if current tag/token allows self-closing itself
+     * 
+     * @param string $html
+     * @return boolean
+     */
     public function isClosingElementImplied($html)
     {
         return false;
     }
 
+    /**
+     * Getter for 'parent'.
+     * 
+     * @return Token the $parent
+     */
     public function getParent()
     {
         return $this->parent;
@@ -98,6 +123,8 @@ abstract class AbstractToken implements Token
 
     /**
      * Getter for 'position'.
+     * 
+     * @return array the $depth
      */
     public function getPosition()
     {
@@ -106,6 +133,9 @@ abstract class AbstractToken implements Token
 
     /**
      * Chainable setter for 'position'.
+     * 
+     * @param int $position
+     * @return self
      */
     public function setPosition($position)
     {
@@ -134,46 +164,92 @@ abstract class AbstractToken implements Token
         return $this->type;
     }
 
+    /**
+     * Check for 'CDATA' type.
+     *
+     * @return boolean
+     */
     public function isCDATA()
     {
         return $this->type === Token::CDATA;
     }
 
+    /**
+     * Check for 'Comment' type.
+     *
+     * @return boolean
+     */
     public function isComment()
     {
         return $this->type === Token::COMMENT;
     }
 
+    /**
+     * Check for 'DocType' type.
+     *
+     * @return boolean
+     */
     public function isDocType()
     {
         return $this->type === Token::DOCTYPE;
     }
 
+    /**
+     * Check for 'Element' type.
+     *
+     * @return boolean
+     */
     public function isElement()
     {
         return $this->type === Token::ELEMENT;
     }
 
+    /**
+     * Check for 'Php' type.
+     *
+     * @return boolean
+     */
     public function isPhp()
     {
         return $this->type === Token::PHP;
     }
 
+    /**
+     * Check for 'Text' type.
+     *
+     * @return boolean
+     */
     public function isText()
     {
         return $this->type === Token::TEXT;
     }
 
+    /**
+     * Check for 'CDATA' type.
+     *
+     * @return boolean
+     */
     public function isPagstract()
     {
         return $this->type === Token::PAGSTRACT;
     }
 
+    /**
+     * Check for 'CDATA' type.
+     *
+     * @return boolean
+     */
     public function isContenido()
     {
         return $this->type === Token::CONTENIDO;
     }
 
+    /**
+     * Check for a valid given type.
+     *
+     * @param string
+     * @return boolean
+     */
     protected function isValidType($type)
     {
         return $type === Token::CDATA
