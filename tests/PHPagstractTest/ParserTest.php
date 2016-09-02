@@ -14,6 +14,7 @@ namespace PHPagstractTest;
 use PHPUnit_Framework_TestCase as TestCase;
 
 use \PHPagstract\Parser;
+use PHPagstract\Token\Tokens\TokenCollection;
 
 class ParserTest extends TestCase
 {
@@ -21,19 +22,27 @@ class ParserTest extends TestCase
     public function testInstanciateObject()
     {
     	try {
-    		$tpl = new Parser();
-    		$className = get_class($tpl);
+    		$parser = new Parser();
+    		$className = get_class($parser);
     	} catch (Exception $e) {
-    		$tpl = null;
+    		$parser = null;
     		$className = null;
     	}
 
-    	$this->assertNotNull($tpl);
+    	$this->assertNotNull($parser);
     	$this->assertNotNull($className);
     	
-		$mockPage = $this->createMock("\PHPagstract\Page");
-    	$this->assertInstanceOf("\PHPagstract\PageAbstract", $mockPage);
-    	$this->assertInstanceOf("\PHPagstract\Page", $mockPage);
+		$mockParser = $this->createMock("\PHPagstract\Parser");
+    	$this->assertInstanceOf("\PHPagstract\ParserAbstract", $mockParser);
+    	$this->assertInstanceOf("\PHPagstract\Parser", $mockParser);
+    }
+    
+    public function testParse () {
+    	$parser = new Parser();
+    	
+    	$compiled = $parser->parse('');
+    	
+    	$this->assertEquals($compiled, '');
     }
 
 }

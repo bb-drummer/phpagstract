@@ -16,6 +16,9 @@ class TokenFactoryTest extends \PHPUnit_Framework_TestCase
     {
         $result = Tokens\TokenFactory::buildFromHtml($html);
         $this->assertInstanceOf($expectedClassName, $result);
+        
+        // clean-up: re-init default tokenizer setup
+        new MarkupTokenizer();
     }
 
     /**
@@ -26,6 +29,9 @@ class TokenFactoryTest extends \PHPUnit_Framework_TestCase
         new PagstractTokenizer();
         $result = Tokens\TokenFactory::buildFromHtml($html);
         $this->assertInstanceOf($expectedClassName, $result);
+        
+        // clean-up: re-init default tokenizer setup
+        new MarkupTokenizer();
     }
 
     /**
@@ -38,11 +44,28 @@ class TokenFactoryTest extends \PHPUnit_Framework_TestCase
                 "end" => TokenFactory::$matchings["Text"]["end"]
         ));
         try {
-            $result = Tokens\TokenFactory::buildFromHtml($html);
+            $result = Tokens\TokenFactory::buildFromHtml($html, null, true);
         } catch (\Exception $e) {
             $this->assertInstanceOf('PHPagstract\Token\Exception\TokenFactoryException', $e);
-            $this->assertContains('No token class found', $e->getMessage());
+            //$this->assertContains('No token class found', $e->getMessage());
+            //$this->assertContains('Could not resolve token', $e->getMessage());
         }
+        
+        // clean-up: re-init default tokenizer setup
+        new MarkupTokenizer();
+    }
+
+    /**
+     * @dataProvider buildFromHtmlDataProvider
+     */
+    public function testBuildFromHtmlReturnsFalse($html, $expectedClassName)
+    {
+        TokenFactory::$matchings = array("UnknownToken" => array(
+                "start" => TokenFactory::$matchings["Text"]["start"],
+                "end" => TokenFactory::$matchings["Text"]["end"]
+        ));
+        $result = Tokens\TokenFactory::buildFromHtml($html);
+        $this->assertFalse($result);
         
         // clean-up: re-init default tokenizer setup
         new MarkupTokenizer();
@@ -58,6 +81,9 @@ class TokenFactoryTest extends \PHPUnit_Framework_TestCase
             $this->assertInstanceOf('PHPagstract\Token\Exception\TokenFactoryException', $e);
             $this->assertContains('Token has been registered already', $e->getMessage());
         }
+        
+        // clean-up: re-init default tokenizer setup
+        new MarkupTokenizer();
          
     }
 
@@ -71,6 +97,9 @@ class TokenFactoryTest extends \PHPUnit_Framework_TestCase
             $this->assertInstanceOf('PHPagstract\Token\Exception\TokenFactoryException', $e);
             $this->assertContains('Invalid token classname given', $e->getMessage());
         }
+        
+        // clean-up: re-init default tokenizer setup
+        new MarkupTokenizer();
 
     }
         
@@ -85,6 +114,9 @@ class TokenFactoryTest extends \PHPUnit_Framework_TestCase
             $this->assertContains('No token class found', $e->getMessage());
         }
         
+        // clean-up: re-init default tokenizer setup
+        new MarkupTokenizer();
+        
     }
         
     public function testRegisterMatchingExceptionNoMatchingFound() {
@@ -98,11 +130,12 @@ class TokenFactoryTest extends \PHPUnit_Framework_TestCase
             $this->assertContains('No matching found', $e->getMessage());
         }
         
+        // clean-up: re-init default tokenizer setup
+        new MarkupTokenizer();
+        
     }
 
     public function testRegisterMatchingExceptionNoTokenEndSequence() {
-        // re-init default tokenizer setup
-        new MarkupTokenizer();
              
         try {
             Tokens\TokenFactory::registerMatching("\StdClass", "/.*/i", "");
@@ -110,6 +143,9 @@ class TokenFactoryTest extends \PHPUnit_Framework_TestCase
             $this->assertInstanceOf('PHPagstract\Token\Exception\TokenFactoryException', $e);
             $this->assertContains('No token-end sequence given', $e->getMessage());
         }
+        
+        // clean-up: re-init default tokenizer setup
+        new MarkupTokenizer();
         
     }
 
@@ -127,8 +163,6 @@ class TokenFactoryTest extends \PHPUnit_Framework_TestCase
     }
 
     public function testGetMatchingFromTokenClassExceptionNoTokenClass() {
-        // re-init default tokenizer setup
-        new MarkupTokenizer();
              
         try {
             $matching = Tokens\TokenFactory::getTokenMatchingFromClass("UnknownToken");
@@ -136,6 +170,9 @@ class TokenFactoryTest extends \PHPUnit_Framework_TestCase
             $this->assertInstanceOf('PHPagstract\Token\Exception\TokenFactoryException', $e);
             $this->assertContains('No token class found', $e->getMessage());
         }
+        
+        // clean-up: re-init default tokenizer setup
+        new MarkupTokenizer();
         
     }
         
@@ -171,9 +208,6 @@ class TokenFactoryTest extends \PHPUnit_Framework_TestCase
                 'PHPagstract\Token\Tokens\Php'
             )
         );
-        
-        // re-init default tokenizer setup
-        new MarkupTokenizer();
     }
 
     public function buildFromHtmlPagstractDataProvider()
@@ -363,14 +397,15 @@ class TokenFactoryTest extends \PHPUnit_Framework_TestCase
             ),
             */
         );
-        
-        // re-init default tokenizer setup
-        new MarkupTokenizer();
     }
 
     public function testNoTypeFound()
     {
+        // re-init default tokenizer setup
+        new MarkupTokenizer();
+        
         $this->assertFalse(TokenFactory::buildFromHtml('< asdfasdf'));
+        
     }
 
     /**
@@ -378,6 +413,9 @@ class TokenFactoryTest extends \PHPUnit_Framework_TestCase
      */
     public function testExceptionInBuildFromHtml()
     {
+        // re-init default tokenizer setup
+        new MarkupTokenizer();
+        
         TokenFactory::buildFromHtml('< asdfasdf', null, true);
     }
 }

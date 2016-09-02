@@ -27,6 +27,12 @@ class PagstractComment extends PagstractAbstractToken
     /** @var boolean */
     public static $nested = false;
 
+	/**
+	 * token constructor
+	 * 
+	 * @param Token $parent
+	 * @param string $throwOnError
+	 */
     public function __construct(Token $parent = null, $throwOnError = false)
     {
         parent::__construct(Token::PAGSTRACTCOMMENT, $parent, $throwOnError);
@@ -34,6 +40,11 @@ class PagstractComment extends PagstractAbstractToken
         $this->value = null;
     }
 
+    /**
+     * parse for comment
+     * {@inheritDoc}
+     * @see \PHPagstract\Token\Tokens\PagstractAbstractToken::parse()
+     */
     public function parse($html)
     {
         $html = ltrim($html);

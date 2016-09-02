@@ -2,9 +2,7 @@
 
 namespace PHPagstract\Token\Tokens;
 
-use PHPagstract\Token\Exception\TokenizerException;
-use PHPagstract\Token\MarkupTokenizer;
-use PHPagstract\Token\Tokens\PagstractMarkup;
+use PHPagstract\Token\ResourceTokenizer;
 
 /**
  * PagstractSimpleValue 'pma:value' token object class
@@ -21,14 +19,17 @@ class PagstractResource extends PagstractAbstractToken
 	 * @var array the $matching
 	 */
 	public static $matching = array(
-			"start" => "/(resource_ext:\/\/|resource:\/\/)(.*)[\"|\'|\s|\n|\ ]/iU", 
+			"start" => "/((resource_ext:\/\/|resource:\/\/)(.*))[\"|\'|\s|\n|\ ]|((resource_ext:\/\/|resource:\/\/)(.*))$/iU", 
 			"end" => PHP_EOL
 	);
 
     /** @var boolean */
     public static $nested = false;
 	
-	/**
+    /** @var string */
+    private $type;
+
+    /**
 	 * token constructor
 	 * 
 	 * @param Token $parent
@@ -36,8 +37,9 @@ class PagstractResource extends PagstractAbstractToken
 	 */
     public function __construct(Token $parent = null, $throwOnError = false)
     {
-        parent::__construct(Token::PAGSTRACTMARKUP, $parent, $throwOnError);
+        parent::__construct(Token::PAGSTRACTRESOURCE, $parent, $throwOnError);
 
+        $this->type = "PagstractResource";
         $this->name = null;
         $this->value = null;
 
@@ -45,34 +47,38 @@ class PagstractResource extends PagstractAbstractToken
         $this->children = array();
     }
 
+    /**
+     * parse for resource references
+     * {@inheritDoc}
+     * @see \PHPagstract\Token\Tokens\PagstractAbstractToken::parse()
+     */
     public function parse($html)
     {
         $html = ltrim($html);
 
-        //echo '.pos. '.htmlentities(print_r($html, true)).' - '; flush();
         // Get token position.
-        $positionArray = MarkupTokenizer::getPosition($html);
+        $positionArray = ResourceTokenizer::getPosition($html);
         $this->setLine($positionArray['line']);
         $this->setPosition($positionArray['position']);
 
         $classname = get_class($this);
-        $match = preg_match($classname::$matching["start"], $html);
-        echo '<pre>'.htmlentities(print_r($match, true)).'</pre>';
-        
+        preg_match($classname::$matching["start"], $html, $match);
+          
         // Parse token.
-        $posOfEndOfCData = mb_strpos($html, '}');
-        //echo '.pos. '.htmlentities(print_r($positionArray, true)).' - '; flush();
-        //echo '.pos. '.htmlentities(print_r($posOfEndOfCData, true)).' - '; flush();
-        if ($posOfEndOfCData === false) {
-            if ($this->getThrowOnError()) {
-                throw new TokenizerException('Invalid Property');
-            }
+        $posOfBegin = mb_strpos($html, $match[0]);
+        $length = mb_strlen($match[0]);
+        $posOfEndOfCData = $posOfBegin + $length;
+        
+		$resourceReference = mb_substr($html, $posOfBegin, $length);
+		
+		if ( mb_strpos($resourceReference,'resource_ext') === false) {
+			$this->name = "resource";
+			$this->value = trim(trim(mb_substr($resourceReference, 11)), "\"'");
+		} else {
+			$this->name = "resource_ext";
+			$this->value = trim(trim(mb_substr($resourceReference, 15)), "\"'");
+		}
 
-            return '';
-        }
-		$propertyReference = mb_substr($html, 2, $posOfEndOfCData-2);
-        $this->value = ($propertyReference);
-
-        return mb_substr($html, $posOfEndOfCData + 1);
+        return mb_substr($html, $posOfEndOfCData);
     }
 }

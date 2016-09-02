@@ -2,10 +2,9 @@
 
 namespace PHPagstract\Token;
 
-use PHPagstract\Token\Tokens\TokenFactory;
-use PHPagstract\Token\Tokens\Element;
 use PHPagstract\Token\Tokens\Token;
-use PHPagstract\Token\Tokens\PagstractMarkup;
+use PHPagstract\Token\Tokens\TokenFactory;
+use PHPagstract\Token\MarkupTokenizer;
 
 /**
  * markup tokenizer object class
@@ -19,10 +18,10 @@ use PHPagstract\Token\Tokens\PagstractMarkup;
 class ResourceTokenizer extends MarkupTokenizer
 {
     /** @var boolean */
-    private $throwOnError;
+    protected $throwOnError;
 
     /** @var string */
-    private static $allHtml = '';
+    protected static $allHtml = '';
 
     /**
      * Constructor
@@ -31,13 +30,9 @@ class ResourceTokenizer extends MarkupTokenizer
     {
         $this->throwOnError = (boolean) $throwOnError;
 
-        //PagstractMarkup::$nested = false;
-        
         TokenFactory::clearMatchings();
         
-        TokenFactory::registerMatching("Text", "/^[^\$]/", '${');
-
         TokenFactory::registerMatching(Token::PAGSTRACTRESOURCE);
     }
-
+    
 }

@@ -2,6 +2,7 @@
 
 namespace PHPagstract\Token\Tokens;
 
+use PHPagstract\Token\Tokens\Token;
 use PHPagstract\Token\Exception\TokenFactoryException;
 
 /**
@@ -21,25 +22,41 @@ class TokenFactory
 	 */
 	public static $matchings = array();
 	
+	/**
+	 * build token (tree) from string
+	 * 
+	 * @param string $html
+	 * @param Token $parent
+	 * @param boolean $throwOnError
+	 * @throws TokenFactoryException
+	 * @return boolean|Token
+	 */
     public static function buildFromHtml($html, Token $parent = null, $throwOnError = false)
     {
         $matchCriteria = self::getMatchings();
+        $noMatchYet = true;
         foreach ($matchCriteria as $className => $regex) {
             if (preg_match($regex["start"], $html) === 1) {
+            	$noMatchYet = false;
                 $fullClassName = $className;
                 if (!class_exists($className)) {
                 	$fullClassName = "PHPagstract\\Token\\Tokens\\" . $className;
                 	if (!class_exists($fullClassName)) {
-                		throw new TokenFactoryException("No token class found for '.$className.'");
+                		if ($throwOnError) {
+                			throw new TokenFactoryException("No token class found for '.$className.'");
+                		} else {
+        					return false;
+                		}
                 	}
                 }
                 $fullClassName::$matching = $regex;
                 return new $fullClassName($parent, $throwOnError);
-            }
+            } 
         }
 
         // Error condition
         if ($throwOnError) {
+        	echo '<pre>'.htmlentities(print_r($html, true)).'</pre>'; flush();
             throw new TokenFactoryException("Could not resolve token");
         }
 
@@ -47,7 +64,7 @@ class TokenFactory
     }
     
 	/**
-	 * @return the $matchings
+	 * @return array the $matchings
 	 */
 	public static function getMatchings() {
 		return self::$matchings;

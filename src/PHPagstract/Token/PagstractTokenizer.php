@@ -18,10 +18,10 @@ use PHPagstract\Token\Tokens\PagstractMarkup;
 class PagstractTokenizer extends MarkupTokenizer
 {
     /** @var boolean */
-    private $throwOnError;
+    protected $throwOnError;
 
     /** @var string */
-    private static $allHtml = '';
+    protected static $allHtml = '';
 
     /**
      * Constructor

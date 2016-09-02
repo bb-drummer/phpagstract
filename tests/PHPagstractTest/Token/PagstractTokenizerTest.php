@@ -2,6 +2,7 @@
 
 namespace PHPagstractTest\Token;
 
+use PHPagstract\Token\MarkupTokenizer;
 use PHPagstract\Token\PagstractTokenizer;
 
 class PagstractTokenizerTest extends \PHPUnit_Framework_TestCase
@@ -21,6 +22,9 @@ class PagstractTokenizerTest extends \PHPUnit_Framework_TestCase
             $expectedTokenArray,
             $tokens->toArray()
         );
+        
+        // clean-up: re-init default tokenizer setup
+        new MarkupTokenizer();
     }
 
     public function parseDataProvider()
@@ -111,6 +115,9 @@ class PagstractTokenizerTest extends \PHPUnit_Framework_TestCase
         $positionArray = PagstractTokenizer::getPosition($partialHtml);
         $this->assertEquals($expectedLine, $positionArray['line']);
         $this->assertEquals($expectedPosition, $positionArray['position']);
+        
+        // clean-up: re-init default tokenizer setup
+        new MarkupTokenizer();
     }
 
     public function getPositionDataProvider()

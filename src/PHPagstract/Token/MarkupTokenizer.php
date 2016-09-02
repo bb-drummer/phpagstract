@@ -18,10 +18,10 @@ use PHPagstract\Token\Tokens\Element;
 class MarkupTokenizer
 {
     /** @var boolean */
-    private $throwOnError;
+    protected $throwOnError;
 
     /** @var string */
-    private static $allHtml = '';
+    protected static $allHtml = '';
 
     /**
      * Constructor

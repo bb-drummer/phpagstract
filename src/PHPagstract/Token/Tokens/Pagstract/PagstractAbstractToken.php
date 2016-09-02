@@ -44,7 +44,6 @@ class PagstractAbstractToken extends AbstractToken
     	Token::PAGSTRACT,
         Token::PAGSTRACTMARKUP, // any other markup than pagstract markup ('<pma:...', '<a pma:name...' etc)
     		
-        Token::PAGSTRACTPROPERTYREFERENCE, // special '${...}' handling
         Token::PAGSTRACTCOMMENT, // special '<!--- ... -->' handling
         Token::PAGSTRACTRESOURCE, // special 'resource(_ext)://...' handling
         Token::PAGSTRACTMESSAGE, // special 'msg://...' handling
@@ -85,9 +84,24 @@ class PagstractAbstractToken extends AbstractToken
         Token::PAGSTRACTSELECT,
     		
         Token::PAGSTRACTDEBUG,
-    		
+
+    	Token::PAGSTRACTPROPERTYREFERENCE, // special '${...}' handling
+        Token::PAGSTRACTPROPERTYREFERENCETEXT, // every other text around a '${...}'
     );
 
+    /**
+     * Constructor
+     *
+     * @param string $type
+     * @param Token $type
+     * @param boolean $type
+     */
+    public function __construct($type, Token $parent = null, $throwOnError = false)
+    {
+    	parent::__construct($type, $parent, $throwOnError);
+        $this->throwOnError = (boolean) $throwOnError;
+    }
+    
     /**
      * Does the parent have an implied closing tag?
      *
@@ -194,7 +208,7 @@ class PagstractAbstractToken extends AbstractToken
         $posOfClosingBracket = mb_strpos($remainingHtml, '>');
         if ($posOfClosingBracket === false) {
             if ($this->getThrowOnError()) {
-                throw new TokenizerException('Invalid element: missing closing bracket.');
+                throw new TokenizerException('Invalid element: missing closing bracket in line: '.$this->getLine().', position: '.$this->getPosition().'');
             }
 
             return '';
@@ -258,7 +272,7 @@ class PagstractAbstractToken extends AbstractToken
                 );
                 if ($valueMatchSuccessful !== 1) {
                     if ($this->getThrowOnError()) {
-                        throw new TokenizerException('Invalid value encapsulation.');
+                        throw new TokenizerException('Invalid value encapsulation in line: '.$this->getLine().', position: '.$this->getPosition().'.');
                     }
 
                     return '';
@@ -366,7 +380,8 @@ class PagstractAbstractToken extends AbstractToken
     private function parseElementName($html)
     {
         $elementMatchSuccessful = preg_match(
-            "/^(<(([a-z0-9\-]+:)?[a-z0-9\-]+))/i",
+            "/(<([\/]?)(([a-z0-9\-]+:)?[a-z0-9\-]+))/i",
+            //"/(<(([a-z0-9\-]+:)?[a-z0-9\-]+))/i",
             $html,
             $elementMatches
         );
@@ -377,8 +392,11 @@ class PagstractAbstractToken extends AbstractToken
 
             return '';
         }
-
-        return mb_strtolower($elementMatches[2]);
+        
+        if (!empty($elementMatches[2])) {
+        	return '';
+        }
+        return mb_strtolower($elementMatches[3]);
     }
 
     /**
@@ -557,6 +575,11 @@ class PagstractAbstractToken extends AbstractToken
         return $result;
     }
 
+    /**
+     * check for valid type
+     * {@inheritDoc}
+     * @see \PHPagstract\Token\Tokens\AbstractToken::isValidType()
+     */
     protected function isValidType($type)
     {
         return (in_array($type, $this->validTypes));

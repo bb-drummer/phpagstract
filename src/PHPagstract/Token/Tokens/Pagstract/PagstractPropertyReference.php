@@ -27,13 +27,25 @@ class PagstractPropertyReference extends PagstractAbstractToken
     /** @var boolean */
     public static $nested = false;
 
+	/**
+	 * token constructor
+	 * 
+	 * @param Token $parent
+	 * @param string $throwOnError
+	 */
     public function __construct(Token $parent = null, $throwOnError = false)
     {
         parent::__construct(Token::PAGSTRACTPROPERTYREFERENCE, null, $throwOnError);
+        $this->throwOnError = (boolean) $throwOnError;
 
         $this->value = null;
     }
 
+    /**
+     * parse for property reference
+     * {@inheritDoc}
+     * @see \PHPagstract\Token\Tokens\PagstractAbstractToken::parse()
+     */
     public function parse($html)
     {
         $html = ltrim($html);
@@ -45,9 +57,9 @@ class PagstractPropertyReference extends PagstractAbstractToken
 
         // Parse token.
         $posOfEndOfCData = mb_strpos($html, '}');
-        if ($posOfEndOfCData === false) {
+        if ($posOfEndOfCData == false) {
             if ($this->getThrowOnError()) {
-                throw new TokenizerException('Invalid Property');
+                throw new TokenizerException('Invalid Property in line: '.$this->getLine().', position: '.$this->getPosition().'');
             }
 
             return '';

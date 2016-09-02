@@ -25,7 +25,6 @@ interface Token
     const PAGSTRACT                  = 'Pagstract';
     const PAGSTRACTMARKUP            = 'PagstractMarkup'; // any other markup than pagstract markup ('<pma:...', '<a pma:name...' etc)
 
-    const PAGSTRACTPROPERTYREFERENCE = 'PagstractPropertyReference'; // special '${...}' handling
     const PAGSTRACTCOMMENT           = 'PagstractComment'; // special '<!--- ... -->' handling
     const PAGSTRACTRESOURCE          = 'PagstractResource'; // special 'resource(_ext)://...' handling
     const PAGSTRACTMESSAGE           = 'PagstractMessage'; // special 'msg://...' handling
@@ -67,6 +66,8 @@ interface Token
 
     const PAGSTRACTDEBUG             = 'PagstractDebug'; // '<pma:debug...'
     
+    const PAGSTRACTPROPERTYREFERENCE     = 'PagstractPropertyReference'; // special '${...}' handling
+    const PAGSTRACTPROPERTYREFERENCETEXT = 'PagstractPropertyReferenceText'; // every other text around a '${...}'
     /**
      * Will return the nesting depth of the token.
      *

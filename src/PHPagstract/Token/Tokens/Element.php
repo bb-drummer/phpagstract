@@ -144,8 +144,8 @@ class Element extends AbstractToken
 
         // Parse attributes.
         $remainingHtml = mb_substr($html, mb_strlen($this->name) + 1);
-        $endSequence = "/^\s*[\/]?".self::$matching["end"]."/";
-        while (mb_strpos($remainingHtml, self::$matching["end"]) !== false && preg_match($endSequence, $remainingHtml) === 0) {
+        $endSequence = "/^\s*[\/]?>/";
+        while (mb_strpos($remainingHtml, '>') !== false && preg_match("/^\s*[\/]?>/", $remainingHtml) === 0) {
             $remainingHtml = $this->parseAttribute($remainingHtml);
         }
 
