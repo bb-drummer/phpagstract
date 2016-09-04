@@ -28,6 +28,6 @@
     "psr-0" : {
       "Profiler" : [ "./src/" ]
     },
-    "classmap" : [ "./src/" ]
+    "classmap" : [ "./src/","./tests/" ]
   }
 }

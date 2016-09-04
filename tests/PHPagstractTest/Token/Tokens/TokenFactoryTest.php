@@ -47,8 +47,6 @@ class TokenFactoryTest extends \PHPUnit_Framework_TestCase
             $result = Tokens\TokenFactory::buildFromHtml($html, null, true);
         } catch (\Exception $e) {
             $this->assertInstanceOf('PHPagstract\Token\Exception\TokenFactoryException', $e);
-            //$this->assertContains('No token class found', $e->getMessage());
-            //$this->assertContains('Could not resolve token', $e->getMessage());
         }
         
         // clean-up: re-init default tokenizer setup
