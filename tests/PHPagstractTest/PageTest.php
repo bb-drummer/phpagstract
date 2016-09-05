@@ -22,19 +22,32 @@ class PageTest extends TestCase
     public function testInstantiateObject()
     {
     	try {
-    		$tpl = new Page();
-    		$className = get_class($tpl);
+    		$page = new Page();
+    		$className = get_class($page);
     	} catch (Exception $e) {
-    		$tpl = null;
+    		$page = null;
     		$className = null;
     	}
 
-    	$this->assertNotNull($tpl);
+    	$this->assertNotNull($page);
     	$this->assertNotNull($className);
     	
 		$mockPage = $this->createMock("\PHPagstract\Page");
     	$this->assertInstanceOf("\PHPagstract\PageAbstract", $mockPage);
     	$this->assertInstanceOf("\PHPagstract\Page", $mockPage);
+    }
+    
+    public function testSetGetParser() {
+    	$page = new Page();
+    	$resolver = $this->createMock('PHPagstract\\Symbol\\SymbolResolver');
+    	$tokenizer = $this->createMock('PHPagstract\Token\AbstractTokenizer');
+
+    	$parser  = $this->getMockForAbstractClass('PHPagstract\\ParserAbstract', array($tokenizer, $resolver));
+    	$page->setParser($parser);
+    	$testParser = $page->getParser();
+
+    	$this->assertInstanceOf('PHPagstract\\ParserAbstract', $testParser);
+    	$this->assertEquals($parser, $testParser);
     }
 
 }

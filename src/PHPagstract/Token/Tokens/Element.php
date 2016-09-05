@@ -330,7 +330,7 @@ class Element extends AbstractToken
     /**
      * Will get the element name from the html string.
      *
-     * @param $html string
+     * @param string $html 
      *
      * @return string The element name.
      */
@@ -355,8 +355,8 @@ class Element extends AbstractToken
     /**
      * Will parse the script and style contents correctly.
      *
-     * @param $tag  string
-     * @param $html string
+     * @param string $tag
+     * @param string $html
      *
      * @return string The remaining HTML.
      */
@@ -405,8 +405,8 @@ class Element extends AbstractToken
      *
      * "iframe" elements.
      *
-     * @param $tag  string
-     * @param $html string
+     * @param string $tag
+     * @param string $html
      *
      * @return string The remaining HTML.
      */

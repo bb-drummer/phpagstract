@@ -15,7 +15,7 @@ use PHPagstract\Token\Tokens\Element;
  * @license   http://www.apache.org/licenses/LICENSE-2.0 Apache License, Version 2.0
  * @copyright copyright (c) 2016 Björn Bartels <coding@bjoernbartels.earth>
  */
-class MarkupTokenizer
+class MarkupTokenizer extends AbstractTokenizer
 {
     /** @var boolean */
     protected $throwOnError;
@@ -70,6 +70,12 @@ class MarkupTokenizer
         return $tokens;
     }
 
+    /**
+     * get position array (line, position)
+     * 
+     * @param string $partialHtml
+     * @return array
+     */
     public static function getPosition($partialHtml)
     {
         $position = mb_strrpos(self::$allHtml, $partialHtml);
