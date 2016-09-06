@@ -13,7 +13,8 @@ use PHPagstract\ParserAbstract;
  * @license   http://www.apache.org/licenses/LICENSE-2.0 Apache License, Version 2.0
  * @copyright copyright (c) 2016 Björn Bartels <coding@bjoernbartels.earth>
  */
-class Parser extends ParserAbstract {
-	
+class Parser extends ParserAbstract
+{
+    
 }
 

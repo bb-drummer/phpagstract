@@ -16,15 +16,17 @@ use PHPagstract\Token\Exception\TokenizerException;
  */
 class DocType extends AbstractToken
 {
-	/**
-	 * @var array the $matching
-	 */
-	public static $matching = array(
-			"start" => "/^\s*<!DOCTYPE /i", 
-			"end" => ">"
-	);
-	
-	/** @var string */
+    /**
+     * @var array the $matching
+     */
+    public static $matching = array(
+            "start" => "/^\s*<!DOCTYPE /i", 
+            "end" => ">"
+    );
+    
+    /**
+ * @var string 
+*/
     private $value;
 
     public function __construct(Token $parent = null, $throwOnError = false)

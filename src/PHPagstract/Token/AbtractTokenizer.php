@@ -16,32 +16,36 @@ use PHPagstract\Token\Tokens\TokenCollection;
 abstract class AbstractTokenizer
 {
 
-	/**
-	 */
-	public function __construct() {}
-	
-	/**
+    /**
+     */
+    public function __construct() 
+    {
+    }
+    
+    /**
      * Will parse html into tokens.
      *
      * @param $html string The HTML to tokenize.
      *
      * @return TokenCollection
      */
-	public function parse( $html ) { 
-		return ( (new TokenCollection()) ); 
-	}
-	
+    public function parse( $html ) 
+    { 
+        return ( (new TokenCollection()) ); 
+    }
+    
     /**
      * get position array (line, position)
      * 
-     * @param string $partialHtml
+     * @param  string $partialHtml
      * @return array
      */
-	public static function getPosition( $html ) { 
-		return array(
-			'line' => 0,
-			'position' => 0
-		);
-	}
-	
+    public static function getPosition( $html ) 
+    { 
+        return array(
+            'line' => 0,
+            'position' => 0
+        );
+    }
+    
 }

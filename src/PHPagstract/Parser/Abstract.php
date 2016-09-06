@@ -17,113 +17,138 @@ use PHPagstract\Token\Tokens\TokenCollection;
  * @license   http://www.apache.org/licenses/LICENSE-2.0 Apache License, Version 2.0
  * @copyright copyright (c) 2016 Björn Bartels <coding@bjoernbartels.earth>
  */
-abstract class ParserAbstract  {
+abstract class ParserAbstract
+{
   
-	/**
-	 * tokenizer container
-	 * @var AbstractTokenizer
-	 */
-	private $tokenizer = null;
-	
-	/**
-	 * symbol resolver container
-	 * @var PHPagstract\Symbol\SymbolResolver
-	 */
-	private $resolver = null;
-	
-	
-	/**
+    /** 
+     * throw exception on error?
+     *
+     * @var boolean 
+     */
+    public $throwOnError;
+    
+    /**
+     * tokenizer container
+     *
+     * @var AbstractTokenizer
+     */
+    private $tokenizer = null;
+    
+    /**
+     * symbol resolver container
+     *
+     * @var PHPagstract\Symbol\SymbolResolver
+     */
+    private $resolver = null;
+    
+    
+    /**
      * constructor
      */
-	public function __construct($tokenizer, $symbolResolver) {
-		
-		$this->setTokenizer($tokenizer);
-		
-		$this->setResolver($symbolResolver);
-		
-	}
-	
-	/**
-	 * parse the content
-	 * 
-	 * @param string $content
-	 */
-	public function parse ($content) {
-		
-		$tokens = $this->tokenize($content);
+    public function __construct($tokenizer, $symbolResolver, $throwOnError = false) 
+    {
+        
+        $this->throwOnError = !!$throwOnError;
+        
+        //$tokenizer->throwOnError = $throwOnError;
+        $this->setTokenizer($tokenizer);
 
-		$symbols = $this->symbolize($tokens);
-		
-		$compiled = $this->compile($symbols);
-		
-		return $compiled;
-	}
-	
-	/**
-	 * parse the content
-	 * 
-	 * @param SymbolCollection $symbols
-	 */
-	public function compile (SymbolCollection $symbols) {
-		$compiled = '';
-		return $compiled;
-	}
-	
-	/**
-	 * parse the content
-	 * 
-	 * @param string $content
-	 * @return TokenCollection
-	 */
-	public function tokenize ($content) {
-		$tokenizer = $this->getTokenizer();
-		$tokens = $tokenizer->parse($content);
-		
-		return $tokens;
-	}
-	
-	/**
-	 * map the tokens to symbols
-	 * 
-	 * @param TokenCollection $tokens
-	 * @return SymbolCollection
-	 */
-	public function symbolize($tokens) {
-		$symbolResolver = new SymbolResolver();
-		$symbolTree = new SymbolCollection();
-		
-		return $symbolTree;
-	}
+        //$symbolResolver->throwOnError = $throwOnError;
+        $this->setResolver($symbolResolver);
+        
+    }
+    
+    /**
+     * parse the content
+     * 
+     * @param string $content
+     */
+    public function parse($content) 
+    {
+        
+        $tokens = $this->tokenize($content);
 
-	/**
-	 * @return AbstractTokenizer
-	 */
-	public function getTokenizer() {
-		return $this->tokenizer;
-	}
+        $symbols = $this->symbolize($tokens);
+        
+        $compiled = $this->compile($symbols);
+        
+        return $compiled;
+    }
+    
+    /**
+     * parse the content
+     * 
+     * @param SymbolCollection $symbols
+     */
+    public function compile(SymbolCollection $symbols) 
+    {
+        $compiled = '';
+        return $compiled;
+    }
+    
+    /**
+     * parse the content
+     * 
+     * @param  string $content
+     * @return TokenCollection
+     */
+    public function tokenize($content) 
+    {
+        $tokenizer = $this->getTokenizer();
+        $tokens = $tokenizer->parse($content);
+        
+        return $tokens;
+    }
+    
+    /**
+     * map the tokens to symbols
+     * 
+     * @param  TokenCollection $tokens
+     * @return SymbolCollection
+     */
+    public function symbolize($tokens) 
+    {
+        $symbolResolver = new SymbolResolver($this->throwOnError);
+        $symbolTree = new SymbolCollection();
+        if ($tokens) {
+            $symbolTree = $symbolResolver->resolve($tokens);
+        }
+        return $symbolTree;
+    }
 
-	/**
-	 * @param \PHPagstract\PHPagstract\Parser $parser
-	 */
-	public function setTokenizer($tokenizer) {
-		$this->tokenizer = $tokenizer;
-	}
+    /**
+     * @return AbstractTokenizer
+     */
+    public function getTokenizer() 
+    {
+        return $this->tokenizer;
+    }
 
-	/**
-	 * @return the $resolver
-	 */
-	public function getResolver() {
-		return $this->resolver;
-	}
+    /**
+     * @param \PHPagstract\PHPagstract\Parser $parser
+     */
+    public function setTokenizer($tokenizer) 
+    {
+        $this->tokenizer = $tokenizer;
+    }
 
-	/**
-	 * @param \PHPagstract\PHPagstract\Symbol\SymbolResolver $resolver
-	 */
-	public function setResolver($resolver) {
-		$this->resolver = $resolver;
-	}
+    /**
+     * @return the $resolver
+     */
+    public function getResolver() 
+    {
+        return $this->resolver;
+    }
 
-	
-	
+    /**
+     * @param \PHPagstract\PHPagstract\Symbol\SymbolResolver $resolver
+     */
+    public function setResolver($resolver) 
+    {
+        $this->resolver = $resolver;
+    }
+
+    
+    
 }
 

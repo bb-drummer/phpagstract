@@ -13,23 +13,25 @@ namespace PHPagstract\Token\Tokens;
  */
 class PagstractListContent extends PagstractAbstractToken
 {
-	/**
-	 * @var array the $matching
-	 */
-	public static $matching = array(
-			"start" => "/^\s*<pma:content/i", 
-			"end" => ">"
-	);
+    /**
+     * @var array the $matching
+     */
+    public static $matching = array(
+            "start" => "/^\s*<pma:content/i", 
+            "end" => ">"
+    );
 
-    /** @var boolean */
+    /**
+ * @var boolean 
+*/
     public static $nested = true;
-	
-	/**
-	 * token constructor
-	 * 
-	 * @param Token $parent
-	 * @param string $throwOnError
-	 */
+    
+    /**
+     * token constructor
+     * 
+     * @param Token  $parent
+     * @param string $throwOnError
+     */
     public function __construct(Token $parent = null, $throwOnError = false)
     {
         parent::__construct(Token::PAGSTRACTLISTCONTENT, $parent, $throwOnError);

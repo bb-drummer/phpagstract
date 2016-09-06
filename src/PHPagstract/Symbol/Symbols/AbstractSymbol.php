@@ -15,35 +15,52 @@ use PHPagstract\Token\Tokens\Token;
  */
 abstract class AbstractSymbol implements Symbol
 {
-	
-	/**
-	 * token container/reference
-	 * @var Token
-	 */
-	private $token = null;
+    
+    /**
+     * token container/reference
+     *
+     * @var Token
+     */
+    private $token = null;
 
-	/**
-	 * convert symbol data to array
-	 * @return array
-	 */
-	public function toArray() {
-		return array();
-	}
+    /**
+     * convert symbol to string representation
+     *
+     * @return array
+     */
+    public function toString() 
+    {
+        return '';
+    }
 
-	/**
-	 * get the token
-	 * @return Token
-	 */
-	public function getToken() {
-		return $this->token;
-	}
-	
-	/**
-	 * set the token
-	 * @param Token $token
-	 */
-	public function setToken(Token $token) {
-		$this->token = $token;
-	}
-	
+    /**
+     * convert symbol data to array
+     *
+     * @return array
+     */
+    public function toArray() 
+    {
+        return array();
+    }
+
+    /**
+     * get the token
+     *
+     * @return Token
+     */
+    public function getToken() 
+    {
+        return $this->token;
+    }
+    
+    /**
+     * set the token
+     *
+     * @param Token $token
+     */
+    public function setToken(Token $token) 
+    {
+        $this->token = $token;
+    }
+    
 }

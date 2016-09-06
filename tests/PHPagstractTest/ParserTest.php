@@ -19,6 +19,7 @@ use PHPagstract\Token\AbstractTokenizer;
 use PHPagstract\Symbol\Symbols\SymbolCollection;
 use PHPagstract\Symbol\SymbolResolver;
 use PHPagstract\ParserAbstract;
+use PHPagstract\Symbol\Exception\SymbolException;
 
 class ParserTest extends TestCase
 {
@@ -48,14 +49,45 @@ class ParserTest extends TestCase
     	$tokens = $parser->tokenize('');
 
     	$this->assertInstanceOf('PHPagstract\Token\Tokens\TokenCollection', $tokens);
+    	$this->assertEquals( 0, $tokens->count() );
     }
     
     public function testSymbolize () {
-    	$parser = $this->getParser();
-    	$mockTokens = $this->createMock('PHPagstract\Token\Tokens\TokenCollection');
-    	$symbols = $parser->symbolize($mockTokens);
+    	$parser = $this->getParser(true);
+    	$mockToken = $this->createMock('PHPagstract\\Token\\Tokens\\AbstractToken');
+    	$tokens = new TokenCollection();
+    	$tokens[] = $mockToken; 
+    	$symbols = $parser->symbolize($tokens);
 
     	$this->assertInstanceOf('PHPagstract\Symbol\Symbols\SymbolCollection', $symbols);
+    	$this->assertEquals( 1, $symbols->count() );
+    }
+    
+    public function testSymbolizeStopsOnError () {
+    	
+    	$parser = $this->getParser();
+    	$mockToken = $this->createMock('PHPagstract\\Token\\Tokens\\AbstractToken');
+    	$mockToken->type='blah';
+    	$tokens = new TokenCollection();
+    	$tokens[] = $mockToken; 
+    	$symbols = $parser->symbolize($tokens);
+
+    	$this->assertInstanceOf('PHPagstract\Symbol\Symbols\SymbolCollection', $symbols);
+    	$this->assertEquals( 0, $symbols->count() );
+    }
+    
+    /**
+     * @expectedException PHPagstract\Symbol\Exception\SymbolException
+     */
+    public function testSymbolizeThrowsException () {
+    	
+    	$parser = $this->getParser(true);
+    	$mockToken = $this->createMock('PHPagstract\\Token\\Tokens\\AbstractToken');
+    	$mockToken->type='blah';
+    	$tokens = new TokenCollection();
+    	$tokens[] = $mockToken; 
+    	$symbols = $parser->symbolize($tokens);
+    	
     }
     
     public function testParse () {
@@ -80,7 +112,7 @@ class ParserTest extends TestCase
      * create a parser object
      * @return ParserAbstract
      */
-    private function getParser() {
+    private function getParser($throwOnError = false) {
     	$mockTokens    = $this->createMock('PHPagstract\Token\Tokens\TokenCollection');
     	$mockTokenizer = $this->createMock('PHPagstract\Token\AbstractTokenizer');
     	$mockTokenizer
@@ -92,7 +124,7 @@ class ParserTest extends TestCase
     		->method('parse')
     		->willReturn($mockTokens);*/
     	
-    	$parser = new Parser( $mockTokenizer, $mockResolver );
+    	$parser = new Parser( $mockTokenizer, $mockResolver, !!$throwOnError );
     	
     	return $parser;
     }

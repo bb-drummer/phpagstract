@@ -17,24 +17,32 @@ use phpDocumentor\Reflection\Types\Boolean;
  */
 class Element extends AbstractToken
 {
-	/**
-	 * @var array the $matching
-	 */
-	public static $matching = array(
-			"start" => "/^\s*<[a-z]/i", 
-			"end" => ">"
-	);
-	
-	/** @var array */
+    /**
+     * @var array the $matching
+     */
+    public static $matching = array(
+            "start" => "/^\s*<[a-z]/i", 
+            "end" => ">"
+    );
+    
+    /**
+ * @var array 
+*/
     private $attributes;
 
-    /** @var array[Token] */
+    /**
+ * @var array[Token] 
+*/
     private $children;
 
-    /** @var string */
+    /**
+ * @var string 
+*/
     private $name;
 
-    /** @var boolean */
+    /**
+ * @var boolean 
+*/
     //public static $nested = true;
 
     public function __construct(Token $parent = null, $throwOnError = false)

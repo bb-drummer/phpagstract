@@ -15,22 +15,22 @@ use PHPagstract\Token\PropertyReferenceTokenizer;
  */
 class PagstractPropertyReferenceText extends PagstractAbstractToken
 {
-	/**
-	 * @var array the $matching
-	 */
-	public static $matching = array(
-			"start" => "/^[^\$]/", 
-			"end" => '${'
-	);
-	
-	/**
-	 * token constructor
-	 * 
-	 * @param Token $parent
-	 * @param string $throwOnError
-	 * @param string $forcedValue
-	 */
-	public function __construct(Token $parent = null, $throwOnError = false, $forcedValue = null)
+    /**
+     * @var array the $matching
+     */
+    public static $matching = array(
+            "start" => "/^[^\$]/", 
+            "end" => '${'
+    );
+    
+    /**
+     * token constructor
+     * 
+     * @param Token  $parent
+     * @param string $throwOnError
+     * @param string $forcedValue
+     */
+    public function __construct(Token $parent = null, $throwOnError = false, $forcedValue = null)
     {
         parent::__construct(Token::PAGSTRACTPROPERTYREFERENCETEXT, $parent, $throwOnError);
 
@@ -40,6 +40,7 @@ class PagstractPropertyReferenceText extends PagstractAbstractToken
     /**
      * parse for everything that is not a property reference
      * {@inheritDoc}
+     *
      * @see \PHPagstract\Token\Tokens\PagstractAbstractToken::parse()
      */
     public function parse($html)
@@ -94,6 +95,7 @@ class PagstractPropertyReferenceText extends PagstractAbstractToken
     /**
      * export token data 
      * {@inheritDoc}
+     *
      * @see \PHPagstract\Token\Tokens\PagstractAbstractToken::toArray()
      */
     public function toArray()

@@ -16,22 +16,32 @@ use PHPagstract\Token\Tokens\Token;
 interface Symbol
 {
 
-	/**
-	 * convert symbol data to array
-	 * @return array
-	 */
-	public function toArray();
+    /**
+     * convert symbol to string representation
+     *
+     * @return string
+     */
+    public function toString();
+    
+    /**
+     * convert symbol data to array
+     *
+     * @return array
+     */
+    public function toArray();
 
-	/**
-	 * get the token
-	 * @return Token
-	 */
-	public function getToken();
-	
-	/**
-	 * set the token
-	 * @param Token $token
-	 */
-	public function setToken(Token $token);
-	
+    /**
+     * get the token
+     *
+     * @return Token
+     */
+    public function getToken();
+    
+    /**
+     * set the token
+     *
+     * @param Token $token
+     */
+    public function setToken(Token $token);
+    
 }

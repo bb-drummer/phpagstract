@@ -13,40 +13,54 @@ namespace PHPagstract\Token\Tokens;
  */
 abstract class AbstractToken implements Token
 {
-	/**
-	 * @var array the $matching
-	 */
-	public static $matching = array(
-			"start" => "/^\s*<[a-z]/i", 
-			"end" => ">"
-	);
+    /**
+     * @var array the $matching
+     */
+    public static $matching = array(
+            "start" => "/^\s*<[a-z]/i", 
+            "end" => ">"
+    );
 
-    /** @var boolean */
+    /**
+ * @var boolean 
+*/
     public static $nested = false;
-	
-	/** @var int */
+    
+    /**
+ * @var int 
+*/
     private $depth;
 
-    /** @var int */
+    /**
+ * @var int 
+*/
     private $line;
 
-    /** @var null|Token */
+    /**
+ * @var null|Token 
+*/
     private $parent;
 
-    /** @var int */
+    /**
+ * @var int 
+*/
     private $position;
 
-    /** @var boolean */
+    /**
+ * @var boolean 
+*/
     private $throwOnError;
 
-    /** @var string */
+    /**
+ * @var string 
+*/
     private $type;
 
     /**
      * Constructor
      * 
-     * @param string $type
-     * @param Token $type
+     * @param string  $type
+     * @param Token   $type
      * @param boolean $type
      */
     public function __construct($type, Token $parent = null, $throwOnError = false)
@@ -90,7 +104,7 @@ abstract class AbstractToken implements Token
     /**
      * Chainable setter for 'line'.
      * 
-     * @param int $line
+     * @param  int $line
      * @return self
      */
     public function setLine($line)
@@ -103,7 +117,7 @@ abstract class AbstractToken implements Token
     /**
      * Check if current tag/token allows self-closing itself
      * 
-     * @param string $html
+     * @param  string $html
      * @return boolean
      */
     public function isClosingElementImplied($html)
@@ -134,7 +148,7 @@ abstract class AbstractToken implements Token
     /**
      * Chainable setter for 'position'.
      * 
-     * @param int $position
+     * @param  int $position
      * @return self
      */
     public function setPosition($position)
@@ -237,7 +251,7 @@ abstract class AbstractToken implements Token
     /**
      * Check for a valid given type.
      *
-     * @param string
+     * @param  string
      * @return boolean
      */
     protected function isValidType($type)

@@ -16,15 +16,17 @@ use PHPagstract\Token\Exception\TokenizerException;
  */
 class CData extends AbstractToken
 {
-	/**
-	 * @var array the $matching
-	 */
-	public static $matching = array(
-			"start" => "/^\s*<!\[CDATA\[/", 
-			"end" => "]]>"
-	);
-	
-	/** @var string */
+    /**
+     * @var array the $matching
+     */
+    public static $matching = array(
+            "start" => "/^\s*<!\[CDATA\[/", 
+            "end" => "]]>"
+    );
+    
+    /**
+ * @var string 
+*/
     private $value;
 
     public function __construct(Token $parent = null, $throwOnError = false)

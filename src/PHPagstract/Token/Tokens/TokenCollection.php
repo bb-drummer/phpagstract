@@ -14,7 +14,9 @@ namespace PHPagstract\Token\Tokens;
  */
 class TokenCollection implements \ArrayAccess, \IteratorAggregate
 {
-    /** @var array[Token] */
+    /**
+ * @var array[Token] 
+*/
     private $tokens;
 
     /**

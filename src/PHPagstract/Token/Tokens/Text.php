@@ -15,15 +15,17 @@ use PHPagstract\Token\MarkupTokenizer;
  */
 class Text extends AbstractToken
 {
-	/**
-	 * @var array the $matching
-	 */
-	public static $matching = array(
-			"start" => "/^[^<]/", 
-			"end" => "<"
-	);
-	
-	/** @var string */
+    /**
+     * @var array the $matching
+     */
+    public static $matching = array(
+            "start" => "/^[^<]/", 
+            "end" => "<"
+    );
+    
+    /**
+ * @var string 
+*/
     private $value;
 
     public function __construct(Token $parent = null, $throwOnError = false, $forcedValue = null)

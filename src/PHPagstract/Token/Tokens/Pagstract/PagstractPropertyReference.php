@@ -16,23 +16,25 @@ use PHPagstract\Token\Exception\TokenizerException;
  */
 class PagstractPropertyReference extends PagstractAbstractToken
 {
-	/**
-	 * @var array the $matching
-	 */
-	public static $matching = array(
-			"start" => "/([$][{])/i", 
-			"end" => "}"
-	);
+    /**
+     * @var array the $matching
+     */
+    public static $matching = array(
+            "start" => "/([$][{])/i", 
+            "end" => "}"
+    );
 
-    /** @var boolean */
+    /**
+ * @var boolean 
+*/
     public static $nested = false;
 
-	/**
-	 * token constructor
-	 * 
-	 * @param Token $parent
-	 * @param string $throwOnError
-	 */
+    /**
+     * token constructor
+     * 
+     * @param Token  $parent
+     * @param string $throwOnError
+     */
     public function __construct(Token $parent = null, $throwOnError = false)
     {
         parent::__construct(Token::PAGSTRACTPROPERTYREFERENCE, null, $throwOnError);
@@ -44,6 +46,7 @@ class PagstractPropertyReference extends PagstractAbstractToken
     /**
      * parse for property reference
      * {@inheritDoc}
+     *
      * @see \PHPagstract\Token\Tokens\PagstractAbstractToken::parse()
      */
     public function parse($html)
@@ -64,7 +67,7 @@ class PagstractPropertyReference extends PagstractAbstractToken
 
             return '';
         }
-		$propertyReference = mb_substr($html, 2, $posOfEndOfCData-2);
+        $propertyReference = mb_substr($html, 2, $posOfEndOfCData-2);
         
         $this->name = ($propertyReference);
         $this->value = ($propertyReference);

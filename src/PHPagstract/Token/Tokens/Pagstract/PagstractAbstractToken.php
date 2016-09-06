@@ -7,30 +7,42 @@ use PHPagstract\Token\Exception\TokenizerException;
 
 class PagstractAbstractToken extends AbstractToken
 {
-	/**
-	 * @var array the $matching
-	 */
-	public static $matching = array(
-			"start" => "/^\s*<pma|^\s*<object |^\s*<a |^\s*<area |^\s*<input |^\s*<select /i", 
-			"end" => ">"
-	);
+    /**
+     * @var array the $matching
+     */
+    public static $matching = array(
+            "start" => "/^\s*<pma|^\s*<object |^\s*<a |^\s*<area |^\s*<input |^\s*<select /i", 
+            "end" => ">"
+    );
 
-    /** @var boolean */
+    /**
+ * @var boolean 
+*/
     public static $nested = true;
-	
-    /** @var array */
+    
+    /**
+ * @var array 
+*/
     protected $attributes;
 
-    /** @var array[Token] */
+    /**
+ * @var array[Token] 
+*/
     protected $children;
 
-    /** @var string */
+    /**
+ * @var string 
+*/
     protected $name;
-	
-	/** @var string */
+    
+    /**
+ * @var string 
+*/
     protected $value;
     
-    /** @var array */
+    /**
+ * @var array 
+*/
     protected $validTypes = array(
         Token::CDATA,
         Token::COMMENT,
@@ -41,16 +53,16 @@ class PagstractAbstractToken extends AbstractToken
 
         Token::CONTENIDO,
 
-    	Token::PAGSTRACT,
+        Token::PAGSTRACT,
         Token::PAGSTRACTMARKUP, // any other markup than pagstract markup ('<pma:...', '<a pma:name...' etc)
-    		
+            
         Token::PAGSTRACTCOMMENT, // special '<!--- ... -->' handling
         Token::PAGSTRACTRESOURCE, // special 'resource(_ext)://...' handling
         Token::PAGSTRACTMESSAGE, // special 'msg://...' handling
             
         Token::PAGSTRACTSIMPLEVALUE,
-    		
-    	Token::PAGSTRACTTILE,
+            
+        Token::PAGSTRACTTILE,
         Token::PAGSTRACTTILEVARIABLE,
             
         Token::PAGSTRACTBEAN,
@@ -73,7 +85,7 @@ class PagstractAbstractToken extends AbstractToken
             
         Token::PAGSTRACTSWITCH,
         Token::PAGSTRACTOBJECT,
-    		
+            
         Token::PAGSTRACTFORM,
             
         Token::PAGSTRACTTEXTIMG,
@@ -82,23 +94,23 @@ class PagstractAbstractToken extends AbstractToken
         Token::PAGSTRACTAREA,
         Token::PAGSTRACTINPUT,
         Token::PAGSTRACTSELECT,
-    		
+            
         Token::PAGSTRACTDEBUG,
 
-    	Token::PAGSTRACTPROPERTYREFERENCE, // special '${...}' handling
+        Token::PAGSTRACTPROPERTYREFERENCE, // special '${...}' handling
         Token::PAGSTRACTPROPERTYREFERENCETEXT, // every other text around a '${...}'
     );
 
     /**
      * Constructor
      *
-     * @param string $type
-     * @param Token $type
+     * @param string  $type
+     * @param Token   $type
      * @param boolean $type
      */
     public function __construct($type, Token $parent = null, $throwOnError = false)
     {
-    	parent::__construct($type, $parent, $throwOnError);
+        parent::__construct($type, $parent, $throwOnError);
         $this->throwOnError = (boolean) $throwOnError;
     }
     
@@ -232,7 +244,7 @@ class PagstractAbstractToken extends AbstractToken
         }
 
         if (!$this->nested()) { 
-        	return $remainingHtml;
+            return $remainingHtml;
         }
         // Open element.
         return $this->parseContents($remainingHtml);
@@ -394,7 +406,7 @@ class PagstractAbstractToken extends AbstractToken
         }
         
         if (!empty($elementMatches[2])) {
-        	return '';
+            return '';
         }
         return mb_strtolower($elementMatches[3]);
     }
@@ -541,10 +553,10 @@ class PagstractAbstractToken extends AbstractToken
      */
     public function nested($nested = null)
     {
-    	$className = get_class($this);
-    	if ($nested !== null) {
-    		$className::$nested = !!$nested;
-    	}
+        $className = get_class($this);
+        if ($nested !== null) {
+            $className::$nested = !!$nested;
+        }
         return $className::$nested;
     }
 
@@ -578,6 +590,7 @@ class PagstractAbstractToken extends AbstractToken
     /**
      * check for valid type
      * {@inheritDoc}
+     *
      * @see \PHPagstract\Token\Tokens\AbstractToken::isValidType()
      */
     protected function isValidType($type)

@@ -5,6 +5,7 @@
 
 ## phpunit reports
 .reports
+qa-metrics.sh
 
 ## dirs
 src_ns

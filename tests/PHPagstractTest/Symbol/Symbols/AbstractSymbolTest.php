@@ -18,6 +18,13 @@ class AbstractSymbolTest extends \PHPUnit_Framework_TestCase {
 		$this->assertEquals(array(), $testArray);
 	}
 	
+	public function testToString() {
+		$symbol = $this->getMockForAbstractClass('PHPagstract\\Symbol\\Symbols\\AbstractSymbol');
+		$testString = $symbol->toString();
+		
+		$this->assertEquals('', $testString);
+	}
+	
 	public function testSetGetToken() {
 		$symbol = $this->getMockForAbstractClass('PHPagstract\\Symbol\\Symbols\\AbstractSymbol');
 		$token  = $this->getMockForAbstractClass('PHPagstract\\Token\\Tokens\\AbstractToken', array(Token::TEXT, null, null));

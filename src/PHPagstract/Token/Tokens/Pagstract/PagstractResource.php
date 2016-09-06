@@ -15,26 +15,30 @@ use PHPagstract\Token\ResourceTokenizer;
  */
 class PagstractResource extends PagstractAbstractToken
 {
-	/**
-	 * @var array the $matching
-	 */
-	public static $matching = array(
-			"start" => "/((resource_ext:\/\/|resource:\/\/)(.*))[\"|\'|\s|\n|\ ]|((resource_ext:\/\/|resource:\/\/)(.*))$/iU", 
-			"end" => PHP_EOL
-	);
+    /**
+     * @var array the $matching
+     */
+    public static $matching = array(
+            "start" => "/((resource_ext:\/\/|resource:\/\/)(.*))[\"|\'|\s|\n|\ ]|((resource_ext:\/\/|resource:\/\/)(.*))$/iU", 
+            "end" => PHP_EOL
+    );
 
-    /** @var boolean */
+    /**
+ * @var boolean 
+*/
     public static $nested = false;
-	
-    /** @var string */
+    
+    /**
+ * @var string 
+*/
     private $type;
 
     /**
-	 * token constructor
-	 * 
-	 * @param Token $parent
-	 * @param string $throwOnError
-	 */
+     * token constructor
+     * 
+     * @param Token  $parent
+     * @param string $throwOnError
+     */
     public function __construct(Token $parent = null, $throwOnError = false)
     {
         parent::__construct(Token::PAGSTRACTRESOURCE, $parent, $throwOnError);
@@ -50,6 +54,7 @@ class PagstractResource extends PagstractAbstractToken
     /**
      * parse for resource references
      * {@inheritDoc}
+     *
      * @see \PHPagstract\Token\Tokens\PagstractAbstractToken::parse()
      */
     public function parse($html)
@@ -69,15 +74,15 @@ class PagstractResource extends PagstractAbstractToken
         $length = mb_strlen($match[0]);
         $posOfEndOfCData = $posOfBegin + $length;
         
-		$resourceReference = mb_substr($html, $posOfBegin, $length);
-		
-		if ( mb_strpos($resourceReference,'resource_ext') === false) {
-			$this->name = "resource";
-			$this->value = trim(trim(mb_substr($resourceReference, 11)), "\"'");
-		} else {
-			$this->name = "resource_ext";
-			$this->value = trim(trim(mb_substr($resourceReference, 15)), "\"'");
-		}
+        $resourceReference = mb_substr($html, $posOfBegin, $length);
+        
+        if (mb_strpos($resourceReference, 'resource_ext') === false) {
+            $this->name = "resource";
+            $this->value = trim(trim(mb_substr($resourceReference, 11)), "\"'");
+        } else {
+            $this->name = "resource_ext";
+            $this->value = trim(trim(mb_substr($resourceReference, 15)), "\"'");
+        }
 
         return mb_substr($html, $posOfEndOfCData);
     }
