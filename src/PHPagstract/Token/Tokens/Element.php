@@ -17,6 +17,7 @@ use phpDocumentor\Reflection\Types\Boolean;
  */
 class Element extends AbstractToken
 {
+
     /**
      * @var array the $matching
      */
@@ -26,23 +27,23 @@ class Element extends AbstractToken
     );
     
     /**
- * @var array 
-*/
+     * @var array 
+     */
     private $attributes;
 
     /**
- * @var array[Token] 
-*/
+     * @var array[Token] 
+     */
     private $children;
 
     /**
- * @var string 
-*/
+     * @var string 
+     */
     private $name;
 
     /**
- * @var boolean 
-*/
+     * @var boolean 
+     */
     //public static $nested = true;
 
     public function __construct(Token $parent = null, $throwOnError = false)
@@ -197,7 +198,7 @@ class Element extends AbstractToken
         }
 
         /*if (!self::$nested) {
-        	return $remainingHtml;
+            return $remainingHtml;
         }*/
         // Open element.
         return $this->parseContents($remainingHtml);

@@ -14,37 +14,4 @@ namespace PHPagstract;
 class Page extends PageAbstract
 {
     
-    /**
-     * parser instance
-     *
-     * @var ParserAbstract
-     */
-    public $parser = null;
-    
-    /**
-     */
-    public function __construct() 
-    {
-        parent::__construct();
-        
-    }
-    
-    /**
-     * @return the $parser
-     */
-    public function getParser() 
-    {
-        return $this->parser;
-    }
-
-    /**
-     * @param \PHPagstract\ParserAbstract $parser
-     */
-    public function setParser($parser) 
-    {
-        $this->parser = $parser;
-    }
-
-    
 }
-

@@ -15,6 +15,7 @@ use PHPagstract\Token\MarkupTokenizer;
  */
 class Text extends AbstractToken
 {
+
     /**
      * @var array the $matching
      */
@@ -24,8 +25,8 @@ class Text extends AbstractToken
     );
     
     /**
- * @var string 
-*/
+     * @var string 
+     */
     private $value;
 
     public function __construct(Token $parent = null, $throwOnError = false, $forcedValue = null)
@@ -94,4 +95,3 @@ class Text extends AbstractToken
         );
     }
 }
-

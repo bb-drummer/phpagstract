@@ -11,6 +11,7 @@ class BootstrapComTest extends \PHPUnit_Framework_TestCase
      */
     public function testBootstrapCom()
     {
+        
         $bootstrapHtml = file_get_contents(__DIR__ . '/bootstrap-com.html');
         $htmlTokenizer = new MarkupTokenizer(!true);
         $tokens = $htmlTokenizer->parse($bootstrapHtml);
@@ -2126,5 +2127,5 @@ class BootstrapComTest extends \PHPUnit_Framework_TestCase
             ),
             $tokens->toArray()
         );
-}
     }
+}

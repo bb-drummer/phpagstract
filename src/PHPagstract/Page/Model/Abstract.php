@@ -2,6 +2,8 @@
 
 namespace PHPagstract\Page;
 
+use \PHPagstract\ParserAbstract;
+
 /**
  * page-model object abstract
  *
@@ -13,6 +15,13 @@ namespace PHPagstract\Page;
  */
 abstract class PageModelAbstract
 {
+
+    /**
+     * parser instance
+     *
+     * @var \PHPagstract\ParserAbstract
+     */
+    protected $parser = null;
     
     /**
      * pagemodel name
@@ -83,6 +92,22 @@ abstract class PageModelAbstract
         }
     }
     
+    /**
+     * @return the $parser
+     */
+    public function getParser() 
+    {
+        return $this->parser;
+    }
+
+    /**
+     * @param \PHPagstract\ParserAbstract $parser
+     */
+    public function setParser($parser) 
+    {
+        $this->parser = $parser;
+    }
+
     /**
      * @return the $name
      */

@@ -16,33 +16,33 @@ class PagstractAbstractToken extends AbstractToken
     );
 
     /**
- * @var boolean 
-*/
+     * @var boolean 
+     */
     public static $nested = true;
     
     /**
- * @var array 
-*/
+     * @var array 
+     */
     protected $attributes;
 
     /**
- * @var array[Token] 
-*/
+     * @var array[Token] 
+     */
     protected $children;
 
     /**
- * @var string 
-*/
+     * @var string 
+     */
     protected $name;
     
     /**
- * @var string 
-*/
+     * @var string 
+     */
     protected $value;
     
     /**
- * @var array 
-*/
+     * @var array 
+     */
     protected $validTypes = array(
         Token::CDATA,
         Token::COMMENT,

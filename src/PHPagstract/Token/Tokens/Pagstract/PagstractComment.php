@@ -25,8 +25,8 @@ class PagstractComment extends PagstractAbstractToken
     );
 
     /**
- * @var boolean 
-*/
+     * @var boolean 
+     */
     public static $nested = false;
 
     /**

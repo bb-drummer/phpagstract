@@ -4,8 +4,8 @@ namespace PHPagstractTest\Token\Tokens;
 
 class PagstractListLastTest extends ElementTestAbstract
 {
-	public $elementClassname = "PagstractListLast";
-	
-	public $elementTagname = "pma:last";
-	
+    public $elementClassname = "PagstractListLast";
+    
+    public $elementTagname = "pma:last";
+    
 }

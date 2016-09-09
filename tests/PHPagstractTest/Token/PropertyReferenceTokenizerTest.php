@@ -2,8 +2,6 @@
 
 namespace PHPagstractTest\Token;
 
-use PHPagstract\Token\MarkupTokenizer;
-use PHPagstract\Token\PagstractTokenizer;
 use PHPagstract\Token\PropertyReferenceTokenizer;
 
 class PropertyReferenceTokenizerTest extends \PHPUnit_Framework_TestCase
@@ -13,6 +11,7 @@ class PropertyReferenceTokenizerTest extends \PHPUnit_Framework_TestCase
      */
     public function testParseHTMLOnly($html, array $expectedTokenArray, $debug = false)
     {
+        
         $htmlTokenizer = new PropertyReferenceTokenizer();
         $tokens = $htmlTokenizer->parse($html);
         if ($debug) {
@@ -25,7 +24,7 @@ class PropertyReferenceTokenizerTest extends \PHPUnit_Framework_TestCase
         );
         
         // clean-up: re-init default tokenizer setup
-        new MarkupTokenizer();
+        //new MarkupTokenizer();
     }
 
     public function parseDataProvider()
@@ -63,192 +62,133 @@ class PropertyReferenceTokenizerTest extends \PHPUnit_Framework_TestCase
             'a single property' => array(
                 '${.a.single.property.only}',
                 array (
-				  0 => 
-				  array (
-				    'type' => 'PagstractPropertyReference',
-				    'name' => '.a.single.property.only',
-				    'value' => '.a.single.property.only',
-				    'line' => 0,
-				    'position' => 0,
-				  ),
-				)
+                  0 => 
+                  array (
+                    'type' => 'PagstractPropertyReference',
+                    'name' => '.a.single.property.only',
+                    'value' => '.a.single.property.only',
+                    'line' => 0,
+                    'position' => 0,
+                  ),
+                )
             ),
             'property in text' => array(
                 'some text will be ${.inserted} here...',
                 array (
-				  0 => 
-				  array (
-				    'type' => 'text',
-				    'value' => 'some text will be ',
-				    'line' => 0,
-				    'position' => 0,
-				  ),
-				  1 => 
-				  array (
-				    'type' => 'PagstractPropertyReference',
-				    'name' => '.inserted',
-				    'value' => '.inserted',
-				    'line' => 0,
-				    'position' => 18,
-				  ),
-				  2 => 
-				  array (
-				    'type' => 'text',
-				    'value' => ' here...',
-				    'line' => 0,
-				    'position' => 30,
-				  ),
-				)
+                  0 => 
+                  array (
+                    'type' => 'text',
+                    'value' => 'some text will be ',
+                    'line' => 0,
+                    'position' => 0,
+                  ),
+                  1 => 
+                  array (
+                    'type' => 'PagstractPropertyReference',
+                    'name' => '.inserted',
+                    'value' => '.inserted',
+                    'line' => 0,
+                    'position' => 18,
+                  ),
+                  2 => 
+                  array (
+                    'type' => 'text',
+                    'value' => ' here...',
+                    'line' => 0,
+                    'position' => 30,
+                  ),
+                )
             ),
             'property in text' => array(
                 'and there, some text will be ${.inserted}      ',
                 array (
-				  0 => 
-				  array (
-				    'type' => 'text',
-				    'value' => 'and there, some text will be ',
-				    'line' => 0,
-				    'position' => 0,
-				  ),
-				  1 => 
-				  array (
-				    'type' => 'PagstractPropertyReference',
-				    'name' => '.inserted',
-				    'value' => '.inserted',
-				    'line' => 0,
-				    'position' => 29,
-				  ),
-				)
+                  0 => 
+                  array (
+                    'type' => 'text',
+                    'value' => 'and there, some text will be ',
+                    'line' => 0,
+                    'position' => 0,
+                  ),
+                  1 => 
+                  array (
+                    'type' => 'PagstractPropertyReference',
+                    'name' => '.inserted',
+                    'value' => '.inserted',
+                    'line' => 0,
+                    'position' => 29,
+                  ),
+                )
             ),
             'multiple properties in text' => array(
                 'some text will be ${.inserted} here and ${.there} another one...',
                 array (
-				  0 => 
-				  array (
-				    'type' => 'text',
-				    'value' => 'some text will be ',
-				    'line' => 0,
-				    'position' => 0,
-				  ),
-				  1 => 
-				  array (
-				    'type' => 'PagstractPropertyReference',
-				    'name' => '.inserted',
-				    'value' => '.inserted',
-				    'line' => 0,
-				    'position' => 18,
-				  ),
-				  2 => 
-				  array (
-				    'type' => 'text',
-				    'value' => ' here and ',
-				    'line' => 0,
-				    'position' => 30,
-				  ),
-				  3 => 
-				  array (
-				    'type' => 'PagstractPropertyReference',
-				    'name' => '.there',
-				    'value' => '.there',
-				    'line' => 0,
-				    'position' => 40,
-				  ),
-				  4 => 
-				  array (
-				    'type' => 'text',
-				    'value' => ' another one...',
-				    'line' => 0,
-				    'position' => 49,
-				  ),
-				)
+                  0 => 
+                  array (
+                    'type' => 'text',
+                    'value' => 'some text will be ',
+                    'line' => 0,
+                    'position' => 0,
+                  ),
+                  1 => 
+                  array (
+                    'type' => 'PagstractPropertyReference',
+                    'name' => '.inserted',
+                    'value' => '.inserted',
+                    'line' => 0,
+                    'position' => 18,
+                  ),
+                  2 => 
+                  array (
+                    'type' => 'text',
+                    'value' => ' here and ',
+                    'line' => 0,
+                    'position' => 30,
+                  ),
+                  3 => 
+                  array (
+                    'type' => 'PagstractPropertyReference',
+                    'name' => '.there',
+                    'value' => '.there',
+                    'line' => 0,
+                    'position' => 40,
+                  ),
+                  4 => 
+                  array (
+                    'type' => 'text',
+                    'value' => ' another one...',
+                    'line' => 0,
+                    'position' => 49,
+                  ),
+                )
             ),
             'property in text with token -like- delimiters' => array(
                 'some text will be ${.inserted} there and but not {here} ...',
                 array (
-				  0 => 
-				  array (
-				    'type' => 'text',
-				    'value' => 'some text will be ',
-				    'line' => 0,
-				    'position' => 0,
-				  ),
-				  1 => 
-				  array (
-				    'type' => 'PagstractPropertyReference',
-				    'name' => '.inserted',
-				    'value' => '.inserted',
-				    'line' => 0,
-				    'position' => 18,
-				  ),
-				  2 => 
-				  array (
-				    'type' => 'text',
-				    'value' => ' there and but not {here} ...',
-				    'line' => 0,
-				    'position' => 30,
-				  ),
-				)
+                  0 => 
+                  array (
+                    'type' => 'text',
+                    'value' => 'some text will be ',
+                    'line' => 0,
+                    'position' => 0,
+                  ),
+                  1 => 
+                  array (
+                    'type' => 'PagstractPropertyReference',
+                    'name' => '.inserted',
+                    'value' => '.inserted',
+                    'line' => 0,
+                    'position' => 18,
+                  ),
+                  2 => 
+                  array (
+                    'type' => 'text',
+                    'value' => ' there and but not {here} ...',
+                    'line' => 0,
+                    'position' => 30,
+                  ),
+                )
             )
         );
     }
-
-    /**
-     * @dataProvider getPositionDataProvider
-     */
-    public function testGetPosition($html, $partialHtml, $expectedLine, $expectedPosition)
-    {
-        $htmlTokenizer = new PagstractTokenizer();
-        $tokens = $htmlTokenizer->parse($html);
-        $positionArray = PagstractTokenizer::getPosition($partialHtml);
-        $this->assertEquals($expectedLine, $positionArray['line']);
-        $this->assertEquals($expectedPosition, $positionArray['position']);
-        
-        // clean-up: re-init default tokenizer setup
-        new MarkupTokenizer();
-    }
-
-    public function getPositionDataProvider()
-    {
-        return array(
-            'single line - 1' => array(
-                '<html><head><title>Asdf1</title></head><body>Yo!</body></html>',
-                '<head><title>Asdf1</title></head><body>Yo!</body></html>',
-                0,
-                6
-            ),
-            'single line - 2' => array(
-                '<html><head><title>Asdf1</title></head><body>Yo!</body></html>',
-                '<body>Yo!</body></html>',
-                0,
-                39
-            ),
-            'multiple lines - 1' => array(
-                '<html>
-    <head>
-        <title>Asdf1</title>
-    </head>
-    <body>Yo!</body>
-</html>',
-                '<head>
-        <title>Asdf1</title>
-    </head>
-    <body>Yo!</body>
-</html>',
-                1,
-                5
-            ),
-            'multiple lines - 1' => array(
-                '<html>
-    <head>
-        <title>Asdf1</title>
-    </head>
-    <body>Yo!</body>
-</html>',
-                '<body>Yo!</body>
-</html>',
-                4,
-                5
-            )
-        );
-    }
+    
 }

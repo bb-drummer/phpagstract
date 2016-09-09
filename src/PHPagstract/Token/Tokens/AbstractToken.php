@@ -22,38 +22,38 @@ abstract class AbstractToken implements Token
     );
 
     /**
- * @var boolean 
-*/
+     * @var boolean 
+     */
     public static $nested = false;
     
     /**
- * @var int 
-*/
+     * @var int 
+     */
     private $depth;
 
     /**
- * @var int 
-*/
+     * @var int 
+     */
     private $line;
 
     /**
- * @var null|Token 
-*/
+     * @var null|Token 
+     */
     private $parent;
 
     /**
- * @var int 
-*/
+     * @var int 
+     */
     private $position;
 
     /**
- * @var boolean 
-*/
+     * @var boolean 
+     */
     private $throwOnError;
 
     /**
- * @var string 
-*/
+     * @var string 
+     */
     private $type;
 
     /**
@@ -176,6 +176,16 @@ abstract class AbstractToken implements Token
     public function getType()
     {
         return $this->type;
+    }
+
+    /**
+     * Setter for 'type'.
+     *
+     * @param string the $type
+     */
+    public function setType($type)
+    {
+        $this->type = $type;
     }
 
     /**

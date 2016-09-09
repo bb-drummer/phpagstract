@@ -2,7 +2,6 @@
 
 namespace PHPagstractTest\Token;
 
-use PHPagstract\Token\MarkupTokenizer;
 use PHPagstract\Token\PagstractTokenizer;
 
 class PagstractTokenizerTest extends \PHPUnit_Framework_TestCase
@@ -12,6 +11,7 @@ class PagstractTokenizerTest extends \PHPUnit_Framework_TestCase
      */
     public function testParseHTMLOnly($html, array $expectedTokenArray, $debug = false)
     {
+        
         $htmlTokenizer = new PagstractTokenizer();
         $tokens = $htmlTokenizer->parse($html);
         if ($debug) {
@@ -23,8 +23,6 @@ class PagstractTokenizerTest extends \PHPUnit_Framework_TestCase
             $tokens->toArray()
         );
         
-        // clean-up: re-init default tokenizer setup
-        new MarkupTokenizer();
     }
 
     public function parseDataProvider()
@@ -62,45 +60,45 @@ class PagstractTokenizerTest extends \PHPUnit_Framework_TestCase
             'contains php' => array(
                 '<!-- comments --><div class="asdf1"><?php echo "asdf5"; ?></div>',
                 array (
-				  0 => 
-				  array (
-				    'type' => 'comment',
-				    'value' => 'comments',
-				    'line' => 0,
-				    'position' => 0,
-				  ),
-				  1 => 
-				  array (
-				    'type' => 'PagstractMarkup',
-				    'name' => 'div',
-				    'value' => NULL,
-				    'line' => 0,
-				    'position' => 17,
-				    'attributes' => 
-				    array (
-				      'class' => 'asdf1',
-				    ),
-				  ),
-				  2 => 
-				  array (
-				    'type' => 'php',
-				    'value' => 'echo "asdf5";',
-				    'line' => 0,
-				    'position' => 36,
-				  ),
-				  3 => 
-				  array (
-				    'type' => 'PagstractMarkup',
-				    'name' => '',
-				    'value' => NULL,
-				    'line' => 0,
-				    'position' => 58,
-				    'attributes' => 
-				    array (
-				      'div' => true,
-				    ),
-				  ),
-				)
+                  0 => 
+                  array (
+                    'type' => 'comment',
+                    'value' => 'comments',
+                    'line' => 0,
+                    'position' => 0,
+                  ),
+                  1 => 
+                  array (
+                    'type' => 'PagstractMarkup',
+                    'name' => 'div',
+                    'value' => NULL,
+                    'line' => 0,
+                    'position' => 17,
+                    'attributes' => 
+                    array (
+                      'class' => 'asdf1',
+                    ),
+                  ),
+                  2 => 
+                  array (
+                    'type' => 'php',
+                    'value' => 'echo "asdf5";',
+                    'line' => 0,
+                    'position' => 36,
+                  ),
+                  3 => 
+                  array (
+                    'type' => 'PagstractMarkup',
+                    'name' => '',
+                    'value' => NULL,
+                    'line' => 0,
+                    'position' => 58,
+                    'attributes' => 
+                    array (
+                      'div' => true,
+                    ),
+                  ),
+                )
             )
         );
     }
@@ -110,14 +108,13 @@ class PagstractTokenizerTest extends \PHPUnit_Framework_TestCase
      */
     public function testGetPosition($html, $partialHtml, $expectedLine, $expectedPosition)
     {
+        
         $htmlTokenizer = new PagstractTokenizer();
         $tokens = $htmlTokenizer->parse($html);
         $positionArray = PagstractTokenizer::getPosition($partialHtml);
         $this->assertEquals($expectedLine, $positionArray['line']);
         $this->assertEquals($expectedPosition, $positionArray['position']);
         
-        // clean-up: re-init default tokenizer setup
-        new MarkupTokenizer();
     }
 
     public function getPositionDataProvider()

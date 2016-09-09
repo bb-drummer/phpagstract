@@ -6,6 +6,13 @@ use PHPagstract\Token\Tokens\Element;
 
 class ElementTest extends \PHPUnit_Framework_TestCase
 {
+    
+    public function setUp() 
+    {
+        // clean-up: re-init default tokenizer setup
+        new \PHPagstract\Token\MarkupTokenizer();;
+    }
+    
     /**
      * @dataProvider isClosingElementImpliedDataProvider
      */

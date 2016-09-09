@@ -6,6 +6,12 @@ use PHPagstract\Token\Tokens\Token;
 
 class AbstractTokenTest extends \PHPUnit_Framework_TestCase
 {
+    public function setUp() 
+    {
+        // clean-up: re-init default tokenizer setup
+        new \PHPagstract\Token\MarkupTokenizer();;
+    }
+    
     public function testConstructorAndDefaults()
     {
         $abstractTokenMock = $this->getMockForAbstractClass(

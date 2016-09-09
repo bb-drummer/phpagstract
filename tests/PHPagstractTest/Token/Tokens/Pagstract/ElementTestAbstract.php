@@ -6,59 +6,59 @@ use PHPagstract\Token\Tokens\PagstractAbstractToken;
 
 class ElementTestAbstract extends \PHPUnit_Framework_TestCase
 {
-	/**
-	 * classes namespace
-	 * @var string
-	 */
-	const NS = "PHPagstract\\Token\Tokens\\";
-	
-	/**
-	 * current element classname
-	 * @var string
-	 */
-	public $elementClassname = 'PagstractAbstractToken';
+    /**
+     * classes namespace
+     * @var string
+     */
+    const NS = "PHPagstract\\Token\Tokens\\";
+    
+    /**
+     * current element classname
+     * @var string
+     */
+    public $elementClassname = 'PagstractAbstractToken';
 
-	/**
-	 * current tag-name classname
-	 * @var string
-	 */
-	public $elementTagname = 'pma:test';
-	
-	/**
-	 * list of tag-names from elements with no children
-	 * @var array
-	 */
-	public $noChildrenElements = array('area', 'input', 'pma:debug');
+    /**
+     * current tag-name classname
+     * @var string
+     */
+    public $elementTagname = 'pma:test';
+    
+    /**
+     * list of tag-names from elements with no children
+     * @var array
+     */
+    public $noChildrenElements = array('area', 'input', 'pma:debug');
 
-	/**
-	 * get (fully) qualified classname
-	 * @param string $classname
-	 * @return string
-	 */
-	private function getElementClassname($classname)
-	{
-		if ( !class_exists($classname) ) {
-			if ( class_exists(self::NS.$classname) ) {
-				return (self::NS.$classname);
-			}
-		}
-		return $classname;
-	}
-	
-	/**
-	 * create a (empty) element helper
-	 * @param string $tag
-	 * @param boolean $selfClosing
-	 * @return PagstractAbstractToken
-	 */
+    /**
+     * get (fully) qualified classname
+     * @param string $classname
+     * @return string
+     */
+    private function getElementClassname($classname)
+    {
+        if ( !class_exists($classname) ) {
+            if ( class_exists(self::NS.$classname) ) {
+                return (self::NS.$classname);
+            }
+        }
+        return $classname;
+    }
+    
+    /**
+     * create a (empty) element helper
+     * @param string $tag
+     * @param boolean $selfClosing
+     * @return PagstractAbstractToken
+     */
     private function createElement($tag, $selfClosing = false)
     {
-    	$classname = $this->getElementClassname($this->elementClassname);
+        $classname = $this->getElementClassname($this->elementClassname);
         $element = new $classname();
         if (!$selfClosing) {
-        	$element->parse('<' . $tag . '></' . $tag . '>');
+            $element->parse('<' . $tag . '></' . $tag . '>');
         } else {
-        	$element->parse('<' . $tag . '/>');
+            $element->parse('<' . $tag . '/>');
         }
 
         return $element;
@@ -69,7 +69,7 @@ class ElementTestAbstract extends \PHPUnit_Framework_TestCase
      */
     public function testParse($html, $expectedName, $expectedRemainingHtml, $debug = false)
     {
-    	$classname = $this->getElementClassname($this->elementClassname);
+        $classname = $this->getElementClassname($this->elementClassname);
         $element = new $classname();
         $remainingHtml = $element->parse($html);
         if ($debug) {
@@ -94,7 +94,7 @@ class ElementTestAbstract extends \PHPUnit_Framework_TestCase
 
     public function testChildren()
     {
-    	if (in_array($this->elementTagname, $this->noChildrenElements)) return ;
+        if (in_array($this->elementTagname, $this->noChildrenElements)) return ;
         $classname = $this->getElementClassname($this->elementClassname);
         $element = new $classname();
         $this->assertFalse($element->hasChildren());

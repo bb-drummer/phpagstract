@@ -48,7 +48,7 @@ abstract class ParserAbstract
     public function __construct($tokenizer, $symbolResolver, $throwOnError = false) 
     {
         
-        $this->throwOnError = !!$throwOnError;
+        $this->throwOnError = $throwOnError;
         
         //$tokenizer->throwOnError = $throwOnError;
         $this->setTokenizer($tokenizer);
@@ -108,11 +108,10 @@ abstract class ParserAbstract
      */
     public function symbolize($tokens) 
     {
-        $symbolResolver = new SymbolResolver($this->throwOnError);
-        $symbolTree = new SymbolCollection();
-        if ($tokens) {
-            $symbolTree = $symbolResolver->resolve($tokens);
-        }
+        $symbolResolver = $this->getResolver();
+        
+        $symbolTree = $symbolResolver->resolve($tokens);
+        
         return $symbolTree;
     }
 

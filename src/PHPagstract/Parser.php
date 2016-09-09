@@ -17,4 +17,3 @@ class Parser extends ParserAbstract
 {
     
 }
-

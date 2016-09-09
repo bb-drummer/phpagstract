@@ -25,8 +25,8 @@ class DocType extends AbstractToken
     );
     
     /**
- * @var string 
-*/
+     * @var string 
+     */
     private $value;
 
     public function __construct(Token $parent = null, $throwOnError = false)

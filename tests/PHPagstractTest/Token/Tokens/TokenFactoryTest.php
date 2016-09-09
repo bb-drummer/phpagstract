@@ -2,23 +2,29 @@
 
 namespace PHPagstractTest\Token\Tokens;
 
-use PHPagstract\Token\Tokens;
+use PHPagstract\Token\Tokens\Token;
 use PHPagstract\Token\Tokens\TokenFactory;
-use PHPagstract\Token\MarkupTokenizer;
 use PHPagstract\Token\PagstractTokenizer;
+use PHPagstract\Token\MarkupTokenizer;
 
 class TokenFactoryTest extends \PHPUnit_Framework_TestCase
 {
+    
+    public function setUp()
+    {
+        TokenFactory::clearMatchings();
+    }
+    
     /**
      * @dataProvider buildFromHtmlDataProvider
      */
     public function testBuildFromHtml($html, $expectedClassName)
     {
-        $result = Tokens\TokenFactory::buildFromHtml($html);
+        // just to be sure, init default/HTML tokenizer setup
+        new MarkupTokenizer();
+        $result = TokenFactory::buildFromHtml($html);
         $this->assertInstanceOf($expectedClassName, $result);
         
-        // clean-up: re-init default tokenizer setup
-        new MarkupTokenizer();
     }
 
     /**
@@ -26,12 +32,11 @@ class TokenFactoryTest extends \PHPUnit_Framework_TestCase
      */
     public function testBuildFromHtmlPagstract($html, $expectedClassName)
     {
+        // just to be sure, init Pagstract tokenizer setup
         new PagstractTokenizer();
-        $result = Tokens\TokenFactory::buildFromHtml($html);
+        $result = TokenFactory::buildFromHtml($html);
         $this->assertInstanceOf($expectedClassName, $result);
         
-        // clean-up: re-init default tokenizer setup
-        new MarkupTokenizer();
     }
 
     /**
@@ -39,18 +44,17 @@ class TokenFactoryTest extends \PHPUnit_Framework_TestCase
      */
     public function testBuildFromHtmlThrowsException($html, $expectedClassName)
     {
+        
         TokenFactory::$matchings = array("UnknownToken" => array(
-                "start" => TokenFactory::$matchings["Text"]["start"],
-                "end" => TokenFactory::$matchings["Text"]["end"]
+                "start" => '/^[^<]/',
+                "end" => PHP_EOL,
         ));
         try {
-            $result = Tokens\TokenFactory::buildFromHtml($html, null, true);
+            $result = TokenFactory::buildFromHtml($html, null, true);
         } catch (\Exception $e) {
             $this->assertInstanceOf('PHPagstract\Token\Exception\TokenFactoryException', $e);
         }
         
-        // clean-up: re-init default tokenizer setup
-        new MarkupTokenizer();
     }
 
     /**
@@ -58,96 +62,80 @@ class TokenFactoryTest extends \PHPUnit_Framework_TestCase
      */
     public function testBuildFromHtmlReturnsFalse($html, $expectedClassName)
     {
+        
         TokenFactory::$matchings = array("UnknownToken" => array(
-                "start" => TokenFactory::$matchings["Text"]["start"],
-                "end" => TokenFactory::$matchings["Text"]["end"]
+                "start" => '/^[^<]/',
+                "end" => PHP_EOL,
         ));
-        $result = Tokens\TokenFactory::buildFromHtml($html);
+        $result = TokenFactory::buildFromHtml($html);
         $this->assertFalse($result);
         
-        // clean-up: re-init default tokenizer setup
-        new MarkupTokenizer();
     }
 
-    public function testRegisterMatchingExceptionRegisteredAlready() {
-        // re-init default tokenizer setup
-        new MarkupTokenizer();
+    public function testRegisterMatchingExceptionRegisteredAlready() 
+    {
         
+        TokenFactory::registerMatching("Text", "/.*/", PHP_EOL);
         try {
-            Tokens\TokenFactory::registerMatching("Text", "/.*/", PHP_EOL);
+            TokenFactory::registerMatching("Text", "/.*/", PHP_EOL);
         } catch (\Exception $e) {
             $this->assertInstanceOf('PHPagstract\Token\Exception\TokenFactoryException', $e);
             $this->assertContains('Token has been registered already', $e->getMessage());
         }
         
-        // clean-up: re-init default tokenizer setup
-        new MarkupTokenizer();
-         
     }
 
-    public function testRegisterMatchingExceptionInvalidTokenName() {
-        // re-init default tokenizer setup
-        new MarkupTokenizer();
+    public function testRegisterMatchingExceptionInvalidTokenName() 
+    {
         
         try {
-            Tokens\TokenFactory::registerMatching("", null, null);
+            TokenFactory::registerMatching("", null, null);
         } catch (\Exception $e) {
             $this->assertInstanceOf('PHPagstract\Token\Exception\TokenFactoryException', $e);
             $this->assertContains('Invalid token classname given', $e->getMessage());
         }
-        
-        // clean-up: re-init default tokenizer setup
-        new MarkupTokenizer();
 
     }
         
-    public function testRegisterMatchingExceptionNoTokenClass() {
-        // re-init default tokenizer setup
-        new MarkupTokenizer();
+    public function testRegisterMatchingExceptionNoTokenClass() 
+    {
              
         try {
-            Tokens\TokenFactory::registerMatching("UnknownToken", null, null);
+            TokenFactory::registerMatching("AnotherUnknownToken", null, null);
         } catch (\Exception $e) {
             $this->assertInstanceOf('PHPagstract\Token\Exception\TokenFactoryException', $e);
             $this->assertContains('No token class found', $e->getMessage());
         }
         
-        // clean-up: re-init default tokenizer setup
-        new MarkupTokenizer();
-        
     }
         
-    public function testRegisterMatchingExceptionNoMatchingFound() {
-        // re-init default tokenizer setup
-        new MarkupTokenizer();
+    public function testRegisterMatchingExceptionNoMatchingFound() 
+    {
              
         try {
-            Tokens\TokenFactory::registerMatching("\StdClass", null, null);
+            TokenFactory::registerMatching("\StdClass", null, null);
         } catch (\Exception $e) {
             $this->assertInstanceOf('PHPagstract\Token\Exception\TokenFactoryException', $e);
             $this->assertContains('No matching found', $e->getMessage());
         }
         
-        // clean-up: re-init default tokenizer setup
-        new MarkupTokenizer();
-        
     }
 
-    public function testRegisterMatchingExceptionNoTokenEndSequence() {
+    public function testRegisterMatchingExceptionNoTokenEndSequence() 
+    {
              
         try {
-            Tokens\TokenFactory::registerMatching("\StdClass", "/.*/i", "");
+            TokenFactory::registerMatching("\StdClass", "/.*/i", "");
         } catch (\Exception $e) {
             $this->assertInstanceOf('PHPagstract\Token\Exception\TokenFactoryException', $e);
             $this->assertContains('No token-end sequence given', $e->getMessage());
         }
         
-        // clean-up: re-init default tokenizer setup
-        new MarkupTokenizer();
-        
     }
 
-    public function testRegisterMatching() {
+    public function testRegisterMatching() 
+    {
+        
         TokenFactory::clearMatchings();
         TokenFactory::registerMatching("Text", "/.*/i", PHP_EOL);
         $matchings = TokenFactory::getMatchings();
@@ -156,21 +144,17 @@ class TokenFactoryTest extends \PHPUnit_Framework_TestCase
         $this->assertArrayHasKey("start", $matchings["Text"]);
         $this->assertArrayHasKey("end", $matchings["Text"]);
         
-        // clean-up: re-init default tokenizer setup
-        new MarkupTokenizer();
     }
 
-    public function testGetMatchingFromTokenClassExceptionNoTokenClass() {
+    public function testGetMatchingFromTokenClassExceptionNoTokenClass() 
+    {
              
         try {
-            $matching = Tokens\TokenFactory::getTokenMatchingFromClass("UnknownToken");
+            $matching = TokenFactory::getTokenMatchingFromClass("UnknownToken");
         } catch (\Exception $e) {
             $this->assertInstanceOf('PHPagstract\Token\Exception\TokenFactoryException', $e);
             $this->assertContains('No token class found', $e->getMessage());
         }
-        
-        // clean-up: re-init default tokenizer setup
-        new MarkupTokenizer();
         
     }
         
@@ -243,18 +227,18 @@ class TokenFactoryTest extends \PHPUnit_Framework_TestCase
                 '<asdf></asdf>',
                 'PHPagstract\Token\Tokens\PagstractMarkup'
             ),
-        		
-        		
-        	array(
-        		'<pma:value pma:name=".property"></pma:value>',
-        		'PHPagstract\Token\Tokens\PagstractSimpleValue'
-        	),
+                
+                
+            array(
+                '<pma:value pma:name=".property"></pma:value>',
+                'PHPagstract\Token\Tokens\PagstractSimpleValue'
+            ),
             array(
                 '<pma:value pma:name=".property" />',
                 'PHPagstract\Token\Tokens\PagstractSimpleValue'
             ),
 
-        	
+            
             array(
                 '<!--- pagstract comment -->',
                 'PHPagstract\Token\Tokens\PagstractComment'
@@ -262,7 +246,7 @@ class TokenFactoryTest extends \PHPUnit_Framework_TestCase
             array(
                 '<pma:debug pma:name />',
                 'PHPagstract\Token\Tokens\PagstractDebug'
-            ),	
+            ),    
             array(
                 '<pma:bean pma:name></pma:bean>',
                 'PHPagstract\Token\Tokens\PagstractBean'
@@ -271,84 +255,84 @@ class TokenFactoryTest extends \PHPUnit_Framework_TestCase
                 '<pma:if-visible pma:name=".property"></pma:if-visible>',
                 'PHPagstract\Token\Tokens\PagstractIfVisible'
             ),
-        		
-        		
+                
+                
             array(
                 '<pma:list pma:name=".listproperty">Link</pma:list>',
                 'PHPagstract\Token\Tokens\PagstractList'
-            ),	
+            ),    
             array(
                 '<pma:header>some content</pma:header>',
                 'PHPagstract\Token\Tokens\PagstractListHeader'
-            ),	
+            ),    
             array(
                 '<pma:content>some content</pma:content>',
                 'PHPagstract\Token\Tokens\PagstractListContent'
-            ),	
+            ),    
             array(
                 '<pma:footer>some content</pma:footer>',
                 'PHPagstract\Token\Tokens\PagstractListFooter'
-            ),	
+            ),    
             array(
                 '<pma:seperator>some content</pma:seperator>',
                 'PHPagstract\Token\Tokens\PagstractListSeperator'
-            ),	
+            ),    
             array(
                 '<pma:first>some content</pma:first>',
                 'PHPagstract\Token\Tokens\PagstractListFirst'
-            ),	
+            ),    
             array(
                 '<pma:last>some content</pma:last>',
                 'PHPagstract\Token\Tokens\PagstractListLast'
-            ),	
+            ),    
             array(
                 '<pma:even>some content</pma:even>',
                 'PHPagstract\Token\Tokens\PagstractListEven'
-            ),	
+            ),    
             array(
                 '<pma:odd>some content</pma:odd>',
                 'PHPagstract\Token\Tokens\PagstractListOdd'
-            ),	
+            ),    
             array(
                 '<pma:no-content>some content</pma:no-content>',
                 'PHPagstract\Token\Tokens\PagstractListNoContent'
-            ),	
+            ),    
             array(
                 '<pma:nocontent>some content</pma:nocontent>',
                 'PHPagstract\Token\Tokens\PagstractListNoContent'
-            ),	
-        		
-        		
+            ),    
+                
+                
             array(
                 '<pma:modList pma:name>some content</pma:modList>',
                 'PHPagstract\Token\Tokens\PagstractModList'
-            ),	
+            ),    
             array(
                 '<pma:modContent>some content</pma:modContent>',
                 'PHPagstract\Token\Tokens\PagstractModContent'
-            ),	
+            ),    
             array(
                 '<pma:modSeperator>some content</pma:modSeperator>',
                 'PHPagstract\Token\Tokens\PagstractModSeperator'
             ),
-        		
-        		
+                
+                
             array(
                 '<pma:form pma:name=".formproperty"></pma:form>',
                 'PHPagstract\Token\Tokens\PagstractForm'
-            ),	
-        		
-        		
+            ),    
+                
+                
             array(
                 '<pma:switch pma:name>some content</pma:switch>',
                 'PHPagstract\Token\Tokens\PagstractSwitch'
-            ),	
+            ),    
             array(
                 '<object pma:case>some content</object>',
                 'PHPagstract\Token\Tokens\PagstractObject'
-            ),	
+            ),    
 
-        		
+                
             array(
                 '<pma:tile filename="./partial.html"></pma:tile>',
                 'PHPagstract\Token\Tokens\PagstractTile'
@@ -357,8 +341,8 @@ class TokenFactoryTest extends \PHPUnit_Framework_TestCase
                 '<pma:tileVariable>{"some" : "json"}</pma:tileVariable>',
                 'PHPagstract\Token\Tokens\PagstractTileVariable'
             ),
-        		
-        		
+                
+                
             array(
                 '<a pma:name=".actionproperty">Link</a>',
                 'PHPagstract\Token\Tokens\PagstractLink'
@@ -379,28 +363,14 @@ class TokenFactoryTest extends \PHPUnit_Framework_TestCase
                 '<select pma:name=".selectproperty" multiple></select>',
                 'PHPagstract\Token\Tokens\PagstractSelect'
             ),
-        		
-        	/*	
-            array(
-                'resource://images/dummy.png',
-                'PHPagstract\Token\Tokens\PagstractResource'
-            ),	
-            array(
-                'resource_ext://images/dummy.png',
-                'PHPagstract\Token\Tokens\PagstractResource'
-            ),
-            array(
-                'msg://messages.properties.text',
-                'PHPagstract\Token\Tokens\PagstractMessage'
-            ),
-            */
+                
         );
     }
 
     public function testNoTypeFound()
     {
-        // re-init default tokenizer setup
-        new MarkupTokenizer();
+        
+        TokenFactory::clearMatchings();
         
         $this->assertFalse(TokenFactory::buildFromHtml('< asdfasdf'));
         
@@ -411,9 +381,8 @@ class TokenFactoryTest extends \PHPUnit_Framework_TestCase
      */
     public function testExceptionInBuildFromHtml()
     {
-        // re-init default tokenizer setup
-        new MarkupTokenizer();
         
         TokenFactory::buildFromHtml('< asdfasdf', null, true);
+        
     }
 }

@@ -11,6 +11,7 @@ class MarkupTokenizerTest extends \PHPUnit_Framework_TestCase
      */
     public function testParse($html, array $expectedTokenArray, $debug = false)
     {
+        
         $htmlTokenizer = new MarkupTokenizer();
         $tokens = $htmlTokenizer->parse($html);
         if ($debug) {
@@ -21,6 +22,7 @@ class MarkupTokenizerTest extends \PHPUnit_Framework_TestCase
             $expectedTokenArray,
             $tokens->toArray()
         );
+        
     }
 
     public function parseDataProvider()

@@ -6,6 +6,12 @@ use PHPagstract\Token\Tokens\DocType;
 
 class DocTypeTest extends \PHPUnit_Framework_TestCase
 {
+    public function setUp() 
+    {
+        // clean-up: re-init default tokenizer setup
+        new \PHPagstract\Token\MarkupTokenizer();;
+    }
+    
     /**
      * @dataProvider parseDataProvider
      */

@@ -13,6 +13,7 @@ namespace PHPagstract\Token\Tokens;
  */
 interface Token
 {
+
     const CDATA     = 'cdata';
     const COMMENT   = 'comment';
     const DOCTYPE   = 'doctype';

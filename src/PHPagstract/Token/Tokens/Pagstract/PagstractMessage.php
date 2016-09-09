@@ -24,13 +24,13 @@ class PagstractMessage extends PagstractAbstractToken
     );
             
     /**
- * @var boolean 
-*/
+     * @var boolean 
+     */
     public static $nested = false;
     
     /**
- * @var string 
-*/
+     * @var string 
+     */
     private $type;
 
     /**

@@ -18,13 +18,13 @@ use PHPagstract\Token\Tokens\PagstractMarkup;
 class PagstractTokenizer extends MarkupTokenizer
 {
     /**
- * @var boolean 
-*/
+     * @var boolean 
+     */
     protected $throwOnError;
 
     /**
- * @var string 
-*/
+     * @var string 
+     */
     protected static $allHtml = '';
 
     /**

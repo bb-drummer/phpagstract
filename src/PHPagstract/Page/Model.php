@@ -16,21 +16,5 @@ use PHPagstract\Page\PageModelAbstract;
 class PageModel extends PageModelAbstract
 {
     
-    /**
-     *
-     * @param string $name          
-     *
-     * @param string $sourcespath           
-     *
-     * @param mixed  $data           
-     *
-     * @param string $resources         
-     *
-     * @param string $resources_ext         
-     */
-    public function __construct($name, $sourcespath, $data = array(), $resources = "./", $resources_ext = "./") 
-    {
-        parent::__construct($name, $sourcespath, $data, $resources = "./", $resources_ext = "./");
-    }
+    
 }
-

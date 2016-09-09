@@ -22,8 +22,8 @@ class PagstractListFooter extends PagstractAbstractToken
     );
 
     /**
- * @var boolean 
-*/
+     * @var boolean 
+     */
     public static $nested = true;
     
     /**

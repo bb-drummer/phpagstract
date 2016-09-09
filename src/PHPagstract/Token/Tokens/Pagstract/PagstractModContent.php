@@ -22,8 +22,8 @@ class PagstractModContent extends PagstractAbstractToken
     );
 
     /**
- * @var boolean 
-*/
+     * @var boolean 
+     */
     public static $nested = true;
     
     /**

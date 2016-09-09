@@ -18,13 +18,13 @@ use PHPagstract\Token\Tokens\Element;
 class MarkupTokenizer extends AbstractTokenizer
 {
     /**
- * @var boolean 
-*/
+     * @var boolean 
+     */
     protected $throwOnError;
 
     /**
- * @var string 
-*/
+     * @var string 
+     */
     protected static $allHtml = '';
 
     /**
