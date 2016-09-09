@@ -1,0 +1,13 @@
+{
+  "root": {
+    "liste": [
+      "Qualitätsprodukt",
+      "Trendiges Design mit Fernwirkung",
+      "Multifunktional",
+      "Absolut überzeugendes Preis-Leistungs-Verhältnis",
+      "Perfekt stapelbar, spülmaschinenfest",
+      123,
+      true
+    ]
+  }
+}

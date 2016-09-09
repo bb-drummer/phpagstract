@@ -15,8 +15,8 @@ namespace PHPagstract\Symbol\Symbols;
 class SymbolCollection implements \ArrayAccess, \IteratorAggregate
 {
     /**
- * @var array[Symbol] 
-*/
+     * @var array[Symbol] 
+     */
     private $symbols;
 
     /**

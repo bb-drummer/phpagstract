@@ -2,10 +2,11 @@
 
 namespace PHPagstract\Symbol\Symbols;
 
-use PHPagstract\Token\Tokens\Token;
+use PHPagstract\Name\Names\Name;
+use PHPagstract\Token\Tokens\Token as PHPagstractToken;
 
 /**
- * symbol abstract class
+ * abstract symbol class
  *
  * @package   PHPagstract
  * @author    Björn Bartels <coding@bjoernbartels.earth>
@@ -19,9 +20,16 @@ abstract class AbstractSymbol implements Symbol
     /**
      * token container/reference
      *
-     * @var Token
+     * @var PHPagstractToken
      */
     private $token = null;
+
+	/**
+     * symbol name
+     *
+     * @var Name
+     */
+    private $name = 'Symbol';
 
     /**
      * convert symbol to string representation
@@ -40,13 +48,18 @@ abstract class AbstractSymbol implements Symbol
      */
     public function toArray() 
     {
-        return array();
+        $result = array(
+                'name' => $this->getName(),
+                'line' => null,
+                'position' => null
+        );
+        return $result;
     }
 
     /**
      * get the token
      *
-     * @return Token
+     * @return PHPagstractToken
      */
     public function getToken() 
     {
@@ -56,11 +69,31 @@ abstract class AbstractSymbol implements Symbol
     /**
      * set the token
      *
-     * @param Token $token
+     * @param PHPagstract\Token\Tokens\Token $token
      */
-    public function setToken(Token $token) 
+    public function setToken(PHPagstractToken $token) 
     {
         $this->token = $token;
+    }
+    
+    /**
+     * get the name
+     *
+     * @return Name
+     */
+    public function getName() 
+    {
+        return $this->name;
+    }
+    
+    /**
+     * set the name
+     *
+     * @param string $name
+     */
+    public function setName($name) 
+    {
+        $this->name = $name;
     }
     
 }

@@ -1,0 +1,10 @@
+{
+  "root": {
+    "stringValue": "Qualitätsprodukt",
+    "integerValue": 123,
+    "floatValue": 1.23,
+    "trueValue": true,
+    "falseValue": false,
+    "nullValue": null
+  }
+}

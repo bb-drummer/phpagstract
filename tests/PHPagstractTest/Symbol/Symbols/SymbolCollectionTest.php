@@ -68,9 +68,9 @@ class SymbolCollectionTest extends \PHPUnit_Framework_TestCase
         $collection[] = $symbol1;
         $collection[] = $symbol2;
         
-		$testArray = $collection->toArray();
-		$expectedArray = array( $symbol1->toArray(), $symbol2->toArray() );
-		
+        $testArray = $collection->toArray();
+        $expectedArray = array( $symbol1->toArray(), $symbol2->toArray() );
+        
         $this->assertEquals($expectedArray, $testArray);
     }
 }

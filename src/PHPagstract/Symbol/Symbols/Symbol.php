@@ -37,11 +37,4 @@ interface Symbol
      */
     public function getToken();
     
-    /**
-     * set the token
-     *
-     * @param Token $token
-     */
-    public function setToken(Token $token);
-    
 }
