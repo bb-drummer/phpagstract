@@ -161,31 +161,35 @@ class TokenFactoryTest extends \PHPUnit_Framework_TestCase
     public function buildFromHtmlDataProvider()
     {
         return array(
-            array(
+            "default text" => array(
                 'asdf',
                 'PHPagstract\Token\Tokens\Text'
             ),
-            array(
+            "markup tag" => array(
+                '<asdf></asdf>',
+                'PHPagstract\Token\Tokens\Element'
+            ),
+            "markup tag (self-closed)" => array(
                 '<asdf />',
                 'PHPagstract\Token\Tokens\Element'
             ),
-            array(
+            "default comment" => array(
                 '<!-- asdf -->',
                 'PHPagstract\Token\Tokens\Comment'
             ),
-            array(
+            "CDATA" => array(
                 '<![CDATA[asdf]]>',
                 'PHPagstract\Token\Tokens\CData'
             ),
-            array(
+            "DOCTYPE" => array(
                 '<!DOCTYPE asdf >',
                 'PHPagstract\Token\Tokens\DocType'
             ),
-            array(
+            "PHP" => array(
                 '<?php asdf; ?>',
                 'PHPagstract\Token\Tokens\Php'
             ),
-            array(
+            "PHP (short)" => array(
                 '<? asdf; ?>',
                 'PHPagstract\Token\Tokens\Php'
             )
@@ -195,171 +199,171 @@ class TokenFactoryTest extends \PHPUnit_Framework_TestCase
     public function buildFromHtmlPagstractDataProvider()
     {
         return array(
-            array(
+            "default text" => array(
                 'asdf',
                 'PHPagstract\Token\Tokens\Text'
             ),
-            array(
+            "default comment" => array(
                 '<!-- asdf -->',
                 'PHPagstract\Token\Tokens\Comment'
             ),
-            array(
+            "CDATA" => array(
                 '<![CDATA[asdf]]>',
                 'PHPagstract\Token\Tokens\CData'
             ),
-            array(
+            "DOCTYPE" => array(
                 '<!DOCTYPE asdf >',
                 'PHPagstract\Token\Tokens\DocType'
             ),
-            array(
+            "PHP" => array(
                 '<?php asdf; ?>',
                 'PHPagstract\Token\Tokens\Php'
             ),
-            array(
+            "PHP (short)" => array(
                 '<? asdf; ?>',
                 'PHPagstract\Token\Tokens\Php'
             ),
-            array(
+            "markup tag (self-closed)" => array(
                 '<asdf />',
                 'PHPagstract\Token\Tokens\PagstractMarkup'
             ),
-            array(
+            "markup tag" => array(
                 '<asdf></asdf>',
                 'PHPagstract\Token\Tokens\PagstractMarkup'
             ),
                 
                 
-            array(
+            "pma:value" => array(
                 '<pma:value pma:name=".property"></pma:value>',
                 'PHPagstract\Token\Tokens\PagstractSimpleValue'
             ),
-            array(
+            "pma:value (self-closed)" => array(
                 '<pma:value pma:name=".property" />',
                 'PHPagstract\Token\Tokens\PagstractSimpleValue'
             ),
 
             
-            array(
+            "pagstract comment" => array(
                 '<!--- pagstract comment -->',
                 'PHPagstract\Token\Tokens\PagstractComment'
             ),
-            array(
+            "pma:debug" => array(
                 '<pma:debug pma:name />',
                 'PHPagstract\Token\Tokens\PagstractDebug'
             ),    
-            array(
+            "pma:bean" => array(
                 '<pma:bean pma:name></pma:bean>',
                 'PHPagstract\Token\Tokens\PagstractBean'
             ),
-            array(
+            "pma:if-visible" => array(
                 '<pma:if-visible pma:name=".property"></pma:if-visible>',
                 'PHPagstract\Token\Tokens\PagstractIfVisible'
             ),
                 
                 
-            array(
+            "pma:list" => array(
                 '<pma:list pma:name=".listproperty">Link</pma:list>',
                 'PHPagstract\Token\Tokens\PagstractList'
             ),    
-            array(
+            "pma:header" => array(
                 '<pma:header>some content</pma:header>',
                 'PHPagstract\Token\Tokens\PagstractListHeader'
             ),    
-            array(
+            "pma:content" => array(
                 '<pma:content>some content</pma:content>',
                 'PHPagstract\Token\Tokens\PagstractListContent'
             ),    
-            array(
+            "pma:footer" => array(
                 '<pma:footer>some content</pma:footer>',
                 'PHPagstract\Token\Tokens\PagstractListFooter'
             ),    
-            array(
+            "pma:seperator" => array(
                 '<pma:seperator>some content</pma:seperator>',
                 'PHPagstract\Token\Tokens\PagstractListSeperator'
             ),    
-            array(
+            "pma:first" => array(
                 '<pma:first>some content</pma:first>',
                 'PHPagstract\Token\Tokens\PagstractListFirst'
             ),    
-            array(
+            "pma:last" => array(
                 '<pma:last>some content</pma:last>',
                 'PHPagstract\Token\Tokens\PagstractListLast'
             ),    
-            array(
+            "pma:even" => array(
                 '<pma:even>some content</pma:even>',
                 'PHPagstract\Token\Tokens\PagstractListEven'
             ),    
-            array(
+            "pma:odd" => array(
                 '<pma:odd>some content</pma:odd>',
                 'PHPagstract\Token\Tokens\PagstractListOdd'
             ),    
-            array(
+            "pma:no-content" => array(
                 '<pma:no-content>some content</pma:no-content>',
                 'PHPagstract\Token\Tokens\PagstractListNoContent'
             ),    
-            array(
+            "pma:nocontent" => array(
                 '<pma:nocontent>some content</pma:nocontent>',
                 'PHPagstract\Token\Tokens\PagstractListNoContent'
             ),    
                 
                 
-            array(
+            "pma:modList" => array(
                 '<pma:modList pma:name>some content</pma:modList>',
                 'PHPagstract\Token\Tokens\PagstractModList'
             ),    
-            array(
+            "pma:modContent" => array(
                 '<pma:modContent>some content</pma:modContent>',
                 'PHPagstract\Token\Tokens\PagstractModContent'
             ),    
-            array(
+            "pma:modSeperator" => array(
                 '<pma:modSeperator>some content</pma:modSeperator>',
                 'PHPagstract\Token\Tokens\PagstractModSeperator'
             ),
                 
                 
-            array(
+            "pma:form" => array(
                 '<pma:form pma:name=".formproperty"></pma:form>',
                 'PHPagstract\Token\Tokens\PagstractForm'
             ),    
                 
                 
-            array(
+            "pma:switch" => array(
                 '<pma:switch pma:name>some content</pma:switch>',
                 'PHPagstract\Token\Tokens\PagstractSwitch'
             ),    
-            array(
+            "pagstract switch object" => array(
                 '<object pma:case>some content</object>',
                 'PHPagstract\Token\Tokens\PagstractObject'
             ),    
 
                 
-            array(
+            "pma:tile" => array(
                 '<pma:tile filename="./partial.html"></pma:tile>',
                 'PHPagstract\Token\Tokens\PagstractTile'
             ),
-            array(
+            "pma:tileVariable" => array(
                 '<pma:tileVariable>{"some" : "json"}</pma:tileVariable>',
                 'PHPagstract\Token\Tokens\PagstractTileVariable'
             ),
                 
                 
-            array(
+            "pagstract link" => array(
                 '<a pma:name=".actionproperty">Link</a>',
                 'PHPagstract\Token\Tokens\PagstractLink'
             ),
-            array(
+            "pagstract area" => array(
                 '<area pma:name />',
                 'PHPagstract\Token\Tokens\PagstractArea'
             ),
-            array(
+            "pagstract input" => array(
                 '<input pma:name=".inputproperty" />',
                 'PHPagstract\Token\Tokens\PagstractInput'
             ),
-            array(
+            "pagstract select (self-closed)" => array(
                 '<select pma:name=".selectproperty" />',
                 'PHPagstract\Token\Tokens\PagstractSelect'
             ),
-            array(
+            "pagstract select" => array(
                 '<select pma:name=".selectproperty" multiple></select>',
                 'PHPagstract\Token\Tokens\PagstractSelect'
             ),
