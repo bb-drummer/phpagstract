@@ -1,4 +1,6 @@
 <?php
+namespace PHPagstractTest;
+
 /**
  * PHPagstract page class tests
  *
@@ -8,8 +10,6 @@
  * @license     http://www.apache.org/licenses/LICENSE-2.0 Apache License, Version 2.0
  * @copyright   copyright (c) 2016 Björn Bartels <coding@bjoernbartels.earth>
  */
-
-namespace PHPagstractTest;
 
 use PHPUnit_Framework_TestCase as TestCase;
 
@@ -128,6 +128,25 @@ class ParserTest extends TestCase
         $this->assertEquals($resolver, $testResolver);
         
     }
+    
+    /**
+     * @dataProvider files2parseDataProvider
+     */
+    public function testParseMarkup ($tokenizer, $filename, $throwOnError = false) 
+    {
+        $mockResolver  = new SymbolResolver($throwOnError); 
+        $mockTokenizer = new $tokenizer($throwOnError);
+        
+        $parser = new Parser( $mockTokenizer, $mockResolver, $throwOnError );
+        $html = file_get_contents($filename);
+
+        $pagstracttokens = $parser->tokenize($html);
+        $pagstractsymbols = $parser->symbolize($pagstracttokens);
+        
+        
+        $this->assertEquals($pagstracttokens->count(), $pagstractsymbols->count());
+        
+    }
 
     /**
      * create a parser object
@@ -148,6 +167,28 @@ class ParserTest extends TestCase
         $parser = new Parser( $mockTokenizer, $mockResolver, $throwOnError );
         
         return $parser;
-        
+    }
+    
+    public function files2parseDataProvider () {
+/*$page[] = file_get_contents("/Volumes/BB.DATA.MOBILE.01/repostories/php/phpagstract/data/shop/base/templates/containers/mainReviewer.html");
+$page[] = file_get_contents("/Volumes/BB.DATA.MOBILE.01/repostories/php/phpagstract/data/shop/base/templates/ArtikelDetailsBuchPageModel.html");
+$page[] = file_get_contents("/Volumes/BB.DATA.MOBILE.01/repostories/php/phpagstract/data/shop/base/templates/containers/pvTopDetailsFormatsTabs.html");
+$page[] = file_get_contents("/Volumes/BB.DATA.MOBILE.01/repostories/php/phpagstract/data/shop/base/templates/containers/pvTopDetailsFormatsDropdowns.html");
+$page[] = file_get_contents("/Volumes/BB.DATA.MOBILE.01/repostories/php/phpagstract/data/shop/base/templates/containers/navSideMenu.html");
+$page[] = file_get_contents("/Volumes/BB.DATA.MOBILE.01/repostories/php/phpagstract/tests/PHPagstractTest/Token/Html/bootstrap-com.html");
+
+$resourcesfile = file_get_contents("/Volumes/BB.DATA.MOBILE.01/repostories/php/phpagstract/data/shop/base/templates/globals/htmlCloseJSIE8.html");
+$messagesfile = file_get_contents("/Volumes/BB.DATA.MOBILE.01/repostories/php/phpagstract/data/shop/base/templates/globals/footerSocialMedia.html");
+$jsonfile = file_get_contents("/Volumes/BB.DATA.MOBILE.01/repostories/php/phpagstract/data/farben_kacheln.json");*/
+    	return array(
+	    	"HTML file 01" => array(
+	    		"tokenizer" => "PHPagstract\\Token\\MarkupTokenizer",
+	    		"filename" => "/Volumes/BB.DATA.MOBILE.01/repostories/php/phpagstract/tests/PHPagstractTest/Token/Html/bootstrap-com.html",
+	    	),
+	    	"Pagstract file 01" => array(
+	    		"tokenizer" => "PHPagstract\\Token\\PagstractTokenizer",
+	    		"filename" => "/Volumes/BB.DATA.MOBILE.01/repostories/php/phpagstract/data/shop/base/templates/containers/mainReviewer.html",
+	    	),
+        );
     }
 }

@@ -1,5 +1,4 @@
 <?php
-
 namespace PHPagstract;
 
 use PHPagstract\ParserAbstract;
