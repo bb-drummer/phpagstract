@@ -3,7 +3,7 @@
 namespace PHPagstract\Symbol\Symbols\Properties;
 
 /**
- * form component property symbol class
+ * component property symbol class
  *
  * @package   PHPagstract
  * @author    Björn Bartels <coding@bjoernbartels.earth>
@@ -11,11 +11,12 @@ namespace PHPagstract\Symbol\Symbols\Properties;
  * @license   http://www.apache.org/licenses/LICENSE-2.0 Apache License, Version 2.0
  * @copyright copyright (c) 2016 Björn Bartels <coding@bjoernbartels.earth>
  */
-class FormProperty extends ComponentProperty {
+class ComponentProperty extends ObjectProperty {
     
     /**
      */
     public function __construct($name, $parent) {
-        parent::__construct ('form', $name, $parent);
+        parent::__construct ('component', $name, $parent);
+    }
 }
 

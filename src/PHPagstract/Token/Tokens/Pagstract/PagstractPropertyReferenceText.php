@@ -24,6 +24,11 @@ class PagstractPropertyReferenceText extends PagstractAbstractToken
     );
     
     /**
+     * @var boolean 
+     */
+    public $nested = false;
+    
+    /**
      * token constructor
      * 
      * @param Token  $parent
@@ -80,16 +85,6 @@ class PagstractPropertyReferenceText extends PagstractAbstractToken
         $this->value = $startingWhitespace . trim($text) . $endingWhitespace;
 
         return mb_substr($html, $posOfNextElement);
-    }
-
-    /**
-     * Getter for 'value'.
-     *
-     * @return string
-     */
-    public function getValue()
-    {
-        return $this->value;
     }
 
     /**

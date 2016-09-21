@@ -27,7 +27,7 @@ class PagstractPropertyReference extends PagstractAbstractToken
     /**
      * @var boolean 
      */
-    public static $nested = false;
+    public $nested = false;
 
     /**
      * token constructor
