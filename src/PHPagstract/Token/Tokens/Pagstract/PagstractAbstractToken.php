@@ -18,7 +18,7 @@ class PagstractAbstractToken extends AbstractToken
     /**
      * @var boolean 
      */
-    public static $nested = true;
+    public $nested = true;
     
     /**
      * @var array 
@@ -39,6 +39,11 @@ class PagstractAbstractToken extends AbstractToken
      * @var string 
      */
     protected $value;
+    
+    /**
+     * @var string 
+     */
+    protected $isClosing;
     
     /**
      * @var array 
@@ -112,6 +117,12 @@ class PagstractAbstractToken extends AbstractToken
     {
         parent::__construct($type, $parent, $throwOnError);
         $this->throwOnError = (boolean) $throwOnError;
+
+        $this->name = null;
+        $this->value = null;
+        
+        $this->attributes = null;
+        $this->children = null;
     }
     
     /**
@@ -123,7 +134,7 @@ class PagstractAbstractToken extends AbstractToken
      */
     public function isClosingElementImplied($html)
     {
-        $parent = $this->getParent();
+        /* $parent = $this->getParent();
         if ($parent === null || !($parent instanceof self)) {
             return false;
         }
@@ -187,7 +198,7 @@ class PagstractAbstractToken extends AbstractToken
         if (($parentName == 'rp' || $parentName == 'rt') && ($name == 'rp' || $name == 'rt')) {
             return true;
         }
-
+        */
         return false;
     }
 
@@ -209,9 +220,9 @@ class PagstractAbstractToken extends AbstractToken
 
         // Parse name.
         $this->name = $this->parseElementName($html);
-
+      
         // Parse attributes.
-        $remainingHtml = mb_substr($html, mb_strlen($this->name) + 1);
+        $remainingHtml = mb_substr($html, mb_strlen($this->name) + 1 + ($this->isClosing ? 1 : 0) );
         while (mb_strpos($remainingHtml, '>') !== false && preg_match("/^\s*[\/]?>/", $remainingHtml) === 0) {
             $remainingHtml = $this->parseAttribute($remainingHtml);
         }
@@ -237,15 +248,32 @@ class PagstractAbstractToken extends AbstractToken
         // Lets close those closed-only elements that are left open.
         $closedOnlyElements = array(
             'area',
-            'input'
+            'base',
+            'br',
+            'col',
+            'embed',
+            'hr',
+            'img',
+            'input',
+            'link',
+            'meta',
+            'param',
+            'source',
+            'track',
+            'wbr'
+        		
+            //'area',
+            //'input'
         );
         if (array_search($this->name, $closedOnlyElements) !== false) {
             return $remainingHtml;
         }
-
-        if (!$this->nested()) { 
+		$nested = $this->nested();
+		//echo '<pre>'.htmlentities(var_export(!$nested, true)).'</pre>';
+        if (!$nested) { 
             return $remainingHtml;
         }
+
         // Open element.
         return $this->parseContents($remainingHtml);
     }
@@ -335,6 +363,7 @@ class PagstractAbstractToken extends AbstractToken
             return '';
         }
 
+        /* do we really have tags to omit parsing for?!?
         // Don't parse contents of "iframe" element.
         if ($this->name == 'iframe') {
             return $this->parseNoContents('iframe', $html);
@@ -349,7 +378,8 @@ class PagstractAbstractToken extends AbstractToken
         if ($this->name == 'style') {
             return $this->parseForeignContents('style', $html);
         }
-
+        */
+        
         // Parse contents one token at a time.
         $remainingHtml = $html;
         while (preg_match("/^<\/\s*" . $this->name . "\s*>/is", $remainingHtml) === 0) {
@@ -362,7 +392,10 @@ class PagstractAbstractToken extends AbstractToken
             if ($token === false || $token->isClosingElementImplied($remainingHtml)) {
                 return $remainingHtml;
             }
-
+            
+            if (!is_array($this->children)) {
+            	$this->children = array();
+            }
             $remainingHtml = $token->parse($remainingHtml);
             $this->children[] = $token;
         }
@@ -402,11 +435,13 @@ class PagstractAbstractToken extends AbstractToken
                 throw new TokenizerException('Invalid element name.');
             }
 
-            return '';
+            return null;
         }
-        
+		//echo '<pre>'.htmlentities(var_export(($elementMatches), true)).'</pre>'; flush();
         if (!empty($elementMatches[2])) {
-            return '';
+        	$this->isClosing = true;
+            return ''; //$elementMatches[2];
+            //.mb_strtolower($elementMatches[3]);
         }
         return mb_strtolower($elementMatches[3]);
     }
@@ -418,7 +453,7 @@ class PagstractAbstractToken extends AbstractToken
      * @param string $html
      *
      * @return string The remaining HTML.
-     */
+     * /
     private function parseForeignContents($tag, $html)
     {
         $remainingHtml = ltrim($html);
@@ -468,7 +503,7 @@ class PagstractAbstractToken extends AbstractToken
      * @param string $html
      *
      * @return string The remaining HTML.
-     */
+     * /
     private function parseNoContents($tag, $html)
     {
         $remainingHtml = ltrim($html);
@@ -489,6 +524,9 @@ class PagstractAbstractToken extends AbstractToken
         );
     }
 
+    */
+    
+    
     /**
      * Getter for 'attributes'.
      *
@@ -553,11 +591,11 @@ class PagstractAbstractToken extends AbstractToken
      */
     public function nested($nested = null)
     {
-        $className = get_class($this);
         if ($nested !== null) {
-            $className::$nested = !!$nested;
+            $this->nested = !!$nested;
+            
         }
-        return $className::$nested;
+        return $this->nested;
     }
 
     public function toArray()
@@ -577,12 +615,16 @@ class PagstractAbstractToken extends AbstractToken
             }
         }
 
-        if (!empty($this->children)) {
+        if ( ($this->children !== null) ) {
             $result['children'] = array();
-            foreach ($this->children as $child) {
-                $result['children'][] = $child->toArray();
-            }
+	        if (!empty($this->children)) {
+	            foreach ($this->children as $child) {
+	                $result['children'][] = $child->toArray();
+	            }
+	        }
         }
+        
+        //$result["closing"] = !!$this->isClosing;
 
         return $result;
     }

@@ -19,14 +19,17 @@ class PagstractResource extends PagstractAbstractToken
      * @var array the $matching
      */
     public static $matching = array(
-            "start" => "/((resource_ext:\/\/|resource:\/\/)(.*))[\"|\'|\s|\n|\ ]|((resource_ext:\/\/|resource:\/\/)(.*))$/iU", 
-            "end" => PHP_EOL
+            //"start" => "/^((resource_ext:\/\/|resource:\/\/)(.*))[\"|\'|\s|\n|\ ]|^((resource_ext:\/\/|resource:\/\/)(.*))$/iU", 
+            //"start" => "/^((resource_ext|resource):\/\/(.*))[\"|\'|\s|\n|\ ]|^((resource_ext|resource):\/\/(.*))$/iU", 
+    		//"start" => "/^((resource_ext|resource):\/\/(.*))[\"|\'|\s|\n|\ |".PHP_EOL."]/iU", 
+    		"start" => "/^((resource_ext|resource):\/\/(.*))/iU", 
+            "end" => "/([\"|\'|\s|\n|\ ])/"
     );
 
     /**
      * @var boolean 
      */
-    public static $nested = false;
+    public $nested = false;
     
     /**
      * @var string 
@@ -44,11 +47,7 @@ class PagstractResource extends PagstractAbstractToken
         parent::__construct(Token::PAGSTRACTRESOURCE, $parent, $throwOnError);
 
         $this->type = "PagstractResource";
-        $this->name = null;
-        $this->value = null;
-
-        $this->attributes = array();
-        $this->children = array();
+        
     }
 
     /**
@@ -59,31 +58,60 @@ class PagstractResource extends PagstractAbstractToken
      */
     public function parse($html)
     {
-        $html = ltrim($html);
+        $html = ($html);
 
         // Get token position.
         $positionArray = ResourceTokenizer::getPosition($html);
         $this->setLine($positionArray['line']);
         $this->setPosition($positionArray['position']);
-
+        
         $classname = get_class($this);
-        preg_match($classname::$matching["start"], $html, $match);
-          
+        $isMatching = preg_match($classname::$matching["start"], $html, $match);
+        
+		if ($isMatching != 1) {
+        	// reg-ex is not really matching, check if we have an empty reference here...
+			if ($html == 'resource://') {
+            	$this->name = "resource";
+				$this->value = '';
+				return '';
+			}
+            if ($html == 'resource_ext://') {
+            	$this->name = "resource_ext";
+            	$this->value = '';
+            	return '';
+            }
+            // do we have an eror here?
+            // would we ever get here?
+		} else {
+        	// reg-ex is matching, extract reference type here...
+			$this->name = $match[2];
+		}
+		
         // Parse token.
-        $posOfBegin = mb_strpos($html, $match[0]);
+        $posOfBegin = mb_strpos($html, $match[1]);
         $length = mb_strlen($match[0]);
-        $posOfEndOfCData = $posOfBegin + $length;
+        $posOfBeginOfData = $posOfBegin + $length;
         
-        $resourceReference = mb_substr($html, $posOfBegin, $length);
-        
-        if (mb_strpos($resourceReference, 'resource_ext') === false) {
-            $this->name = "resource";
-            $this->value = trim(trim(mb_substr($resourceReference, 11)), "\"'");
+        $remaining = mb_substr($html, $length);
+        // look for the next terminating character (sequence)
+        $hasEndMatch = preg_match($classname::$matching["end"], $remaining, $endMatch);
+        if ($hasEndMatch === 1) {
+        	$posOfEndOfData = $posOfBeginOfData + mb_strpos($remaining, $endMatch[0]);
         } else {
-            $this->name = "resource_ext";
-            $this->value = trim(trim(mb_substr($resourceReference, 15)), "\"'");
+        	$posOfEndOfData = $posOfBeginOfData + mb_strlen($remaining);
         }
-
-        return mb_substr($html, $posOfEndOfCData);
+        
+        // extract reference token value
+        if ($posOfEndOfData > $posOfBeginOfData) {
+	        $resourceReference = mb_substr($html, $posOfBeginOfData, $posOfEndOfData-$length);
+	        $this->value = $resourceReference;
+        } else {
+        	$this->value = '';
+        }
+        
+        // return remaining content
+		$remaining = mb_substr($html, $posOfEndOfData);
+        
+        return $remaining;
     }
 }

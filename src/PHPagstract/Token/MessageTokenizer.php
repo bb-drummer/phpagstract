@@ -37,6 +37,8 @@ class MessageTokenizer extends MarkupTokenizer
         TokenFactory::clearMatchings();
         
         TokenFactory::registerMatching(Token::PAGSTRACTMESSAGE);
+        
+        TokenFactory::registerMatching(Token::PAGSTRACTMESSAGETEXT);
     }
 
 }

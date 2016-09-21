@@ -24,7 +24,7 @@ class PagstractBean extends PagstractAbstractToken
     /**
      * @var boolean 
      */
-    public static $nested = true;
+    public $nested = true;
     
     /**
      * token constructor
@@ -35,12 +35,7 @@ class PagstractBean extends PagstractAbstractToken
     public function __construct(Token $parent = null, $throwOnError = false)
     {
         parent::__construct(Token::PAGSTRACTBEAN, $parent, $throwOnError);
-
-        $this->name = null;
-        $this->value = null;
-
-        $this->attributes = array();
-        $this->children = array();
+        
     }
 
 }

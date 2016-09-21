@@ -19,14 +19,14 @@ class PagstractMessage extends PagstractAbstractToken
      * @var array the $matching
      */
     public static $matching = array(
-            "start" => "/((msg:\/\/)(.*))(?![\w\b\.-_])/iU",
+            "start" => "/^((msg:\/\/)(.*))(?![\w\b\.\-\_])/iU",
             "end" => PHP_EOL
     );
             
     /**
      * @var boolean 
      */
-    public static $nested = false;
+    public $nested = false;
     
     /**
      * @var string 
@@ -43,12 +43,8 @@ class PagstractMessage extends PagstractAbstractToken
     {
         parent::__construct(Token::PAGSTRACTMESSAGE, $parent, $throwOnError);
 
-        $this->type = "PagstractMessage";
-        $this->name = null; 
-        $this->value = null;
-
-        $this->attributes = array();
-        $this->children = array();
+        //$this->type = "PagstractMessage";
+        
     }
 
     /**

@@ -28,7 +28,9 @@ interface Token
 
     const PAGSTRACTCOMMENT           = 'PagstractComment'; // special '<!--- ... -->' handling
     const PAGSTRACTRESOURCE          = 'PagstractResource'; // special 'resource(_ext)://...' handling
+    const PAGSTRACTRESOURCETEXT      = 'PagstractResourceText'; // special 'resource(_ext)://...' text handling
     const PAGSTRACTMESSAGE           = 'PagstractMessage'; // special 'msg://...' handling
+    const PAGSTRACTMESSAGETEXT       = 'PagstractMessageText'; // special 'msg://...' text handling
 
     const PAGSTRACTSIMPLEVALUE       = 'PagstractSimpleValue'; // '<pma:value...'
     

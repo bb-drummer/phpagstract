@@ -35,7 +35,7 @@ class ElementTestAbstract extends \PHPUnit_Framework_TestCase
      * @param string $classname
      * @return string
      */
-    private function getElementClassname($classname)
+    public function getElementClassname($classname)
     {
         if ( !class_exists($classname) ) {
             if ( class_exists(self::NS.$classname) ) {
@@ -96,11 +96,15 @@ class ElementTestAbstract extends \PHPUnit_Framework_TestCase
     {
         if (in_array($this->elementTagname, $this->noChildrenElements)) return ;
         $classname = $this->getElementClassname($this->elementClassname);
-        $element = new $classname();
-        $this->assertFalse($element->hasChildren());
-        $element->parse('<' . $this->elementTagname . '>asdf</' . $this->elementTagname . '>');
-        $this->assertTrue($element->hasChildren());
-        $this->assertEquals(1, count($element->getChildren()));
+	    $element = new $classname();
+        if ( $element->nested === true ) {
+	        $element = new $classname();
+	        $this->assertFalse($element->hasChildren());
+	        //var_dump($this->elementTagname);
+	        $element->parse('<' . $this->elementTagname . '>asdf</' . $this->elementTagname . '>');
+	        $this->assertTrue($element->hasChildren());
+	        $this->assertEquals(1, count($element->getChildren()));
+        }
     }
     
     /**
@@ -151,7 +155,22 @@ class ElementTestAbstract extends \PHPUnit_Framework_TestCase
             var_dump($html, $element->toArray());
         }
 
+        /*if ( $classname::$nested === false ) {
+        	unset($expectedArray["children"]);
+        }*/
         $this->assertEquals($expectedArray, $element->toArray());
+    }
+
+    public function testNested()
+    {
+        $classname = $this->getElementClassname($this->elementClassname);
+        $element = new $classname();
+    	$current = $element->nested();
+    	
+    	$this->assertTrue($element->nested(true));
+    	$this->assertFalse($element->nested(false));
+    	
+    	$this->assertEquals($current, $element->nested($current));
     }
     
     //

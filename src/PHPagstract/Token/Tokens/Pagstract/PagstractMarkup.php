@@ -18,13 +18,14 @@ class PagstractMarkup extends PagstractAbstractToken
      */
     public static $matching = array(
             "start" => "/^\s*<[a-z]|^\s*<(?!(\/pma))/i", 
+            //"start" => "/(^\s*<[a-z]|^\s*<\/\s*[a-z])|^\s*<(?!(\/pma))/i", 
             "end" => ">"
     );
 
     /**
      * @var boolean 
      */
-    public static $nested = false;
+    public $nested = false;
     
     /**
      * token constructor
@@ -35,12 +36,7 @@ class PagstractMarkup extends PagstractAbstractToken
     public function __construct(Token $parent = null, $throwOnError = false)
     {
         parent::__construct(Token::PAGSTRACTMARKUP, $parent, $throwOnError);
-
-        $this->name = null;
-        $this->value = null;
-
-        $this->attributes = array();
-        $this->children = array();
+        
     }
 
 }

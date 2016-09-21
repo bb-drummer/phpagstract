@@ -37,6 +37,8 @@ class ResourceTokenizer extends MarkupTokenizer
         TokenFactory::clearMatchings();
         
         TokenFactory::registerMatching(Token::PAGSTRACTRESOURCE);
+        
+        TokenFactory::registerMatching(Token::PAGSTRACTRESOURCETEXT);
     }
     
 }

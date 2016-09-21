@@ -35,10 +35,8 @@ class TokenFactory
     public static function buildFromHtml($html, Token $parent = null, $throwOnError = false)
     {
         $matchCriteria = self::getMatchings();
-        $noMatchYet = true;
         foreach ($matchCriteria as $className => $regex) {
             if (preg_match($regex["start"], $html) === 1) {
-                $noMatchYet = false;
                 $fullClassName = $className;
                 if (!class_exists($className)) {
                     $fullClassName = "PHPagstract\\Token\\Tokens\\" . $className;
@@ -57,7 +55,6 @@ class TokenFactory
 
         // Error condition
         if ($throwOnError) {
-            echo '<pre>'.htmlentities(print_r($html, true)).'</pre>'; flush();
             throw new TokenFactoryException("Could not resolve token");
         }
 

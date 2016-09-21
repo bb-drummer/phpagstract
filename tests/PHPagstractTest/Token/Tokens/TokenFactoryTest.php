@@ -371,7 +371,7 @@ class TokenFactoryTest extends \PHPUnit_Framework_TestCase
         );
     }
 
-    public function testNoTypeFound()
+    public function testNoTypeFoundReturnsFalseInBuildFromHtml()
     {
         
         TokenFactory::clearMatchings();
@@ -383,10 +383,11 @@ class TokenFactoryTest extends \PHPUnit_Framework_TestCase
     /**
      * @expectedException PHPagstract\Token\Exception\TokenFactoryException
      */
-    public function testExceptionInBuildFromHtml()
+    public function testNoTypeFoundThrowsExceptionInBuildFromHtml()
     {
         
         TokenFactory::buildFromHtml('< asdfasdf', null, true);
         
     }
+    
 }

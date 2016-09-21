@@ -2,6 +2,16 @@
 
 namespace PHPagstractTest\Token\Html;
 
+/**
+ * PHPagstract MarkupTokenizer class test on a (valid) HTML file
+ *
+ * @package     PHPagstract
+ * @author      Björn Bartels <coding@bjoernbartels.earth>
+ * @link        https://gitlab.bjoernbartels.earth/groups/zf2
+ * @license     http://www.apache.org/licenses/LICENSE-2.0 Apache License, Version 2.0
+ * @copyright   copyright (c) 2016 Björn Bartels <coding@bjoernbartels.earth>
+ */
+
 use PHPagstract\Token\MarkupTokenizer;
 
 class BootstrapComTest extends \PHPUnit_Framework_TestCase
@@ -13,7 +23,7 @@ class BootstrapComTest extends \PHPUnit_Framework_TestCase
     {
         
         $bootstrapHtml = file_get_contents(__DIR__ . '/bootstrap-com.html');
-        $htmlTokenizer = new MarkupTokenizer(!true);
+        $htmlTokenizer = new MarkupTokenizer();
         $tokens = $htmlTokenizer->parse($bootstrapHtml);
         $this->assertEquals(
             array (

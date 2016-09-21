@@ -24,7 +24,7 @@ abstract class AbstractToken implements Token
     /**
      * @var boolean 
      */
-    public static $nested = false;
+    protected $nested = false;
     
     /**
      * @var int 

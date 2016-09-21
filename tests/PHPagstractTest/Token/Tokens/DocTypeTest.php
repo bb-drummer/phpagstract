@@ -42,12 +42,12 @@ class DocTypeTest extends \PHPUnit_Framework_TestCase
                 'yo'
             ),
             'non-standard' => array(
-                '<!docType ASDF>',
-                'ASDF',
+                '<!docType asdf>',
+                'asdf',
                 ''
             ),
             'parse error' => array(
-                '<!DOCTYPE ASDF',
+                '<!DOCTYPE asdf',
                 null,
                 ''
             )

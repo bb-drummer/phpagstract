@@ -34,7 +34,7 @@ class PagstractTokenizer extends MarkupTokenizer
     {
         $this->throwOnError = (boolean) $throwOnError;
 
-        PagstractMarkup::$nested = false;
+        //PagstractMarkup::$nested = false;
         
         TokenFactory::clearMatchings();
 
