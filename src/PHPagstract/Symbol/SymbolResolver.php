@@ -1,5 +1,4 @@
 <?php
-
 namespace PHPagstract\Symbol;
 
 
@@ -25,13 +24,6 @@ class SymbolResolver
     protected $throwOnError;
     
     /**
-     * token tree/list
-     *
-     * @var TokenCollection
-     */
-    protected static $tokenTree = null;
-    
-    /**
      */
     public function __construct($throwOnError = false) 
     {
@@ -47,10 +39,9 @@ class SymbolResolver
     public function resolve($tokens) 
     {
 
-        $this->setTokenTree($tokens);
         $symbols = new SymbolCollection();
 
-        $tokenTree = $this->getTokenTree()->getIterator();
+        $tokenTree = $tokens->getIterator();
         if ($tokenTree !== null) {
             $tokenTree->rewind();
             $currentToken = $tokenTree->current();
@@ -59,7 +50,6 @@ class SymbolResolver
                     $currentToken,
                     $this->throwOnError
                 );
-                
                 if ($symbol === false) {
                     // Error condition ? 
                     // maybe add a fallback here ?!
@@ -68,42 +58,27 @@ class SymbolResolver
                     break;
                 }
                 
+				if (method_exists($currentToken, 'hasChildren') && $currentToken->hasChildren()) {
+		            $tokenChildren = $currentToken->getChildren();
+		            $children = new TokenCollection();
+		            $symbolChildren = array();
+		            foreach ($tokenChildren as $idx => $child) {
+		            	$children[] = $child;
+		            }
+		            $symbolChildren = $this->resolve($children);
+		            $symbol->setChildren($symbolChildren);
+		        }
+		        
                 $symbols[] = $symbol;
                 
-                $currentToken = $tokenTree->next();
+                $tokenTree->next();
+            	$currentToken = $tokenTree->current();
                 
             };
         }
         
         return $symbols;
         
-    }
-    
-    /**
-     * set current tokens
-     * 
-     * @param \PHPagstract\Token\Tokens\TokenCollection $tokens
-     */
-    public function setTokenTree($tokens) 
-    {
-        if ( !($tokens instanceof  \PHPagstract\Token\Tokens\TokenCollection)) {
-            if ($this->throwOnError) {
-                throw new SymbolResolverException('Invalid token-collection to set to symbolize');
-            }
-            self::$tokenTree = new TokenCollection();
-        } else {
-            self::$tokenTree = $tokens;
-        }
-    }
-    
-    /**
-     * get curent tokens
-
-     * @return \PHPagstract\Token\Tokens\TokenCollection
-     */
-    public function getTokenTree() 
-    {
-        return self::$tokenTree;
     }
     
 }

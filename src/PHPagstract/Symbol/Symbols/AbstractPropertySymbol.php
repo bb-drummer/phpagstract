@@ -11,8 +11,29 @@ namespace PHPagstract\Symbol\Symbols;
  * @license   http://www.apache.org/licenses/LICENSE-2.0 Apache License, Version 2.0
  * @copyright copyright (c) 2016 Björn Bartels <coding@bjoernbartels.earth>
  */
-abstract class AbstractPropertySymbol extends AbstractSymbol {
+abstract class AbstractPropertySymbol {
     
+	/**
+     * symbol name
+     *
+     * @var Name
+     */
+    private $name = 'Symbol';
+    
+    /**
+     * property type
+     *
+     * @var string
+     */
+    private $type = null;
+
+    /**
+     * parent symbol
+     * 
+     * @var Symbol
+     */
+    private $parent;
+
     /**
      * property container/reference
      *
@@ -22,13 +43,102 @@ abstract class AbstractPropertySymbol extends AbstractSymbol {
 
     /**
      */
-    public function __construct() {
+    public function __construct($type, $name, AbstractPropertySymbol &$parent = null) {
+    	if ($parent !== null) {
+    		$this->parent =& $parent;
+    	}
+    	$this->setName($name);
+    	$this->setType($type);
+    }
+    
+    /**
+     * convert symbol data to array
+     *
+     * @return array
+     */
+    public function serialize()
+    {
+    	$result = get_object_vars($this);
+    	if ( isset($result["parent"]) )unset($result["parent"]);
+    	if ( isset($result["items"]) ) {
+    		$items = [];
+    		foreach ($result["items"] as $key => $item) {
+    			$items[] = $item->serialize();
+    		}
+    		$result["items"] = $items;
+    	}
+    	if ( isset($result["properties"]) ) {
+    		$properties = get_object_vars($result["properties"]);
+    		$items = [];
+    		foreach ($properties as $key => $item) {
+    			$items[$key] = $item->serialize();
+    		}
+    		$result["properties"] = (object)$items;
+    	}
+    	return $result;
+    }
+    
+    //
+    // get/set new property
+    //
+    
+    /**
+     * get a property's value
+     * 
+     * @param string $property the property name
+     * @return mixed|NULL
+     */
+    public function get( $property ) {
+    	if (isset($this->$property)) {
+    		return $this->$property;
+    	}
+    	return null;
+    }
+    
+    /**
+     * set a property's value
+     * 
+     * @param string $property the property name
+     * @param mixed $value
+     * @return self
+     */
+    public function set( $property, $value ) {
+    	$this->$property = $value;
+    	return $this;
+    }
+    
+    //
+    // getter/setters
+    //
+
+    /**
+     * get the property
+     *
+     * @return AbstractPropertySymbol
+     */
+    public function getParent() 
+    {
+    	if ($this->parent === null) {
+    		return $this;
+    	}
+        return $this->parent;
+    }
+    
+    /**
+     * set the property
+     *
+     * @param AbstractPropertySymbol $property
+     */
+    public function setParent(AbstractPropertySymbol $parent) 
+    {
+        $this->parent = $parent;
+        return $this;
     }
 
     /**
      * get the property
      *
-     * @return \stdClass
+     * @return mixed
      */
     public function getProperty() 
     {
@@ -38,12 +148,67 @@ abstract class AbstractPropertySymbol extends AbstractSymbol {
     /**
      * set the property
      *
-     * @param \stdClass $property
+     * @param mixed $property
      */
     public function setProperty($property) 
     {
         $this->property = $property;
+        return $this;
+    }
+
+    /**
+     * get the property type
+     *
+     * @return string
+     */
+    public function getType() 
+    {
+        return $this->type;
     }
     
+    /**
+     * set the property type
+     *
+     * @param string $type
+     */
+    public function setType($type) 
+    {
+        $this->type = $type;
+        return $this;
+    }
+    
+    /**
+     * get the name
+     *
+     * @return string
+     */
+    public function getName() 
+    {
+        return (string)$this->name;
+    }
+    
+    /**
+     * set the name
+     *
+     * @param string $name
+     */
+    public function setName($name) 
+    {
+        $this->name = $name;
+        return $this;
+    }
+
+
+    /**
+     * 'magic' debug info assembler
+     *
+     * @param string $name
+     * /
+    public function __debugInfo() {
+    	$result = get_object_vars($this);
+    	//if ( isset($result["parent"]) )unset($result["parent"]);
+    	return $result;
+    } 
+    */
 }
 

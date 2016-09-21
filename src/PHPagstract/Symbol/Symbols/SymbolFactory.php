@@ -26,15 +26,11 @@ class SymbolFactory
      */
     public static function symbolize( $token, $throwOnError = false ) 
     {
-        //echo '<pre>'.htmlentities(print_r($token->getType(), true)).'</pre>';
         
         // get token name "PHPagstactTokenName", fallback "PHPagstactMarkup"
         $symbolName = ucfirst( $token->getType() );
         $symbolClassname = "PHPagstract\\Symbol\\Symbols\\Tokens\\" . $symbolName;
-        if (!class_exists($symbolClassname)) {
-            //$symbolName = "PagstractMarkup";
-            //$symbolClassname = "PHPagstract\\Symbol\\Symbols\\Tokens\\" . $symbolName;
-        }
+        
         if (!class_exists($symbolClassname)) {
             if ($throwOnError) {
                 throw new SymbolResolverException("Invalid token to symbolize: " . $symbolName);
@@ -46,30 +42,25 @@ class SymbolFactory
         $symbol = new $symbolClassname;
         $symbol->setName($symbolName);
         
+        // is token a nesting closing token
+        if (method_exists($token, "getName")) {
+        	$name = $token->getName();
+	        if ((empty($name) || ($name == $symbolName)) && method_exists($token, "getAttributes")) {
+	        	$attr = $token->getAttributes();
+	        	if (is_array($attr)) {
+		        	$keys = array_keys($attr);
+		        	if ( isset($keys[0]) && is_string($keys[0]) ) {
+		        		$symbol->isClosing(true);
+		        	}
+	        	}
+	        }
+        }
+        
+        // link current token to symbol
         if (method_exists($symbol, "setToken")) {
             $symbol->setToken($token);
         }
 
-        if (method_exists($token, 'hasChildren') && $token->hasChildren()) {
-            $tokenChildren = $token->getChildren();
-            $symbolChildren = array();
-            foreach ($tokenChildren as $idx => $child) {
-                $symbolChild = self::symbolize(
-                    $child, 
-                    $throwOnError
-                );
-                if ($symbolChild === false) {
-                    // Error condition
-                    if ($throwOnError) {
-                        throw new SymbolResolverException("Could not resolve symbol");
-                    }
-                    // Error has occurred, so we stop.
-                    break;
-                }
-                $symbolChildren[] = $symbolChild;
-            }
-            $symbol->setChildren($symbolChildren);
-        }
         return $symbol;
     }
     

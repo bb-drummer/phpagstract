@@ -1,24 +1,18 @@
 <?php
-
 namespace PHPagstractTest\Symbol\Symbols;
 
+use PHPagstract\Symbol\Symbols\Tokens\Element;
+
 /**
+ * PHPagstract abstract/token symbol class tests
  *
- * @author bba
- *        
+ * @package     PHPagstract
+ * @author      Björn Bartels <coding@bjoernbartels.earth>
+ * @link        https://gitlab.bjoernbartels.earth/groups/zf2
+ * @license     http://www.apache.org/licenses/LICENSE-2.0 Apache License, Version 2.0
+ * @copyright   copyright (c) 2016 Björn Bartels <coding@bjoernbartels.earth>
  */
 class AbstractSymbolTest extends \PHPUnit_Framework_TestCase {
-    
-    public function testToArray() {
-        $symbol = $this->getMockForAbstractClass('PHPagstract\\Symbol\\Symbols\\AbstractSymbol');
-        $testArray = $symbol->toArray();
-        
-        $this->assertEquals(array(
-            'name' => 'Symbol',
-            'line' => null,
-            'position' => null,
-        ), $testArray);
-    }
     
     public function testToString() {
         $symbol = $this->getMockForAbstractClass('PHPagstract\\Symbol\\Symbols\\AbstractSymbol');
@@ -42,6 +36,219 @@ class AbstractSymbolTest extends \PHPUnit_Framework_TestCase {
         $testName = $symbol->getName();
         
         $this->assertEquals('my-name', $testName);
+    }
+    
+    public function testSymbolsTokenGetHasAttributes() {
+        $attr = array(
+        	"foo" => "bar"
+        );
+        $token = $this->getMockForAbstractClass(
+            'PHPagstract\\Token\\Tokens\\AbstractToken', 
+        	array("element", null, null),
+        	'', null, null, null, 
+        	array('hasAttributes', 'getAttributes')
+        );
+        $token->method('hasAttributes')->willReturn(true);
+        $token->method('getAttributes')->willReturn($attr);
+        
+        $symbol = new Element();
+        $symbol->setToken($token);
+        
+        $testAttr = $symbol->getAttributes();
+        
+        $this->assertEquals($attr, $testAttr);
+        $this->assertTrue($symbol->hasAttributes());
+        
+    }
+
+    public function testSymbolsTokenGetHasNoAttributes() {
+        $token = $this->getMockForAbstractClass(
+            'PHPagstract\\Token\\Tokens\\AbstractToken', 
+        	array("element", null, null),
+        	'', null, null, null, 
+        	array('hasAttributes', 'getAttributes')
+        );
+        $token->method('hasAttributes')->willReturn(false);
+        $token->method('getAttributes')->willReturn(array());
+        
+        $symbol = new Element();
+        $symbol->setToken($token);
+        
+        $testAttr = $symbol->getAttributes();
+        
+        $this->assertEquals(array(), $testAttr);
+        $this->assertFalse($symbol->hasAttributes());
+    }
+    
+    public function testSymbolsTokenGetValue() {
+        $token = $this->getMockForAbstractClass(
+            'PHPagstract\\Token\\Tokens\\AbstractToken', 
+        	array("element", null, null),
+        	'', null, null, null, 
+        	array('getValue')
+        );
+        $token->method('getValue')->willReturn("my value");
+        
+        $symbol = new Element();
+        $symbol->setToken($token);
+        
+        $testValue = $symbol->getValue();
+        
+        $this->assertEquals("my value", $testValue);
+    }
+    
+    public function testSymbolsTokenMethodsDoNotExist() {
+        $token = $this->getMockForAbstractClass(
+            'PHPagstract\\Token\\Tokens\\Text'
+        );
+        
+        $symbol = new Element();
+        $symbol->setToken($token);
+
+        $this->assertFalse($symbol->hasAttributes());
+        $this->assertEquals(array(), $symbol->getAttributes());
+
+        $token = $this->getMockForAbstractClass(
+            'PHPagstract\\Token\\Tokens\\AbstractToken', 
+        	array("text", null, null),
+        	'', null, null, null, 
+        	array()
+        );
+        
+        $symbol = new Element();
+        $symbol->setToken($token);
+        
+        $this->assertNull($symbol->getValue());
+    }
+    
+    public function testSetGetChildren() {
+        $childSymbol = $this->getMockForAbstractClass('PHPagstract\\Symbol\\Symbols\\AbstractSymbol');
+        
+        $symbol = new Element();
+        
+        $symbol->setChildren(array(
+        	$childSymbol,
+        	$childSymbol
+        ));
+        
+        $testArray = $symbol->getChildren();
+        
+        $this->assertTrue($symbol->hasChildren());
+        $this->assertEquals(
+	        array( 
+	        	$childSymbol, 
+	        	$childSymbol
+	        ), 
+        	$testArray
+        ); 
+        
+    }
+    
+    public function testToArrayAbstractSymbol() 
+    {
+        $symbol = $this->getMockForAbstractClass('PHPagstract\\Symbol\\Symbols\\AbstractSymbol');
+        $testArray = $symbol->toArray();
+        $this->assertEquals(
+        	array(
+        		'name' => 'Symbol',
+        		'line' => null,
+        		'position' => null,
+	        ),
+	        $testArray
+		);
+        
+    }
+        
+    public function testToArrayWithAttributesAndChildren() 
+    {
+       	$token = $this->getMockForAbstractClass(
+    		'PHPagstract\\Token\\Tokens\\AbstractToken',
+    		array("text", null, null),
+    		'', null, null, null,
+    		array('getLine', 'getPosition', 'getAttributes')
+    	);
+    	$token->method('getAttributes')->willReturn(array(
+    		'foo' => 'bar'
+    	));
+    	
+    	$symbol = new Element();
+    	$symbol->setToken($token);
+    	
+    	$testArray = $symbol->toArray();
+        $this->assertEquals(
+        	array(
+	            'name' => 'Symbol',
+	            'line' => null,
+	            'position' => null,
+		        'token' => null,
+	    		'attributes' => array(
+	    			'foo' => 'bar'
+	    		),
+	        ), 
+        	$testArray
+        );
+        
+        $childSymbol = new Element();
+    	$childSymbol->setToken($token);
+    	
+    	$testArray = $childSymbol->toArray();
+    	$this->assertEquals(
+    		array(
+	    		'name' => 'Symbol',
+	    		'line' => null,
+	    		'position' => null,
+	    		'token' => null,
+	    		'attributes' => array(
+	    			'foo' => 'bar'
+	    		),
+	    	), 
+    		$childSymbol->toArray()
+    	);
+    	
+    	
+    	$symbol = new Element();
+    	$symbol->setToken($token);
+    	$symbol->isClosing(true);
+    	
+    	$symbol->setChildren(array(
+    		$childSymbol, $childSymbol
+    	));
+    	
+    	$testArray = $symbol->toArray();
+    	$this->assertEquals(
+    		array(
+    			'name' => 'Symbol',
+    			'line' => null,
+    			'position' => null,
+	    		'token' => null,
+	    		'attributes' => array(
+	    			'foo' => 'bar'
+	    		),
+	    		'closing' => true,
+    			'children' => array(
+		    		array(
+			    		'name' => 'Symbol',
+			    		'line' => null,
+			    		'position' => null,
+	    				'token' => null,
+			    		'attributes' => array(
+			    			'foo' => 'bar'
+			    		),
+			    	), 
+		    		array(
+			    		'name' => 'Symbol',
+			    		'line' => null,
+			    		'position' => null,	
+	    				'token' => null,
+			    		'attributes' => array(
+			    			'foo' => 'bar'
+			    		),
+			    	), 
+    			),
+    		), 
+    		$symbol->toArray()
+    	);
+    	 
     }
     
 }

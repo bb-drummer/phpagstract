@@ -15,11 +15,11 @@ namespace PHPagstract\Symbol\Symbols;
 abstract class AbstractTokenSymbol extends AbstractSymbol {
     
     /**
-     * child elements
+     * is closing tag?
      * 
-     * @var array[Symbol] 
+     * @var boolean 
      */
-    private $children;
+    private $closing;
 
     /**
      */
@@ -64,43 +64,22 @@ abstract class AbstractTokenSymbol extends AbstractSymbol {
         return !empty($attributes);
     }
     
-    /**
-     * Getter for 'children'.
-     *
-     * @return array
-     */
-    public function getChildren()
-    {
-        return $this->children;
-    }
-    
-    /**
-     * Setter for 'children'.
-     *
-     * @param array
-     */
-    public function setChildren($children)
-    {
-        $this->children = $children;
-    }
-    
-    /**
-     * @return boolean
-     */
-    public function hasChildren()
-    {
-        return !empty($this->children);
-    }
-    
     public function toArray()
     {
         $result = array(
                 'name' => $this->getName(),
                 'line' => $this->getToken()->getLine(),
                 'position' => $this->getToken()->getPosition(),
-                'token' => $this->getToken()->getType()
+                'token' => $this->getToken()->getType(),
+                //'closing' => $this->isClosing(),
         );
 
+        if ($this->isClosing()) {
+        	$result['closing'] = true;
+        }
+        
+        $result['token'] = $this->getToken()->toArray();
+        
         $attributes = $this->getAttributes();
         if (!empty($attributes)) {
             $result['attributes'] = array();
@@ -112,12 +91,27 @@ abstract class AbstractTokenSymbol extends AbstractSymbol {
         $children = $this->getChildren();
         if (!empty($children)) {
             $result['children'] = array();
-            foreach ($this->children as $child) {
+            foreach ($children as $child) {
                 $result['children'][] = $child->toArray();
             }
         }
     
         return $result;
     }    
+
+    /**
+     * Setter and getter for 'children'.
+     *
+     * @param boolaan
+     * @return boolean
+     */
+    public function isClosing($isClosing = null)
+    {
+    	if ($isClosing !== null) {
+    		$this->closing = !!$isClosing;
+    	}
+        return !!$this->closing;
+    }
+    
 }
 

@@ -2,8 +2,10 @@
 
 namespace PHPagstract\Symbol\Symbols\Tokens;
 
+use PHPagstract\Symbol\Symbols\AbstractTokenSymbol;
+
 /**
- * PHPagstract message symbol class
+ * PHPagstract token symbol class
  *
  * @package     PHPagstract
  * @author      Björn Bartels <coding@bjoernbartels.earth>
@@ -11,12 +13,12 @@ namespace PHPagstract\Symbol\Symbols\Tokens;
  * @license     http://www.apache.org/licenses/LICENSE-2.0 Apache License, Version 2.0
  * @copyright   copyright (c) 2016 Björn Bartels <coding@bjoernbartels.earth>
  */
-class PagstractMessage extends PagstractMarkup {
+class Comment extends AbstractTokenSymbol {
     
     /**
      */
-    public function __construct() {
+    public function __construct($parent = null, $throwOnError = false) {
+        parent::__construct ($parent, $throwOnError);
     }
-    
 }
 

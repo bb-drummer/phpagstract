@@ -18,11 +18,25 @@ abstract class AbstractSymbol implements Symbol
 {
     
     /**
+     * child symbols
+     * 
+     * @var array[Symbol] 
+     */
+    private $children;
+
+    /**
+     * parent symbol
+     * 
+     * @var Symbol
+     */
+    private $parent;
+
+	/**
      * token container/reference
      *
      * @var PHPagstractToken
      */
-    private $token = null;
+    private  $token = null;
 
 	/**
      * symbol name
@@ -56,6 +70,34 @@ abstract class AbstractSymbol implements Symbol
         return $result;
     }
 
+    /**
+     * Getter for 'children'.
+     *
+     * @return array
+     */
+    public function getChildren()
+    {
+        return $this->children;
+    }
+    
+    /**
+     * Setter for 'children'.
+     *
+     * @param array
+     */
+    public function setChildren($children)
+    {
+        $this->children = $children;
+    }
+    
+    /**
+     * @return boolean
+     */
+    public function hasChildren()
+    {
+        return !empty($this->children);
+    }
+    
     /**
      * get the token
      *
