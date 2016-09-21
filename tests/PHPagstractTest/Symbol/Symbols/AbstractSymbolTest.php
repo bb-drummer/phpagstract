@@ -2,6 +2,8 @@
 namespace PHPagstractTest\Symbol\Symbols;
 
 use PHPagstract\Symbol\Symbols\Tokens\Element;
+use PHPagstract\Symbol\Symbols\Properties\RootProperty;
+use PHPagstract\Symbol\Symbols\Properties\ScalarProperty;
 
 /**
  * PHPagstract abstract/token symbol class tests
@@ -249,6 +251,22 @@ class AbstractSymbolTest extends \PHPUnit_Framework_TestCase {
     		$symbol->toArray()
     	);
     	 
+    }
+        
+    public function testPropertySymbolsSetGetParents() 
+    {
+    	$root = new RootProperty();
+    	
+    	$prop = new ScalarProperty('test', null);
+    	
+    	$testNull = $prop->getParent();
+    	 
+    	$this->assertEquals($prop, $testNull);
+    	
+    	$prop->setParent($root);
+    	$testProp = $prop->getParent();
+    	
+    	$this->assertEquals($root, $testProp);
     }
     
 }
