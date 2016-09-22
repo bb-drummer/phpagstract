@@ -18,7 +18,7 @@ class ListProperty extends AbstractPropertySymbol {
 	/**
 	 */
 	public function __construct($name, $parent) {
-		parent::__construct ('list', $name, $parent);
+		parent::__construct('list', $name, $parent);
 	}
 }
 

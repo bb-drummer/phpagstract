@@ -18,7 +18,7 @@ class ObjectProperty extends AbstractPropertySymbol {
 	/**
 	 */
 	public function __construct($name, $parent) {
-		parent::__construct ('object', $name, $parent);
+		parent::__construct('object', $name, $parent);
 	}
 }
 

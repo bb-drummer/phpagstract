@@ -14,7 +14,7 @@ class RootProperty extends AbstractPropertySymbol {
 	/**
 	 */
 	public function __construct() {
-		parent::__construct ('root', 'root', $this);
+		parent::__construct('root', 'root', $this);
 	}
 }
 

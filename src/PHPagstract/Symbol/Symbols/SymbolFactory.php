@@ -24,16 +24,16 @@ class SymbolFactory
 	 * @param boolean $throwOnError
 	 * @return object|boolean
 	 */
-	public static function symbolize( $token, $throwOnError = false ) 
+	public static function symbolize($token, $throwOnError = false) 
 	{
         
 		// get token name "PHPagstactTokenName", fallback "PHPagstactMarkup"
-		$symbolName = ucfirst( $token->getType() );
-		$symbolClassname = "PHPagstract\\Symbol\\Symbols\\Tokens\\" . $symbolName;
+		$symbolName = ucfirst($token->getType());
+		$symbolClassname = "PHPagstract\\Symbol\\Symbols\\Tokens\\".$symbolName;
         
 		if (!class_exists($symbolClassname)) {
 			if ($throwOnError) {
-				throw new SymbolResolverException("Invalid token to symbolize: " . $symbolName);
+				throw new SymbolResolverException("Invalid token to symbolize: ".$symbolName);
 			}
 			return (false);
 		}
@@ -49,7 +49,7 @@ class SymbolFactory
 				$attr = $token->getAttributes();
 				if (is_array($attr)) {
 					$keys = array_keys($attr);
-					if ( isset($keys[0]) && is_string($keys[0]) ) {
+					if (isset($keys[0]) && is_string($keys[0])) {
 						$symbol->isClosing(true);
 					}
 				}

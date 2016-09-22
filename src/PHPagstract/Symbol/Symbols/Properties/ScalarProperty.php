@@ -18,7 +18,7 @@ class ScalarProperty extends AbstractPropertySymbol {
 	/**
 	 */
 	public function __construct($name, $parent) {
-		parent::__construct ('scalar', $name, $parent);
+		parent::__construct('scalar', $name, $parent);
 	}
 }
 

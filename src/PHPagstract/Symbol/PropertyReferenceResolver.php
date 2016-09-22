@@ -55,10 +55,10 @@ class PropertyReferenceResolver {
 	 * @param mixed $data
 	 * @return mixed
 	 */
-	public function symbolize ( $data, AbstractPropertySymbol $parent = null, $name = null ) 
+	public function symbolize($data, AbstractPropertySymbol $parent = null, $name = null) 
 	{
     	
-		if ( ($parent === null) ) {
+		if (($parent === null)) {
 			// no parent, so create a root node
 			$root = new RootProperty();
 			if (isset($data->root)) {
@@ -68,7 +68,7 @@ class PropertyReferenceResolver {
 			foreach ($rootProperties as $name => $value) {
 				$properties[$name] = $this->symbolize($value, $root, $name);
 			}
-		   	$root->set('properties', (object)$properties);
+		   	$root->set('properties', (object) $properties);
 			return ($root);
 		}
     	
@@ -100,7 +100,7 @@ class PropertyReferenceResolver {
 				foreach ($objProperties as $xname => $value) {
 					$properties[$xname] = $this->symbolize($value, $property, $xname);
 				}
-				$property->set('properties', (object)$properties);
+				$property->set('properties', (object) $properties);
 			break;
 
 			case $this->isScalar($data):
@@ -122,13 +122,13 @@ class PropertyReferenceResolver {
 	 * @param string $reference
 	 * @return array
 	 */
-	public function parsePropertyReferenceString ( $reference ) 
+	public function parsePropertyReferenceString($reference) 
 	{
         
 		$tokens = array();
 		preg_match_all($this->parseRegex, $reference, $tokens);
 		$errors = preg_match_all($this->errorRegex, $reference);
-		if ( ($errors !== false) && ($errors > 0) ) {
+		if (($errors !== false) && ($errors > 0)) {
 			return array();
 		}
 		$parts = array();
@@ -150,15 +150,15 @@ class PropertyReferenceResolver {
 	 * @param string $reference
 	 * @return mixed
 	 */
-	public function getPropertyByReference ( $reference ) 
+	public function getPropertyByReference($reference) 
 	{
         
         
-		if ( strpos($reference, "../") === 0) {
+		if (strpos($reference, "../") === 0) {
 			// we have a parental reference here, so get parent
 			$data = $this->getContext()->getParent();
 			$parentsName = $data->getName();
-			if ( ($parentsName === "0") || is_numeric( $parentsName ) ) {
+			if (($parentsName === "0") || is_numeric($parentsName)) {
 				// we are in a list and actual parent is the numeric index item, so get parent's parent
 				// check if this one here is really needed anymore
 			}
@@ -175,20 +175,20 @@ class PropertyReferenceResolver {
 			$index = $value[2];
 
 			$type = $data->getType();
-			if ( in_array($type, array('root', 'object')) ) {
+			if (in_array($type, array('root', 'object'))) {
 				$properties = $data->get('properties');
-				if ( isset($properties->$propertyName) ) {
+				if (isset($properties->$propertyName)) {
 		   			$data = $properties->$propertyName;
 		   		}
 		   		$items = $data->get('items');
-		   		if ( ($index != '') && isset($items[$index]) ) {
+		   		if (($index != '') && isset($items[$index])) {
 		   			$data = $items[$index];
 		   		}
 			}
 		}
         
 		$rootContext = $this->getContext();
-		if ( ($rootContext->getName() == $data->getName()) && ($rootContext->getParent()->getName() == $data->getParent()->getName()) ) {
+		if (($rootContext->getName() == $data->getName()) && ($rootContext->getParent()->getName() == $data->getParent()->getName())) {
 			return null;
 		}
         
@@ -201,7 +201,7 @@ class PropertyReferenceResolver {
 	 * @param string $reference
 	 * @return mixed
 	 */
-	public function getValueByReference ( $reference ) 
+	public function getValueByReference($reference) 
 	{
 		$property = $this->getPropertyByReference($reference);
 		switch ($property->getType()) {
@@ -226,7 +226,7 @@ class PropertyReferenceResolver {
 	 * 
 	 * @param array|object $context
 	 */
-	public function setContext( &$context ) 
+	public function setContext(&$context) 
 	{
 		$this->context = $context;
 	}
@@ -239,7 +239,7 @@ class PropertyReferenceResolver {
 	 */
 	public function isObject($param) 
 	{
-		return ($param instanceof \stdClass );
+		return ($param instanceof \stdClass);
 	}
 
 
