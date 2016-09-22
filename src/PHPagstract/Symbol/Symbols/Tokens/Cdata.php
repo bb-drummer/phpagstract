@@ -18,7 +18,7 @@ class Cdata extends AbstractTokenSymbol {
 	/**
 	 */
 	public function __construct($parent = null, $throwOnError = false) {
-		parent::__construct ($parent, $throwOnError);
+		parent::__construct($parent, $throwOnError);
 	}
 }
 

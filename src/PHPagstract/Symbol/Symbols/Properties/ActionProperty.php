@@ -18,7 +18,7 @@ class ActionProperty extends AbstractPropertySymbol {
 	/**
 	 */
 	public function __construct($name, $parent) {
-		parent::__construct ('action', $name, $parent);
+		parent::__construct('action', $name, $parent);
 	}
 }
 

@@ -103,7 +103,7 @@ class PagstractResource extends PagstractAbstractToken
         
 		// extract reference token value
 		if ($posOfEndOfData > $posOfBeginOfData) {
-			$resourceReference = mb_substr($html, $posOfBeginOfData, $posOfEndOfData-$length);
+			$resourceReference = mb_substr($html, $posOfBeginOfData, $posOfEndOfData - $length);
 			$this->value = $resourceReference;
 		} else {
 			$this->value = '';

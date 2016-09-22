@@ -18,7 +18,7 @@ class PagstractDebug extends AbstractTokenSymbol {
 	/**
 	 */
 	public function __construct() {
-		parent::__construct ();
+		parent::__construct();
 	}
 }
 

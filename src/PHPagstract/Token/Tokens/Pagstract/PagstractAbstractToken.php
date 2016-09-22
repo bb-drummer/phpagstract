@@ -222,7 +222,7 @@ class PagstractAbstractToken extends AbstractToken
 		$this->name = $this->parseElementName($html);
       
 		// Parse attributes.
-		$remainingHtml = mb_substr($html, mb_strlen($this->name) + 1 + ($this->isClosing ? 1 : 0) );
+		$remainingHtml = mb_substr($html, mb_strlen($this->name) + 1 + ($this->isClosing ? 1 : 0));
 		while (mb_strpos($remainingHtml, '>') !== false && preg_match("/^\s*[\/]?>/", $remainingHtml) === 0) {
 			$remainingHtml = $this->parseAttribute($remainingHtml);
 		}
@@ -306,7 +306,7 @@ class PagstractAbstractToken extends AbstractToken
 			if ($remainingHtml[0] === "'" || $remainingHtml[0] === '"') {
 				// Quote enclosed attribute value.
 				$valueMatchSuccessful = preg_match(
-					"/" . $remainingHtml[0] . "(.*?(?<!\\\))" . $remainingHtml[0] . "/s",
+					"/".$remainingHtml[0]."(.*?(?<!\\\))".$remainingHtml[0]."/s",
 					$remainingHtml,
 					$valueMatches
 				);
@@ -382,7 +382,7 @@ class PagstractAbstractToken extends AbstractToken
         
 		// Parse contents one token at a time.
 		$remainingHtml = $html;
-		while (preg_match("/^<\/\s*" . $this->name . "\s*>/is", $remainingHtml) === 0) {
+		while (preg_match("/^<\/\s*".$this->name."\s*>/is", $remainingHtml) === 0) {
 			$token = TokenFactory::buildFromHtml(
 				$remainingHtml,
 				$this,
@@ -614,7 +614,7 @@ class PagstractAbstractToken extends AbstractToken
 			}
 		}
 
-		if ( ($this->children !== null) ) {
+		if (($this->children !== null)) {
 			$result['children'] = array();
 			if (!empty($this->children)) {
 				foreach ($this->children as $child) {

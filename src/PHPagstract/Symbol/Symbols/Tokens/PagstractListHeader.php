@@ -16,7 +16,7 @@ class PagstractListHeader extends PagstractMarkup {
 	/**
 	 */
 	public function __construct() {
-		parent::__construct ();
+		parent::__construct();
 	}
 }
 
