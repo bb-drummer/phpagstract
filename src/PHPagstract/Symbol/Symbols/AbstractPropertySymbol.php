@@ -60,7 +60,9 @@ abstract class AbstractPropertySymbol {
 	public function serialize()
 	{
 		$result = get_object_vars($this);
-		if (isset($result["parent"]))unset($result["parent"]);
+		if (isset($result["parent"])) {
+			unset($result["parent"]);
+		}
 		if (isset($result["items"])) {
 			$items = [];
 			foreach ($result["items"] as $key => $item) {
