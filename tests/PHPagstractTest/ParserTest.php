@@ -170,24 +170,14 @@ class ParserTest extends TestCase
     }
     
     public function files2parseDataProvider () {
-/*$page[] = file_get_contents("/Volumes/BB.DATA.MOBILE.01/repostories/php/phpagstract/data/shop/base/templates/containers/mainReviewer.html");
-$page[] = file_get_contents("/Volumes/BB.DATA.MOBILE.01/repostories/php/phpagstract/data/shop/base/templates/ArtikelDetailsBuchPageModel.html");
-$page[] = file_get_contents("/Volumes/BB.DATA.MOBILE.01/repostories/php/phpagstract/data/shop/base/templates/containers/pvTopDetailsFormatsTabs.html");
-$page[] = file_get_contents("/Volumes/BB.DATA.MOBILE.01/repostories/php/phpagstract/data/shop/base/templates/containers/pvTopDetailsFormatsDropdowns.html");
-$page[] = file_get_contents("/Volumes/BB.DATA.MOBILE.01/repostories/php/phpagstract/data/shop/base/templates/containers/navSideMenu.html");
-$page[] = file_get_contents("/Volumes/BB.DATA.MOBILE.01/repostories/php/phpagstract/tests/PHPagstractTest/Token/Html/bootstrap-com.html");
-
-$resourcesfile = file_get_contents("/Volumes/BB.DATA.MOBILE.01/repostories/php/phpagstract/data/shop/base/templates/globals/htmlCloseJSIE8.html");
-$messagesfile = file_get_contents("/Volumes/BB.DATA.MOBILE.01/repostories/php/phpagstract/data/shop/base/templates/globals/footerSocialMedia.html");
-$jsonfile = file_get_contents("/Volumes/BB.DATA.MOBILE.01/repostories/php/phpagstract/data/farben_kacheln.json");*/
     	return array(
 	    	"HTML file 01" => array(
 	    		"tokenizer" => "PHPagstract\\Token\\MarkupTokenizer",
-	    		"filename" => "/Volumes/BB.DATA.MOBILE.01/repostories/php/phpagstract/tests/PHPagstractTest/Token/Html/bootstrap-com.html",
+	    		"filename" => __DIR__."/Token/Html/bootstrap-com.html",
 	    	),
 	    	"Pagstract file 01" => array(
 	    		"tokenizer" => "PHPagstract\\Token\\PagstractTokenizer",
-	    		"filename" => "/Volumes/BB.DATA.MOBILE.01/repostories/php/phpagstract/data/shop/base/templates/containers/mainReviewer.html",
+	    		"filename" => __DIR__."/Token/Html/pagstract-test.html",
 	    	),
         );
     }
