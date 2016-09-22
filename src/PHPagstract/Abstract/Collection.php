@@ -140,7 +140,7 @@ class AbstractCollection implements \ArrayAccess, \IteratorAggregate {
      * retrieve array iterator for items
      * required by the IteratorAggregate interface
      * 
-     * @return ArrayIterator
+     * @return \ArrayIterator
      */
     public function getIterator()
     {
@@ -151,7 +151,7 @@ class AbstractCollection implements \ArrayAccess, \IteratorAggregate {
 	 * set/get 'only valid type' flag
 	 * 
 	 * @param boolean $setTo
-	 * @return boolean $onlyValidType
+	 * @return boolean|null $onlyValidType
 	 */
 	public function onlyValidType($setTo = null) {
 		if ($setTo === null) {

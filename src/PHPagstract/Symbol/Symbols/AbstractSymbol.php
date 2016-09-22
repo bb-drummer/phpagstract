@@ -48,7 +48,7 @@ abstract class AbstractSymbol implements Symbol
     /**
      * convert symbol to string representation
      *
-     * @return array
+     * @return string
      */
     public function toString() 
     {
@@ -111,7 +111,7 @@ abstract class AbstractSymbol implements Symbol
     /**
      * set the token
      *
-     * @param PHPagstract\Token\Tokens\Token $token
+     * @param PHPagstractToken $token
      */
     public function setToken(PHPagstractToken $token) 
     {

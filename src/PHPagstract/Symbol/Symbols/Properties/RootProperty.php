@@ -11,10 +11,10 @@ use PHPagstract\Symbol\Symbols\AbstractPropertySymbol;
  */
 class RootProperty extends AbstractPropertySymbol {
     
-    /**
-     */
-    public function __construct() {
-        parent::__construct ('root', 'root', $this);
-    }
+	/**
+	 */
+	public function __construct() {
+		parent::__construct ('root', 'root', $this);
+	}
 }
 

@@ -15,10 +15,10 @@ use PHPagstract\Symbol\Symbols\AbstractTokenSymbol;
  */
 class PagstractDebug extends AbstractTokenSymbol {
     
-    /**
-     */
-    public function __construct() {
-        parent::__construct ();
-    }
+	/**
+	 */
+	public function __construct() {
+		parent::__construct ();
+	}
 }
 

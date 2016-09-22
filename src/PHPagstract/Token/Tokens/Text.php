@@ -51,7 +51,7 @@ class Text extends AbstractToken
         
         $posOfNextElement = mb_strpos($html, '<');
         if ($posOfNextElement === false) {
-            $this->value = $startingWhitespace . trim($html);
+            $this->value = $startingWhitespace.trim($html);
 
             return '';
         }
@@ -70,7 +70,7 @@ class Text extends AbstractToken
             $endingWhitespace = ' ';
         }
 
-        $this->value = $startingWhitespace . trim($text) . $endingWhitespace;
+        $this->value = $startingWhitespace.trim($text).$endingWhitespace;
 
         return mb_substr($html, $posOfNextElement);
     }

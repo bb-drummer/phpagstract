@@ -63,7 +63,7 @@ class PagstractPropertyReferenceText extends PagstractAbstractToken
         
         $posOfNextElement = mb_strpos($html, '${');
         if ($posOfNextElement === false) {
-            $this->value = $startingWhitespace . trim($html);
+            $this->value = $startingWhitespace.trim($html);
 
             return '';
         }
@@ -82,7 +82,7 @@ class PagstractPropertyReferenceText extends PagstractAbstractToken
             $endingWhitespace = ' ';
         }
 
-        $this->value = $startingWhitespace . trim($text) . $endingWhitespace;
+        $this->value = $startingWhitespace.trim($text).$endingWhitespace;
 
         return mb_substr($html, $posOfNextElement);
     }

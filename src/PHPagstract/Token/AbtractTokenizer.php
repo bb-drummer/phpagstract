@@ -25,22 +25,21 @@ abstract class AbstractTokenizer
     /**
      * Will parse html into tokens.
      *
-     * @param $html string The HTML to tokenize.
+     * @param string $html string The HTML to tokenize.
      *
      * @return TokenCollection
      */
-    public function parse( $html ) 
+    public function parse($html) 
     { 
-        return ( (new TokenCollection()) ); 
+        return ((new TokenCollection())); 
     }
     
     /**
      * get position array (line, position)
      * 
-     * @param  string $partialHtml
      * @return array
      */
-    public static function getPosition( $html ) 
+    public static function getPosition($html) 
     { 
         return array(
             'line' => 0,

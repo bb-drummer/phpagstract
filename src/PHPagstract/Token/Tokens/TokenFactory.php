@@ -39,7 +39,7 @@ class TokenFactory
             if (preg_match($regex["start"], $html) === 1) {
                 $fullClassName = $className;
                 if (!class_exists($className)) {
-                    $fullClassName = "PHPagstract\\Token\\Tokens\\" . $className;
+                    $fullClassName = "PHPagstract\\Token\\Tokens\\".$className;
                     if (!class_exists($fullClassName)) {
                         if ($throwOnError) {
                             throw new TokenFactoryException("No token class found for '.$className.'");
@@ -73,11 +73,11 @@ class TokenFactory
      * @param string $className
      * @return array|boolean the token's $matching
      */
-    public static function getTokenMatchingFromClass( $className ) 
+    public static function getTokenMatchingFromClass($className) 
     {
         $fullClassName = $className;
         if (!class_exists($className)) {
-            $fullClassName = "PHPagstract\\Token\\Tokens\\" . $className;
+            $fullClassName = "PHPagstract\\Token\\Tokens\\".$className;
             if (!class_exists($fullClassName)) {
                 throw new TokenFactoryException("No token class found for '.$className.'");
             }
@@ -109,12 +109,12 @@ class TokenFactory
         if (array_key_exists($className, self::$matchings)) {
             throw new TokenFactoryException("Token has been registered already");
         }
-        if (!is_string($className) ||  empty($className)) {
+        if (!is_string($className) || empty($className)) {
             throw new TokenFactoryException("Invalid token classname given");
         } else if (!self::tokenExists($className)) {
             throw new TokenFactoryException("No token class found for '".$className."'");
         }
-        if (!is_string($regexStart) ||  empty($regexStart) ) {
+        if (!is_string($regexStart) || empty($regexStart)) {
             $matching = self::getTokenMatchingFromClass($className);
             if (!is_array($matching)) {
                 throw new TokenFactoryException("No matching found in token class '".$className."'");
@@ -124,7 +124,7 @@ class TokenFactory
                     "start" => $matching["start"],
                     "end"   => $matching["end"],
             );
-            return ;
+            return;
         }
         
         if (!is_string($regexEnd) || empty($regexEnd)) {
@@ -135,7 +135,7 @@ class TokenFactory
             "end"   => $regexEnd,
         );
             
-        return ;
+        return;
         
     }
 
@@ -143,10 +143,10 @@ class TokenFactory
      * @param string $className
      * @return boolean the token of $classname exists?
      */
-    public static function tokenExists( $className ) 
+    public static function tokenExists($className) 
     {
         if (!class_exists($className)) {
-            $fullClassName = "PHPagstract\\Token\\Tokens\\" . $className;
+            $fullClassName = "PHPagstract\\Token\\Tokens\\".$className;
             if (!class_exists($fullClassName)) {
                 return false;
             }
