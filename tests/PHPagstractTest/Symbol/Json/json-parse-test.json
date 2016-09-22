@@ -1,0 +1,57 @@
+{
+    "root" : { 
+        "myproperty" : "myvalue",
+        "mypropertyWithDot" : "other value",
+        "propertyfalse" : false,
+        "propertytrue" : true,
+        "propertynull" : null,
+        "propertyint" : 123,
+        "propertyfloat" : 123.45,
+        "property" : {
+            "child" : {
+                "more" : {   
+                    "child" : "child-value"
+                }
+            }    
+        },
+        "otherproperty" : [
+            {
+                "otherChild" : "otherValue",
+                "moreChildren" : {
+                    "good" : "bye",
+                    "fare" : "well"
+                }
+            },
+            {
+                "hello" : "world",
+                "child" : {
+                    "more" : {
+                        "child" : "child-value"
+                    },
+                    "other" : [
+                        {
+                            "odd" : "val"
+                        },
+                        {
+                            "even" : {
+                                "more" : {
+                                    "properties" : [
+                                        {
+                                            "something" : "here"
+                                        },
+                                        {
+                                            "something" : "there"
+                                        },
+                                        {
+                                            "deep" : "deepvalue"
+                                        }
+                                    ]
+                                }
+                            }    
+                        }
+                    ]
+                }
+            }
+        ]
+    }
+}

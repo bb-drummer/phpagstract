@@ -174,24 +174,16 @@ class PropertyReferenceResolver {
             $propertyName = $value[1];
             $index = $value[2];
 
-            switch ($data->getType()) {
-            	case 'root' : 
-            	case 'object' : 
-            		$properties = $data->get('properties');
-            		if ( isset($properties->$propertyName) ) {
-            			$data = $properties->$propertyName;
-            		}
-            		$items = $data->get('items');
-            		if ( ($index != '') && isset($items[$index]) ) {
-            			$data = $items[$index];
-            		}
-            	break;
-            	case 'list' : 
-            		$items = $data->get('items');
-            		if ( isset($items[$index]) ) {
-            			$data = $items[$index];
-            		}
-            	break;
+            $type = $data->getType();
+            if ( in_array($type, array('root', 'object')) ) {
+            	$properties = $data->get('properties');
+            	if ( isset($properties->$propertyName) ) {
+           			$data = $properties->$propertyName;
+           		}
+           		$items = $data->get('items');
+           		if ( ($index != '') && isset($items[$index]) ) {
+           			$data = $items[$index];
+           		}
             }
         }
         

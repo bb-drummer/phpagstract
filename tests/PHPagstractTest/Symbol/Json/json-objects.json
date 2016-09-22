@@ -1,12 +1,12 @@
 {
   "root": {
     "object1": {
-      "text1": "Qualitätsprodukt",
-      "text2": "Trendiges Design mit Fernwirkung"
+      "text1": "this is a text...",
+      "text2": "this is another text..."
     },
     "object2": {
-      "text1": "Qualitätsprodukt",
-      "text2": "Absolut überzeugendes Preis-Leistungs-Verhältnis"
+      "text1": "this is more text...",
+      "text2": "this is even more text..."
     }
   }
 }

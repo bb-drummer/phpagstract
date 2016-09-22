@@ -1,22 +1,28 @@
 {
   "root": {
     "object1": {
-      "text1": "Qualitätsprodukt",
-      "text2": "Trendiges Design mit Fernwirkung"
+      "text1": "this is a text...",
+      "text2": "this is another text..."
     },
     "object2": {
-      "text1": "Multifunktional",
-      "text2": "Absolut überzeugendes Preis-Leistungs-Verhältnis"
+      "text1": "this is more text...",
+      "text2": "this is even more text..."
     },
-    "liste": [
+    "objectList": [
       {
-        "text": "Qualitätsprodukt"
+        "text": "this is a text..."
       },
       {
-        "text": "Trendiges Design mit Fernwirkung"
+        "text": "this is some other text..."
       },
       {
-        "text": "Multifunktional"
+        "text": "this is another text..."
+      },
+      {
+        "text": "this is more text..."
+      },
+      {
+        "text": "this is even more text..."
       }
     ]
   }

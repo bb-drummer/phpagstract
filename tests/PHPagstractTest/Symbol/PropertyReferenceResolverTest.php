@@ -1,9 +1,9 @@
 <?php
 namespace PHPagstractTest\Symbol;
 
-use PHPagstract\Symbol\SymbolResolver;
-use PHPagstract\Token\Tokens\TokenCollection;
 use PHPagstract\Symbol\PropertyReferenceResolver;
+use PHPagstract\Symbol\Symbols\Properties\RootProperty;
+use PHPagstract\Symbol\Symbols\Properties\ComponentProperty;
 
 /**
  * PHPagstract property reference resolver class tests
@@ -14,24 +14,41 @@ use PHPagstract\Symbol\PropertyReferenceResolver;
  * @license     http://www.apache.org/licenses/LICENSE-2.0 Apache License, Version 2.0
  * @copyright   copyright (c) 2016 Björn Bartels <coding@bjoernbartels.earth>
  */
-class PropertyReferenceResolverTest extends \PHPUnit_Framework_TestCase {
+class PropertyReferenceResolverTest extends \PHPUnit_Framework_TestCase 
+{
     
-    /**
-     * @expectedException PHPagstract\Symbol\Exception\SymbolException
-     */
-    public function testResolveThrowsException() {
+    public function testInstantiateObject()
+    {
         
-        $resolver = new SymbolResolver(true);
-        $mockToken = $this->createMock('PHPagstract\\Token\\Tokens\\AbstractToken');
-        $mockToken
-            ->method('getType')
-            ->willReturn('blah');
-        $tokens = new TokenCollection();
-        $tokens[] = $mockToken; 
-        $symbols = $resolver->resolve($tokens);
+        try {
+            $resolver = new PropertyReferenceResolver();
+            $className = get_class($resolver);
+        } catch (Exception $e) {
+            $resolver = null;
+            $className = null;
+        }
+
+        $this->assertNotNull($resolver);
+        $this->assertNotNull($className);
+        $this->assertInstanceOf("\PHPagstract\Symbol\PropertyReferenceResolver", $resolver);
+        
+        $mockResolver = $this->createMock("\PHPagstract\Symbol\PropertyReferenceResolver");
+        $this->assertInstanceOf("\PHPagstract\Symbol\PropertyReferenceResolver", $mockResolver);
+        
     }
     
+    public function testInstantiateComponentPropertyObject()
+    {
+        
+        $root = new RootProperty();
+        $componentProperty = new ComponentProperty('test', $root);
+
+        $this->assertEquals("test", $componentProperty->getName());
+        $this->assertEquals("component", $componentProperty->getType());
+        $this->assertEquals($root, $componentProperty->getParent());
+    }
     
+	
     /**
      * @dataProvider parsePropertyReferenceStringsDataProvider
      */
@@ -44,7 +61,7 @@ class PropertyReferenceResolverTest extends \PHPUnit_Framework_TestCase {
             var_export($reference); var_export($expectedArray); var_export($tokens);
         }
 
-        $this->assertEquals(
+        $this->assertSame(
             $expectedArray,
             $tokens
         );
@@ -190,6 +207,7 @@ class PropertyReferenceResolverTest extends \PHPUnit_Framework_TestCase {
         $this->assertEquals( $expectedName,  ($property->getName()) );
         $this->assertEquals( $expectedType,  ($property->getType()) );
         $this->assertEquals( $expectedValue,  ($property->serialize()) );
+        $this->assertSameSize( $expectedValue,  ($property->serialize()) );
         
     }
 
@@ -409,7 +427,7 @@ class PropertyReferenceResolverTest extends \PHPUnit_Framework_TestCase {
     public function testLookupParentPropertyAndSerialize()
     {
         $resolver = new PropertyReferenceResolver();
-        $jsondata = (file_get_contents(__DIR__."/../../../data/parse-json-test01.json"));
+        $jsondata = (file_get_contents(__DIR__."/Json/json-parse-test.json"));
         $context = json_decode($jsondata);
 		$rootSymbolTree = $resolver->symbolize($context);
 		$resolver->setContext($rootSymbolTree);
@@ -424,7 +442,7 @@ class PropertyReferenceResolverTest extends \PHPUnit_Framework_TestCase {
         $this->assertEquals( 'myproperty',  ($property->getName()) );
         $this->assertEquals( 'scalar',  ($property->getType()) );
         $this->assertEquals( 'myvalue',  ($property->getProperty()) );
-        $this->assertEquals( array (
+        $this->assertSame( array (
         		'name' => 'myproperty',
         		'type' => 'scalar',
         		'property' => 'myvalue',
@@ -441,7 +459,7 @@ class PropertyReferenceResolverTest extends \PHPUnit_Framework_TestCase {
     public function testLookupListItemsPropertyAndSerialize()
     {
         $resolver = new PropertyReferenceResolver();
-        $jsondata = (file_get_contents(__DIR__."/../../../data/parse-json-test01.json"));
+        $jsondata = (file_get_contents(__DIR__."/Json/json-parse-test.json"));
         $context = json_decode($jsondata);
 		$rootSymbolTree = $resolver->symbolize($context);
 		$resolver->setContext($rootSymbolTree);
@@ -455,16 +473,11 @@ class PropertyReferenceResolverTest extends \PHPUnit_Framework_TestCase {
         
         $property = $resolver->getPropertyByReference('otherproperty[1].child.other[0]');
 
-        echo PHP_EOL . var_export($property->serialize(), true) . PHP_EOL;
+        //echo PHP_EOL . var_export($property->serialize(), true) . PHP_EOL;
         $this->assertEquals( 'PHPagstract\\Symbol\\Symbols\\Properties\\ObjectProperty',  get_class($property) );
         $this->assertEquals( '0',  ($property->getName()) );
         $this->assertEquals( 'object',  ($property->getType()) );
         $this->assertEquals( null,  ($property->getProperty()) );
-        /*$this->assertEquals( array (
-        		'name' => 'hello',
-        		'type' => 'scalar',
-        		'property' => 'world',
-        ),  ($property->serialize()) );*/
         
     }
     
@@ -472,7 +485,7 @@ class PropertyReferenceResolverTest extends \PHPUnit_Framework_TestCase {
     public function testLookupListParentPropertyAndSerialize()
     {
         $resolver = new PropertyReferenceResolver();
-        $jsondata = (file_get_contents(__DIR__."/../../../data/parse-json-test01.json"));
+        $jsondata = (file_get_contents(__DIR__."/Json/json-parse-test.json"));
         $context = json_decode($jsondata);
 		$rootSymbolTree = $resolver->symbolize($context);
 		$resolver->setContext($rootSymbolTree);
@@ -486,12 +499,401 @@ class PropertyReferenceResolverTest extends \PHPUnit_Framework_TestCase {
         $this->assertEquals( 'hello',  ($property->getName()) );
         $this->assertEquals( 'scalar',  ($property->getType()) );
         $this->assertEquals( 'world',  ($property->getProperty()) );
-        $this->assertEquals( array (
+        $this->assertSame( array (
         		'name' => 'hello',
         		'type' => 'scalar',
         		'property' => 'world',
         ),  ($property->serialize()) );
         
+    }
+    
+    /**
+     * @dataProvider getPropertyByReferencesDataProvider
+     */
+    public function testGetPropertyByReferences($filename, $reference, $expectedData, $debug = false)
+    {
+        $resolver = new PropertyReferenceResolver();
+        $jsondata = (file_get_contents($filename));
+        
+        if (is_string($expectedData) && file_exists($expectedData)) {
+	        $expectedData = include ($expectedData);
+        }
+        $context = json_decode($jsondata);
+		$rootSymbolTree = $resolver->symbolize($context);
+		$resolver->setContext($rootSymbolTree);
+
+		$property = $resolver->getPropertyByReference($reference);
+		
+		if ($debug) {
+            echo "data: "; var_export($jsondata); echo PHP_EOL;
+            echo "file: "; var_export($filename); echo PHP_EOL;
+            echo "to parse: "; var_export($reference); echo PHP_EOL;
+            echo "expected: "; var_export($expectedData); echo PHP_EOL;
+            //echo "serialized: "; var_export($property); echo PHP_EOL;
+            echo "serialized: "; var_export($property->serialize()); echo PHP_EOL;
+        }
+        
+        $this->assertInstanceOf( 'PHPagstract\\Symbol\\Symbols\\AbstractPropertySymbol',  $property );
+        $this->assertNotNull( $expectedData,  $property );
+        //$this->assertSame( $expectedData,  ($property->serialize()) );
+        $this->assertEquals( $expectedData,  ($property->serialize()) );
+        $this->assertSameSize( $expectedData,  ($property->serialize()) );
+    }
+    
+    /**
+     * @dataProvider getPropertyByReferencesDataProvider
+     */
+    public function testGetValueByReferences($filename, $reference, $expectedData, $debug = false)
+    {
+        $resolver = new PropertyReferenceResolver();
+        $jsondata = (file_get_contents($filename));
+        
+        if (is_string($expectedData) && file_exists($expectedData)) {
+	        $expectedData = include ($expectedData);
+        }
+        $context = json_decode($jsondata);
+		$rootSymbolTree = $resolver->symbolize($context);
+		$resolver->setContext($rootSymbolTree);
+
+		$propertyValue = $resolver->getValueByReference($reference);
+
+        if ($debug) {
+            echo "data: "; var_export($jsondata); echo PHP_EOL;
+            echo "file: "; var_export($filename); echo PHP_EOL;
+            echo "to parse: "; var_export($reference); echo PHP_EOL;
+            echo "expected: "; var_export($expectedData); echo PHP_EOL;
+            if ( is_object($propertyValue) && method_exists($propertyValue, "serialize") ) { 
+            	echo "serialized: "; var_export($propertyValue->serialize()); echo PHP_EOL; 
+            } else {
+            	echo "serialized: "; var_export($propertyValue); echo PHP_EOL; 
+            }
+        }
+        
+        if ($expectedData['type'] == 'list') {
+        	$this->assertCount( count($expectedData['items']),  $propertyValue );
+        } else if ($expectedData['type'] == 'object') {
+        	foreach ($expectedData['properties'] as $idx => $expectedItem) {
+        		$this->assertEquals( ($expectedItem['name']),  $propertyValue->$idx->getName() );
+        		$this->assertEquals( ($expectedItem['type']),  $propertyValue->$idx->getType() );
+        	}
+        } else {
+        	$this->assertEquals( $expectedData['property'],  $propertyValue );
+        }
+    }
+    
+    public function getPropertyByReferencesDataProvider()
+    {
+    	return array(
+    			
+    		"string value" => array(
+    			__DIR__."/Json/json-values.json",
+    			"stringValue",
+    			array (
+				  'name' => 'stringValue',
+				  'type' => 'scalar',
+				  'property' => 'this is a text...',
+				),
+    			$debug = false
+    		),
+    			
+    		"integer value" => array(
+    			__DIR__."/Json/json-values.json",
+    			"integerValue",
+    			array (
+				  'name' => 'integerValue',
+				  'type' => 'scalar',
+				  'property' => 123,
+				),
+    			$debug = false
+    		),
+    			
+    		"float value" => array(
+    			__DIR__."/Json/json-values.json",
+    			"floatValue",
+    			array (
+				  'name' => 'floatValue',
+				  'type' => 'scalar',
+				  'property' => 1.23,
+				),
+    			$debug = false
+    		),
+    			
+    		"boolean value (true)" => array(
+    			__DIR__."/Json/json-values.json",
+    			"trueValue",
+    			array (
+				  'name' => 'trueValue',
+				  'type' => 'scalar',
+				  'property' => true,
+				),
+    			$debug = false
+    		),
+    			
+    		"boolean value (false)" => array(
+    			__DIR__."/Json/json-values.json",
+    			"falseValue",
+    			array (
+				  'name' => 'falseValue',
+				  'type' => 'scalar',
+				  'property' => false,
+				),
+    			$debug = false
+    		),
+    			
+    		"null value" => array(
+    			__DIR__."/Json/json-values.json",
+    			"nullValue",
+    			array (
+				  'name' => 'nullValue',
+				  'type' => 'scalar',
+				  'property' => null,
+				),
+    			$debug = false
+    		),
+    			
+    		"list of scalars" => array(
+    			__DIR__."/Json/json-listOfValues.json",
+    			"scalarList",
+    			array (
+				  'name' => 'scalarList',
+				  'type' => 'list',
+				  'property' => null,
+    			  'items' =>
+    					array (
+    							0 =>
+    							array (
+    									'name' => 0,
+    									'type' => 'scalar',
+    									'property' => 'this is a text...',
+    							),
+    							1 =>
+    							array (
+    									'name' => 1,
+    									'type' => 'scalar',
+    									'property' => 'this is some other text...',
+    							),
+    							2 =>
+    							array (
+    									'name' => 2,
+    									'type' => 'scalar',
+    									'property' => 'this is another text...',
+    							),
+    							3 =>
+    							array (
+    									'name' => 3,
+    									'type' => 'scalar',
+    									'property' => 'this is more text...',
+    							),
+    							4 =>
+    							array (
+    									'name' => 4,
+    									'type' => 'scalar',
+    									'property' => 'this is even more text...',
+    							),
+    							5 =>
+    							array (
+    									'name' => 5,
+    									'type' => 'scalar',
+    									'property' => 123,
+    							),
+    							6 =>
+    							array (
+    									'name' => 6,
+    									'type' => 'scalar',
+    									'property' => 123.45,
+    							),
+    							7 =>
+    							array (
+    									'name' => 7,
+    									'type' => 'scalar',
+    									'property' => NULL,
+    							),
+    							8 =>
+    							array (
+    									'name' => 8,
+    									'type' => 'scalar',
+    									'property' => false,
+    							),
+    							9 =>
+    							array (
+    									'name' => 9,
+    									'type' => 'scalar',
+    									'property' => true,
+    							),
+    					),
+				),
+    			$debug = false
+    		),
+    			
+    		"first of list of scalars" => array(
+    			__DIR__."/Json/json-listOfValues.json",
+    			"scalarList[0]",
+    			array (
+				  'name' => 0,
+				  'type' => 'scalar',
+				  'property' => 'this is a text...',
+				),
+    			$debug = false
+    		),
+    			
+    		"second of list of scalars" => array(
+    			__DIR__."/Json/json-listOfValues.json",
+    			"scalarList[1]",
+    			array (
+				  'name' => 1,
+				  'type' => 'scalar',
+				  'property' => 'this is some other text...',
+				),
+    			$debug = false
+    		),
+    			
+    		"objects" => array(
+    			__DIR__."/Json/json-objects.json",
+    			"object1",
+    			array (
+				  'name' => 'object1',
+				  'type' => 'object',
+				  'property' => NULL,
+				  'properties' => 
+				  (object)(array(
+				     'text1' => 
+				    array (
+				      'name' => 'text1',
+				      'type' => 'scalar',
+				      'property' => 'this is a text...',
+				    ),
+				     'text2' => 
+				    array (
+				      'name' => 'text2',
+				      'type' => 'scalar',
+				      'property' => 'this is another text...',
+				    ),
+				  )),
+				),
+    			$debug = false
+    		),
+    		
+    		"list of objects" => array(
+    			__DIR__."/Json/json-listOfObjects.json",
+    			"objectList",
+    			array (
+				  'name' => 'objectList',
+				  'type' => 'list',
+				  'property' => NULL,
+				  'items' => 
+				  array (
+				    0 => 
+				    array (
+				      'name' => 0,
+				      'type' => 'object',
+				      'property' => NULL,
+				      'properties' => 
+				      (object)(array(
+				         'text' => 
+				        array (
+				          'name' => 'text',
+				          'type' => 'scalar',
+				          'property' => 'this is a text...',
+				        ),
+				      )),
+				    ),
+				    1 => 
+				    array (
+				      'name' => 1,
+				      'type' => 'object',
+				      'property' => NULL,
+				      'properties' => 
+				      (object)(array(
+				         'text' => 
+				        array (
+				          'name' => 'text',
+				          'type' => 'scalar',
+				          'property' => 'this is some other text...',
+				        ),
+				      )),
+				    ),
+				    2 => 
+				    array (
+				      'name' => 2,
+				      'type' => 'object',
+				      'property' => NULL,
+				      'properties' => 
+				      (object)(array(
+				         'text' => 
+				        array (
+				          'name' => 'text',
+				          'type' => 'scalar',
+				          'property' => 'this is another text...',
+				        ),
+				      )),
+				    ),
+				    3 => 
+				    array (
+				      'name' => 3,
+				      'type' => 'object',
+				      'property' => NULL,
+				      'properties' => 
+				      (object)(array(
+				         'text' => 
+				        array (
+				          'name' => 'text',
+				          'type' => 'scalar',
+				          'property' => 'this is more text...',
+				        ),
+				      )),
+				    ),
+				    4 => 
+				    array (
+				      'name' => 4,
+				      'type' => 'object',
+				      'property' => NULL,
+				      'properties' => 
+				      (object)(array(
+				         'text' => 
+				        array (
+				          'name' => 'text',
+				          'type' => 'scalar',
+				          'property' => 'this is even more text...',
+				        ),
+				      )),
+				    ),
+				  ),
+				),
+    			$debug = false
+    		),
+    		
+    		"object in list of objects" => array(
+    			__DIR__."/Json/json-listOfObjects.json",
+    			"objectList[1]",
+    			array (
+				  'name' => 1,
+				  'type' => 'object',
+				  'property' => NULL,
+				  'properties' => 
+				  (object)(array(
+				     'text' => 
+				    array (
+				      'name' => 'text',
+				      'type' => 'scalar',
+				      'property' => 'this is some other text...',
+				    ),
+				  )),
+				),
+    			$debug = false
+    		),
+    		
+    		/* "object in list of objects" => array(
+    			__DIR__."/Json/json-listOfObjects.json",
+    			"objectList[1]",
+    			array (
+    				'name' => 1,
+    				'type' => 'object',
+    				'property' => 'this is some other text...',
+    			),
+    			$debug = true
+    		), */
+    			
+    	);
     }
 
 }
