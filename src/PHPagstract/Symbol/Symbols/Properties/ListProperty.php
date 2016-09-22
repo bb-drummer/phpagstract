@@ -15,10 +15,10 @@ use PHPagstract\Symbol\Symbols\AbstractPropertySymbol;
  */
 class ListProperty extends AbstractPropertySymbol {
     
-    /**
-     */
-    public function __construct($name, $parent) {
-        parent::__construct ('list', $name, $parent);
-    }
+	/**
+	 */
+	public function __construct($name, $parent) {
+		parent::__construct ('list', $name, $parent);
+	}
 }
 

@@ -67,7 +67,7 @@ class PagstractPropertyReference extends PagstractAbstractToken
 
             return '';
         }
-        $propertyReference = mb_substr($html, 2, $posOfEndOfCData-2);
+        $propertyReference = mb_substr($html, 2, $posOfEndOfCData - 2);
         
         $this->name = ($propertyReference);
         $this->value = ($propertyReference);

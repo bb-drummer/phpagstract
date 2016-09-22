@@ -16,67 +16,67 @@ use PHPagstract\Token\Exception\TokenizerException;
  */
 class Comment extends AbstractToken
 {
-    /**
-     * @var array the $matching
-     */
-    public static $matching = array(
-            "start" => "/^\s*<!--/", 
-            "end" => "-->"
-    );
+	/**
+	 * @var array the $matching
+	 */
+	public static $matching = array(
+			"start" => "/^\s*<!--/", 
+			"end" => "-->"
+	);
     
-    /**
-     * @var string 
-     */
-    private $value;
+	/**
+	 * @var string 
+	 */
+	private $value;
 
-    public function __construct(Token $parent = null, $throwOnError = false)
-    {
-        parent::__construct(Token::COMMENT, $parent, $throwOnError);
+	public function __construct(Token $parent = null, $throwOnError = false)
+	{
+		parent::__construct(Token::COMMENT, $parent, $throwOnError);
 
-        $this->value = null;
-    }
+		$this->value = null;
+	}
 
-    public function parse($html)
-    {
-        $html = ltrim($html);
+	public function parse($html)
+	{
+		$html = ltrim($html);
 
-        // Get token position.
-        $positionArray = MarkupTokenizer::getPosition($html);
-        $this->setLine($positionArray['line']);
-        $this->setPosition($positionArray['position']);
+		// Get token position.
+		$positionArray = MarkupTokenizer::getPosition($html);
+		$this->setLine($positionArray['line']);
+		$this->setPosition($positionArray['position']);
 
-        // Parse token.
-        $posOfEndOfComment = mb_strpos($html, '-->');
-        if ($posOfEndOfComment === false) {
-            if ($this->getThrowOnError()) {
-                throw new TokenizerException('Invalid comment.');
-            }
+		// Parse token.
+		$posOfEndOfComment = mb_strpos($html, '-->');
+		if ($posOfEndOfComment === false) {
+			if ($this->getThrowOnError()) {
+				throw new TokenizerException('Invalid comment.');
+			}
 
-            return '';
-        }
+			return '';
+		}
 
-        $this->value = trim(mb_substr($html, 4, $posOfEndOfComment - 4));
+		$this->value = trim(mb_substr($html, 4, $posOfEndOfComment - 4));
 
-        return mb_substr($html, $posOfEndOfComment + 3);
-    }
+		return mb_substr($html, $posOfEndOfComment + 3);
+	}
 
-    /**
-     * Getter for 'value'.
-     *
-     * @return string
-     */
-    public function getValue()
-    {
-        return $this->value;
-    }
+	/**
+	 * Getter for 'value'.
+	 *
+	 * @return string
+	 */
+	public function getValue()
+	{
+		return $this->value;
+	}
 
-    public function toArray()
-    {
-        return array(
-            'type' => 'comment',
-            'value' => $this->value,
-            'line' => $this->getLine(),
-            'position' => $this->getPosition()
-        );
-    }
+	public function toArray()
+	{
+		return array(
+			'type' => 'comment',
+			'value' => $this->value,
+			'line' => $this->getLine(),
+			'position' => $this->getPosition()
+		);
+	}
 }

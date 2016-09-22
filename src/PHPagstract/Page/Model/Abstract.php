@@ -73,7 +73,7 @@ abstract class PageModelAbstract
      * @param string                $resources
      * @param string                $resources_ext
      */
-    public function __construct( $name, $sourcespath, $data = array(), $resources = "./", $resources_ext = "./") 
+    public function __construct($name, $sourcespath, $data = array(), $resources = "./", $resources_ext = "./") 
     {
         if (!empty($name)) {
             $this->setName($name);

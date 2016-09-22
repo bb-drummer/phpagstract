@@ -124,7 +124,6 @@ abstract class ParserAbstract
     }
 
     /**
-     * @param \PHPagstract\PHPagstract\Parser $parser
      */
     public function setTokenizer($tokenizer) 
     {

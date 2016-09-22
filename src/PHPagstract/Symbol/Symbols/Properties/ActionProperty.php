@@ -15,10 +15,10 @@ use PHPagstract\Symbol\Symbols\AbstractPropertySymbol;
  */
 class ActionProperty extends AbstractPropertySymbol {
     
-    /**
-     */
-    public function __construct($name, $parent) {
-        parent::__construct ('action', $name, $parent);
-    }
+	/**
+	 */
+	public function __construct($name, $parent) {
+		parent::__construct ('action', $name, $parent);
+	}
 }
 

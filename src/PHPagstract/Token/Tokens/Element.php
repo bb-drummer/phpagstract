@@ -4,7 +4,6 @@ namespace PHPagstract\Token\Tokens;
 
 use PHPagstract\Token\MarkupTokenizer;
 use PHPagstract\Token\Exception\TokenizerException;
-use phpDocumentor\Reflection\Types\Boolean;
 
 /**
  * (generic/HTML) 'Element' token object class
@@ -232,7 +231,7 @@ class Element extends AbstractToken
             if ($remainingHtml[0] === "'" || $remainingHtml[0] === '"') {
                 // Quote enclosed attribute value.
                 $valueMatchSuccessful = preg_match(
-                    "/" . $remainingHtml[0] . "(.*?(?<!\\\))" . $remainingHtml[0] . "/s",
+                    "/".$remainingHtml[0]."(.*?(?<!\\\))".$remainingHtml[0]."/s",
                     $remainingHtml,
                     $valueMatches
                 );
@@ -306,7 +305,7 @@ class Element extends AbstractToken
 
         // Parse contents one token at a time.
         $remainingHtml = $html;
-        while (preg_match("/^<\/\s*" . $this->name . "\s*>/is", $remainingHtml) === 0) {
+        while (preg_match("/^<\/\s*".$this->name."\s*>/is", $remainingHtml) === 0) {
             $token = TokenFactory::buildFromHtml(
                 $remainingHtml,
                 $this,
@@ -378,7 +377,7 @@ class Element extends AbstractToken
 
         // Find all contents.
         $matchingResult = preg_match(
-            "/(<\/\s*" . $tag . "\s*>)/i",
+            "/(<\/\s*".$tag."\s*>)/i",
             $html,
             $endOfScriptMatches
         );
@@ -423,7 +422,7 @@ class Element extends AbstractToken
     {
         $remainingHtml = ltrim($html);
         $matchingResult = preg_match(
-            "/(<\/\s*" . $tag . "\s*>)/i",
+            "/(<\/\s*".$tag."\s*>)/i",
             $html,
             $endOfScriptMatches
         );

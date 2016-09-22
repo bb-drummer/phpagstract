@@ -17,55 +17,55 @@ use PHPagstract\Page\PageModel;
 abstract class PageAbstract
 {
 
-    /**
-     * page model instance
-     *
-     * @var PageModelAbstract
-     */
-    public $pageModel = null;
+	/**
+	 * page model instance
+	 *
+	 * @var PageModelAbstract
+	 */
+	public $pageModel = null;
     
-    /**
-     */
-    public function __construct() 
-    {
+	/**
+	 */
+	public function __construct() 
+	{
         
-    }
+	}
     
-    /**
-     * initialize page model instance
-     * @return PHPagstract\Page\PageModelAbstract the $pageModel instance
-     */
-    public function initPageModel() 
-    {
-        $name = "";
-        $sourcePath = "./";
-        $data = array();
-        $resources = "./";
-        $resources_ext = "./";
+	/**
+	 * initialize page model instance
+	 * @return PHPagstract\Page\PageModelAbstract the $pageModel instance
+	 */
+	public function initPageModel() 
+	{
+		$name = "";
+		$sourcePath = "./";
+		$data = array();
+		$resources = "./";
+		$resources_ext = "./";
         
-        $pageModel = new PageModel($name, $sourcePath, $data, $resources, $resources_ext);
-        $this->setPageModel($pageModel);
+		$pageModel = new PageModel($name, $sourcePath, $data, $resources, $resources_ext);
+		$this->setPageModel($pageModel);
         
-        return $this->getPageModel();
-    }
+		return $this->getPageModel();
+	}
     
-    /**
-     * @return PHPagstract\Page\PageModelAbstract the $pageModel instance
-     */
-    public function getPageModel() 
-    {
-        return $this->pageModel;
-    }
+	/**
+	 * @return PHPagstract\Page\PageModelAbstract the $pageModel instance
+	 */
+	public function getPageModel() 
+	{
+		return $this->pageModel;
+	}
 
-    /**
-     * set the $pageModel instance
-     * 
-     * @param \PHPagstract\Page\PageModelAbstract $pageModel
-     */
-    public function setPageModel($pageModel) 
-    {
-        $this->pageModel = $pageModel;
-    }
+	/**
+	 * set the $pageModel instance
+	 * 
+	 * @param \PHPagstract\Page\PageModelAbstract $pageModel
+	 */
+	public function setPageModel($pageModel) 
+	{
+		$this->pageModel = $pageModel;
+	}
 
     
 }

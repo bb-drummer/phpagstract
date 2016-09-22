@@ -42,10 +42,11 @@ abstract class AbstractPropertySymbol {
     private $property = null;
 
     /**
+     * @param string $type
      */
-    public function __construct($type, $name, AbstractPropertySymbol &$parent = null) {
+    public function __construct($type, $name, AbstractPropertySymbol & $parent = null) {
     	if ($parent !== null) {
-    		$this->parent =& $parent;
+    		$this->parent = & $parent;
     	}
     	$this->setName($name);
     	$this->setType($type);
@@ -59,21 +60,21 @@ abstract class AbstractPropertySymbol {
     public function serialize()
     {
     	$result = get_object_vars($this);
-    	if ( isset($result["parent"]) )unset($result["parent"]);
-    	if ( isset($result["items"]) ) {
+    	if (isset($result["parent"]))unset($result["parent"]);
+    	if (isset($result["items"])) {
     		$items = [];
     		foreach ($result["items"] as $key => $item) {
     			$items[] = $item->serialize();
     		}
     		$result["items"] = $items;
     	}
-    	if ( isset($result["properties"]) ) {
+    	if (isset($result["properties"])) {
     		$properties = get_object_vars($result["properties"]);
     		$items = [];
     		foreach ($properties as $key => $item) {
     			$items[$key] = $item->serialize();
     		}
-    		$result["properties"] = (object)$items;
+    		$result["properties"] = (object) $items;
     	}
     	return $result;
     }
@@ -88,7 +89,7 @@ abstract class AbstractPropertySymbol {
      * @param string $property the property name
      * @return mixed|NULL
      */
-    public function get( $property ) {
+    public function get($property) {
     	if (isset($this->$property)) {
     		return $this->$property;
     	}
@@ -102,7 +103,7 @@ abstract class AbstractPropertySymbol {
      * @param mixed $value
      * @return self
      */
-    public function set( $property, $value ) {
+    public function set($property, $value) {
     	$this->$property = $value;
     	return $this;
     }
@@ -127,7 +128,6 @@ abstract class AbstractPropertySymbol {
     /**
      * set the property
      *
-     * @param AbstractPropertySymbol $property
      */
     public function setParent(AbstractPropertySymbol $parent) 
     {
@@ -138,7 +138,7 @@ abstract class AbstractPropertySymbol {
     /**
      * get the property
      *
-     * @return mixed
+     * @return \stdClass
      */
     public function getProperty() 
     {
@@ -184,7 +184,7 @@ abstract class AbstractPropertySymbol {
      */
     public function getName() 
     {
-        return (string)$this->name;
+        return (string) $this->name;
     }
     
     /**

@@ -12,9 +12,9 @@ namespace PHPagstract\Page\Resolver;
  */
 class FilepathResolver {
     
-    /**
-     */
-    public function __construct() {
-    }
+	/**
+	 */
+	public function __construct() {
+	}
 }
 

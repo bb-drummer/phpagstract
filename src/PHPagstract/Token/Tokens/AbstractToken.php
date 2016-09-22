@@ -66,7 +66,7 @@ abstract class AbstractToken implements Token
     public function __construct($type, Token $parent = null, $throwOnError = false)
     {
         if (!$this->isValidType($type)) {
-            throw new \InvalidArgumentException('Invalid type: ' . $type);
+            throw new \InvalidArgumentException('Invalid type: '.$type);
         }
 
         $this->depth = 0;

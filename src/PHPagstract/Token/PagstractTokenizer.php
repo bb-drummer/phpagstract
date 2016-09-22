@@ -17,73 +17,73 @@ use PHPagstract\Token\Tokens\PagstractMarkup;
  */
 class PagstractTokenizer extends MarkupTokenizer
 {
-    /**
-     * @var boolean 
-     */
-    protected $throwOnError;
+	/**
+	 * @var boolean 
+	 */
+	protected $throwOnError;
 
-    /**
-     * @var string 
-     */
-    protected static $allHtml = '';
+	/**
+	 * @var string 
+	 */
+	protected static $allHtml = '';
 
-    /**
-     * Constructor
-     */
-    public function __construct($throwOnError = false)
-    {
-        $this->throwOnError = (boolean) $throwOnError;
+	/**
+	 * Constructor
+	 */
+	public function __construct($throwOnError = false)
+	{
+		$this->throwOnError = (boolean) $throwOnError;
 
-        //PagstractMarkup::$nested = false;
+		//PagstractMarkup::$nested = false;
         
-        TokenFactory::clearMatchings();
+		TokenFactory::clearMatchings();
 
-        TokenFactory::registerMatching("Php");
-        TokenFactory::registerMatching("CData");
-        TokenFactory::registerMatching("DocType");
+		TokenFactory::registerMatching("Php");
+		TokenFactory::registerMatching("CData");
+		TokenFactory::registerMatching("DocType");
         
-        TokenFactory::registerMatching(Token::PAGSTRACTCOMMENT);
-        TokenFactory::registerMatching("Comment");
-        TokenFactory::registerMatching(Token::PAGSTRACTSIMPLEVALUE);
+		TokenFactory::registerMatching(Token::PAGSTRACTCOMMENT);
+		TokenFactory::registerMatching("Comment");
+		TokenFactory::registerMatching(Token::PAGSTRACTSIMPLEVALUE);
         
-        TokenFactory::registerMatching(Token::PAGSTRACTTILE);
-        TokenFactory::registerMatching(Token::PAGSTRACTTILEVARIABLE);
+		TokenFactory::registerMatching(Token::PAGSTRACTTILE);
+		TokenFactory::registerMatching(Token::PAGSTRACTTILEVARIABLE);
         
-        TokenFactory::registerMatching(Token::PAGSTRACTBEAN);
-        TokenFactory::registerMatching(Token::PAGSTRACTIFVISIBLE);
+		TokenFactory::registerMatching(Token::PAGSTRACTBEAN);
+		TokenFactory::registerMatching(Token::PAGSTRACTIFVISIBLE);
         
-        TokenFactory::registerMatching(Token::PAGSTRACTLIST);
-        TokenFactory::registerMatching(Token::PAGSTRACTLISTHEADER);
-        TokenFactory::registerMatching(Token::PAGSTRACTLISTCONTENT);
-        TokenFactory::registerMatching(Token::PAGSTRACTLISTFOOTER);
-        TokenFactory::registerMatching(Token::PAGSTRACTLISTSEPERATOR);
-        TokenFactory::registerMatching(Token::PAGSTRACTLISTFIRST);
-        TokenFactory::registerMatching(Token::PAGSTRACTLISTLAST);
-        TokenFactory::registerMatching(Token::PAGSTRACTLISTEVEN);
-        TokenFactory::registerMatching(Token::PAGSTRACTLISTODD);
-        TokenFactory::registerMatching(Token::PAGSTRACTLISTNOCONTENT);
+		TokenFactory::registerMatching(Token::PAGSTRACTLIST);
+		TokenFactory::registerMatching(Token::PAGSTRACTLISTHEADER);
+		TokenFactory::registerMatching(Token::PAGSTRACTLISTCONTENT);
+		TokenFactory::registerMatching(Token::PAGSTRACTLISTFOOTER);
+		TokenFactory::registerMatching(Token::PAGSTRACTLISTSEPERATOR);
+		TokenFactory::registerMatching(Token::PAGSTRACTLISTFIRST);
+		TokenFactory::registerMatching(Token::PAGSTRACTLISTLAST);
+		TokenFactory::registerMatching(Token::PAGSTRACTLISTEVEN);
+		TokenFactory::registerMatching(Token::PAGSTRACTLISTODD);
+		TokenFactory::registerMatching(Token::PAGSTRACTLISTNOCONTENT);
         
-        TokenFactory::registerMatching(Token::PAGSTRACTMODLIST);
-        TokenFactory::registerMatching(Token::PAGSTRACTMODCONTENT);
-        TokenFactory::registerMatching(Token::PAGSTRACTMODSEPERATOR);
+		TokenFactory::registerMatching(Token::PAGSTRACTMODLIST);
+		TokenFactory::registerMatching(Token::PAGSTRACTMODCONTENT);
+		TokenFactory::registerMatching(Token::PAGSTRACTMODSEPERATOR);
 
-        TokenFactory::registerMatching(Token::PAGSTRACTSWITCH);
-        TokenFactory::registerMatching(Token::PAGSTRACTOBJECT);
+		TokenFactory::registerMatching(Token::PAGSTRACTSWITCH);
+		TokenFactory::registerMatching(Token::PAGSTRACTOBJECT);
         
-        TokenFactory::registerMatching(Token::PAGSTRACTFORM);
+		TokenFactory::registerMatching(Token::PAGSTRACTFORM);
         
-        // this is currently not available: TokenFactory::registerMatching(Token::PAGSTRACTTEXTIMG);
+		// this is currently not available: TokenFactory::registerMatching(Token::PAGSTRACTTEXTIMG);
 
-        TokenFactory::registerMatching(Token::PAGSTRACTLINK);
-        TokenFactory::registerMatching(Token::PAGSTRACTAREA);
-        TokenFactory::registerMatching(Token::PAGSTRACTINPUT);
-        TokenFactory::registerMatching(Token::PAGSTRACTSELECT);
+		TokenFactory::registerMatching(Token::PAGSTRACTLINK);
+		TokenFactory::registerMatching(Token::PAGSTRACTAREA);
+		TokenFactory::registerMatching(Token::PAGSTRACTINPUT);
+		TokenFactory::registerMatching(Token::PAGSTRACTSELECT);
         
-        TokenFactory::registerMatching(Token::PAGSTRACTDEBUG);
+		TokenFactory::registerMatching(Token::PAGSTRACTDEBUG);
         
-        TokenFactory::registerMatching(Token::PAGSTRACTMARKUP);
+		TokenFactory::registerMatching(Token::PAGSTRACTMARKUP);
 
-        TokenFactory::registerMatching("Text");
-    }
+		TokenFactory::registerMatching("Text");
+	}
 
 }
