@@ -49,7 +49,7 @@ abstract class AbstractToken implements Token
 	/**
 	 * @var boolean 
 	 */
-	private $throwOnError;
+	protected $throwOnError;
 
 	/**
 	 * @var string 

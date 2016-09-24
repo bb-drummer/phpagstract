@@ -21,12 +21,12 @@ class PagstractAbstractToken extends AbstractToken
 	public $nested = true;
     
 	/**
-	 * @var array 
+	 * @var null|array 
 	 */
 	protected $attributes;
 
 	/**
-	 * @var array[Token] 
+	 * @var null|array[Token] 
 	 */
 	protected $children;
 
@@ -41,7 +41,7 @@ class PagstractAbstractToken extends AbstractToken
 	protected $value;
     
 	/**
-	 * @var string 
+	 * @var boolean 
 	 */
 	protected $isClosing;
     
@@ -269,7 +269,6 @@ class PagstractAbstractToken extends AbstractToken
 			return $remainingHtml;
 		}
 		$nested = $this->nested();
-		//echo '<pre>'.htmlentities(var_export(!$nested, true)).'</pre>';
 		if (!$nested) { 
 			return $remainingHtml;
 		}
@@ -437,7 +436,6 @@ class PagstractAbstractToken extends AbstractToken
 
 			return null;
 		}
-		//echo '<pre>'.htmlentities(var_export(($elementMatches), true)).'</pre>'; flush();
 		if (!empty($elementMatches[2])) {
 			$this->isClosing = true;
 			return ''; //$elementMatches[2];
