@@ -16,19 +16,19 @@ use PHPagstract\AbstractCollection;
  */
 class SymbolCollection extends AbstractCollection
 {
-    /**
-     * flag if item to add/set must be an instance of $type
-     *
-     * @var boolean
-     */
-    protected $onlyValidType = true;
+	/**
+	 * flag if item to add/set must be an instance of $type
+	 *
+	 * @var boolean
+	 */
+	protected $onlyValidType = true;
     
     
-    /**
-     * valid type/classname items to add/set must ba an instance of
-     *
-     * @var string
-     */
-    protected $type = 'PHPagstract\\Symbol\\Symbols\\Symbol';
+	/**
+	 * valid type/classname items to add/set must ba an instance of
+	 *
+	 * @var string
+	 */
+	protected $type = 'PHPagstract\\Symbol\\Symbols\\Symbol';
     
 }

@@ -17,125 +17,125 @@ use PHPagstract\Token\Tokens\Token as PHPagstractToken;
 abstract class AbstractSymbol implements Symbol
 {
     
-    /**
-     * child symbols
-     * 
-     * @var array[Symbol] 
-     */
-    private $children;
+	/**
+	 * child symbols
+	 * 
+	 * @var array[Symbol] 
+	 */
+	private $children;
 
-    /**
-     * parent symbol
-     * 
-     * @var Symbol
-     */
-    private $parent;
+	/**
+	 * parent symbol
+	 * 
+	 * @var Symbol
+	 */
+	private $parent;
 
-    /**
-     * token container/reference
-     *
-     * @var PHPagstractToken
-     */
-    private  $token = null;
+	/**
+	 * token container/reference
+	 *
+	 * @var PHPagstractToken
+	 */
+	private  $token = null;
 
-    /**
-     * symbol name
-     *
-     * @var Name
-     */
-    private $name = 'Symbol';
+	/**
+	 * symbol name
+	 *
+	 * @var Name
+	 */
+	private $name = 'Symbol';
 
-    /**
-     * convert symbol to string representation
-     *
-     * @return string
-     */
-    public function toString() 
-    {
-        return '';
-    }
+	/**
+	 * convert symbol to string representation
+	 *
+	 * @return string
+	 */
+	public function toString() 
+	{
+		return '';
+	}
 
-    /**
-     * convert symbol data to array
-     *
-     * @return array
-     */
-    public function toArray() 
-    {
-        $result = array(
-                'name' => $this->getName(),
-                'line' => null,
-                'position' => null
-        );
-        return $result;
-    }
+	/**
+	 * convert symbol data to array
+	 *
+	 * @return array
+	 */
+	public function toArray() 
+	{
+		$result = array(
+				'name' => $this->getName(),
+				'line' => null,
+				'position' => null
+		);
+		return $result;
+	}
 
-    /**
-     * Getter for 'children'.
-     *
-     * @return array
-     */
-    public function getChildren()
-    {
-        return $this->children;
-    }
+	/**
+	 * Getter for 'children'.
+	 *
+	 * @return array
+	 */
+	public function getChildren()
+	{
+		return $this->children;
+	}
     
-    /**
-     * Setter for 'children'.
-     *
-     * @param array
-     */
-    public function setChildren($children)
-    {
-        $this->children = $children;
-    }
+	/**
+	 * Setter for 'children'.
+	 *
+	 * @param array
+	 */
+	public function setChildren($children)
+	{
+		$this->children = $children;
+	}
     
-    /**
-     * @return boolean
-     */
-    public function hasChildren()
-    {
-        return !empty($this->children);
-    }
+	/**
+	 * @return boolean
+	 */
+	public function hasChildren()
+	{
+		return !empty($this->children);
+	}
     
-    /**
-     * get the token
-     *
-     * @return PHPagstractToken
-     */
-    public function getToken() 
-    {
-        return $this->token;
-    }
+	/**
+	 * get the token
+	 *
+	 * @return PHPagstractToken
+	 */
+	public function getToken() 
+	{
+		return $this->token;
+	}
     
-    /**
-     * set the token
-     *
-     * @param PHPagstractToken $token
-     */
-    public function setToken(PHPagstractToken $token) 
-    {
-        $this->token = $token;
-    }
+	/**
+	 * set the token
+	 *
+	 * @param PHPagstractToken $token
+	 */
+	public function setToken(PHPagstractToken $token) 
+	{
+		$this->token = $token;
+	}
     
-    /**
-     * get the name
-     *
-     * @return Name
-     */
-    public function getName() 
-    {
-        return $this->name;
-    }
+	/**
+	 * get the name
+	 *
+	 * @return Name
+	 */
+	public function getName() 
+	{
+		return $this->name;
+	}
     
-    /**
-     * set the name
-     *
-     * @param string $name
-     */
-    public function setName($name) 
-    {
-        $this->name = $name;
-    }
+	/**
+	 * set the name
+	 *
+	 * @param string $name
+	 */
+	public function setName($name) 
+	{
+		$this->name = $name;
+	}
     
 }

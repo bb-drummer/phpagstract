@@ -17,67 +17,67 @@ use PHPagstract\Token\Tokens\TokenCollection;
  */
 class SymbolResolver
 {
-    /**
-     * @var boolean 
-     */
-    protected $throwOnError;
+	/**
+	 * @var boolean 
+	 */
+	protected $throwOnError;
     
-    /**
-     */
-    public function __construct($throwOnError = false) 
-    {
-        $this->throwOnError = $throwOnError;
-    }
+	/**
+	 */
+	public function __construct($throwOnError = false) 
+	{
+		$this->throwOnError = $throwOnError;
+	}
     
-    /**
-     * map tokens to symbols
-     *
-     * @param  \PHPagstract\Token\Tokens\TokenCollection $tokens
-     * @return SymbolCollection
-     */
-    public function resolve($tokens) 
-    {
+	/**
+	 * map tokens to symbols
+	 *
+	 * @param  \PHPagstract\Token\Tokens\TokenCollection $tokens
+	 * @return SymbolCollection
+	 */
+	public function resolve($tokens) 
+	{
 
-        $symbols = new SymbolCollection();
+		$symbols = new SymbolCollection();
 
-        $tokenTree = $tokens->getIterator();
-        if ($tokenTree !== null) {
-            $tokenTree->rewind();
-            $currentToken = $tokenTree->current();
-            while ($currentToken) {
-                $symbol = SymbolFactory::symbolize(
-                    $currentToken,
-                    $this->throwOnError
-                );
-                if ($symbol === false) {
-                    // Error condition ? 
-                    // maybe add a fallback here ?!
+		$tokenTree = $tokens->getIterator();
+		if ($tokenTree !== null) {
+			$tokenTree->rewind();
+			$currentToken = $tokenTree->current();
+			while ($currentToken) {
+				$symbol = SymbolFactory::symbolize(
+					$currentToken,
+					$this->throwOnError
+				);
+				if ($symbol === false) {
+					// Error condition ? 
+					// maybe add a fallback here ?!
                 
-                    // Error has occurred, so we stop.
-                    break;
-                }
+					// Error has occurred, so we stop.
+					break;
+				}
                 
-                if (method_exists($currentToken, 'hasChildren') && $currentToken->hasChildren()) {
-                    $tokenChildren = $currentToken->getChildren();
-                    $children = new TokenCollection();
-                    $symbolChildren = array();
-                    foreach ($tokenChildren as $idx => $child) {
-                        $children[] = $child;
-                    }
-                    $symbolChildren = $this->resolve($children);
-                    $symbol->setChildren($symbolChildren);
-                }
+				if (method_exists($currentToken, 'hasChildren') && $currentToken->hasChildren()) {
+					$tokenChildren = $currentToken->getChildren();
+					$children = new TokenCollection();
+					$symbolChildren = array();
+					foreach ($tokenChildren as $idx => $child) {
+						$children[] = $child;
+					}
+					$symbolChildren = $this->resolve($children);
+					$symbol->setChildren($symbolChildren);
+				}
                 
-                $symbols[] = $symbol;
+				$symbols[] = $symbol;
                 
-                $tokenTree->next();
-                $currentToken = $tokenTree->current();
+				$tokenTree->next();
+				$currentToken = $tokenTree->current();
                 
-            };
-        }
+			};
+		}
         
-        return $symbols;
+		return $symbols;
         
-    }
+	}
     
 }
