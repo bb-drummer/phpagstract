@@ -30,7 +30,7 @@ abstract class AbstractPropertySymbol {
 	/**
 	 * parent symbol
 	 * 
-	 * @var Symbol
+	 * @var AbstractPropertySymbol
 	 */
 	private $parent;
 
@@ -119,7 +119,7 @@ abstract class AbstractPropertySymbol {
 	/**
 	 * get the property
 	 *
-	 * @return Symbol
+	 * @return AbstractPropertySymbol
 	 */
 	public function getParent() 
 	{
@@ -132,6 +132,7 @@ abstract class AbstractPropertySymbol {
 	/**
 	 * set the property
 	 *
+	 * @param AbstractPropertySymbol $parent
 	 */
 	public function setParent(AbstractPropertySymbol $parent) 
 	{

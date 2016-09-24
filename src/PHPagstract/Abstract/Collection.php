@@ -32,7 +32,7 @@ class AbstractCollection implements \ArrayAccess, \IteratorAggregate {
 	/**
 	 * the items
 	 * 
-	 * @var array[mixed] 
+	 * @var array 
 	 */
 	private $items;
 

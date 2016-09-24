@@ -158,10 +158,8 @@ class PropertyReferenceResolver {
 		if (strpos($reference, "../") === 0) {
 			// we have a parental reference here, so get parent and recurse
 			$data = $this->getContext()->getParent();
-			$parentsName = $data->getName();
 			$reference = mb_substr($reference, 3);
 			$this->setContext($data);
-			$this->getPropertyByReference($reference);
 		}
 
 		$data = $this->getContext();

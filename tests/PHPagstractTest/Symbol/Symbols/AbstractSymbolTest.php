@@ -271,7 +271,7 @@ class AbstractSymbolTest extends \PHPUnit_Framework_TestCase {
         
     public function testAbstractSymbolsSetGetParents() 
     {
-        $parent = new RootProperty;
+        $parent = $this->getMockForAbstractClass('PHPagstract\\Symbol\\Symbols\\AbstractSymbol');
 
         $symbol = $this->getMockForAbstractClass('PHPagstract\\Symbol\\Symbols\\AbstractSymbol');
         

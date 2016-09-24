@@ -142,14 +142,14 @@ class FilepathResolver {
     }
 
     /**
-     * @return integer $themeId
+     * @return int $themeId
      */
     public function getThemeId() {
         return $this->themeId;
     }
 
     /**
-     * @param number $themeId
+     * @param int $themeId
      */
     public function setThemeId($themeId) {
         $this->themeId = $themeId;

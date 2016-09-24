@@ -41,7 +41,7 @@ abstract class AbstractSymbol implements Symbol
 	/**
 	 * symbol name
 	 *
-	 * @var Name
+	 * @var string
 	 */
 	private $name = 'Symbol';
 
@@ -155,7 +155,7 @@ abstract class AbstractSymbol implements Symbol
 	 * set the property
 	 *
 	 */
-	public function setParent(AbstractPropertySymbol $parent) 
+	public function setParent(Symbol $parent) 
 	{
 		$this->parent = $parent;
 		return $this;
