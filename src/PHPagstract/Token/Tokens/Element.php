@@ -40,10 +40,6 @@ class Element extends AbstractToken
 	 */
 	private $name;
 
-	/**
-	 * @var boolean 
-	 */
-	//public static $nested = true;
 
 	public function __construct(Token $parent = null, $throwOnError = false)
 	{
@@ -152,7 +148,6 @@ class Element extends AbstractToken
 
 		// Parse attributes.
 		$remainingHtml = mb_substr($html, mb_strlen($this->name) + 1);
-		$endSequence = "/^\s*[\/]?>/";
 		while (mb_strpos($remainingHtml, '>') !== false && preg_match("/^\s*[\/]?>/", $remainingHtml) === 0) {
 			$remainingHtml = $this->parseAttribute($remainingHtml);
 		}
@@ -196,9 +191,6 @@ class Element extends AbstractToken
 			return $remainingHtml;
 		}
 
-		/*if (!self::$nested) {
-            return $remainingHtml;
-        }*/
 		// Open element.
 		return $this->parseContents($remainingHtml);
 	}

@@ -5,7 +5,7 @@ namespace PHPagstract\Token\Tokens;
 use PHPagstract\Token\MessageTokenizer;
 
 /**
- * PagstractSimpleValue 'pma:value' token object class
+ * Pagstract message reference 'msg://...' token object class
  *
  * @package   PHPagstract
  * @author    Björn Bartels <coding@bjoernbartels.earth>
@@ -27,23 +27,16 @@ class PagstractMessage extends PagstractAbstractToken
 	 * @var boolean 
 	 */
 	public $nested = false;
-    
-	/**
-	 * @var string 
-	 */
-	private $type;
 
 	/**
 	 * token constructor
 	 * 
 	 * @param Token  $parent
-	 * @param string $throwOnError
+	 * @param boolean $throwOnError
 	 */
 	public function __construct(Token $parent = null, $throwOnError = false)
 	{
 		parent::__construct(Token::PAGSTRACTMESSAGE, $parent, $throwOnError);
-
-		//$this->type = "PagstractMessage";
         
 	}
 

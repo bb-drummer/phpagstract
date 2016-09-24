@@ -118,6 +118,20 @@ interface Token
 	public function getParent();
 
 	/**
+	 * Will return the current token value or null if none.
+	 *
+	 * @return mixed
+	 */
+	public function getValue();
+
+	/**
+	 * Will return the current token attributes or null if none.
+	 *
+	 * @return null|array
+	 */
+	public function getAttributes();
+	
+	/**
 	 * Will return the type of token.
 	 *
 	 * @return string

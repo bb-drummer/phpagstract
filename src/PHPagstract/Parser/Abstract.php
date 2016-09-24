@@ -49,10 +49,8 @@ abstract class ParserAbstract
         
 		$this->throwOnError = $throwOnError;
         
-		//$tokenizer->throwOnError = $throwOnError;
 		$this->setTokenizer($tokenizer);
 
-		//$symbolResolver->throwOnError = $throwOnError;
 		$this->setResolver($symbolResolver);
         
 	}
@@ -82,6 +80,7 @@ abstract class ParserAbstract
 	public function compile(SymbolCollection $symbols) 
 	{
 		$compiled = '';
+		$symbols->toArray();
 		return $compiled;
 	}
     

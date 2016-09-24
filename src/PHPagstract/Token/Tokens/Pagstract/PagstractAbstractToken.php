@@ -1,10 +1,18 @@
 <?php
-
 namespace PHPagstract\Token\Tokens;
 
 use PHPagstract\Token\MarkupTokenizer;
 use PHPagstract\Token\Exception\TokenizerException;
 
+/**
+ * Pagstract token abstract class
+ *
+ * @package   PHPagstract
+ * @author    Björn Bartels <coding@bjoernbartels.earth>
+ * @link      https://gitlab.bjoernbartels.earth/php/phpagstract
+ * @license   http://www.apache.org/licenses/LICENSE-2.0 Apache License, Version 2.0
+ * @copyright copyright (c) 2016 Björn Bartels <coding@bjoernbartels.earth>
+ */
 class PagstractAbstractToken extends AbstractToken
 {
 	/**
@@ -36,7 +44,7 @@ class PagstractAbstractToken extends AbstractToken
 	protected $name;
     
 	/**
-	 * @var string 
+	 * @var mixed 
 	 */
 	protected $value;
     
@@ -110,8 +118,8 @@ class PagstractAbstractToken extends AbstractToken
 	 * Constructor
 	 *
 	 * @param string  $type
-	 * @param Token   $type
-	 * @param boolean $type
+	 * @param Token   $parent
+	 * @param boolean $throwOnError
 	 */
 	public function __construct($type, Token $parent = null, $throwOnError = false)
 	{
@@ -134,71 +142,6 @@ class PagstractAbstractToken extends AbstractToken
 	 */
 	public function isClosingElementImplied($html)
 	{
-		/* $parent = $this->getParent();
-        if ($parent === null || !($parent instanceof self)) {
-            return false;
-        }
-
-        $name = $this->parseElementName($html);
-        $parentName = $parent->getName();
-
-        // HEAD: no closing tag.
-        if ($name === 'body' && $parentName === 'head') {
-            return true;
-        }
-
-        // P
-        $elementsNotChildrenOfP = array(
-            'address',
-            'article',
-            'aside',
-            'blockquote',
-            'details',
-            'div',
-            'dl',
-            'fieldset',
-            'figcaption',
-            'figure',
-            'footer',
-            'form',
-            'h1',
-            'h2',
-            'h3',
-            'h4',
-            'h5',
-            'h6',
-            'header',
-            'hgroup',
-            'hr',
-            'main',
-            'menu',
-            'nav',
-            'ol',
-            'p',
-            'pre',
-            'section',
-            'table',
-            'ul'
-        );
-        if ($parentName === 'p' && array_search($name, $elementsNotChildrenOfP) !== false) {
-            return true;
-        }
-
-        // LI
-        if ($parentName == 'li' && $name == 'li') {
-            return true;
-        }
-
-        // DT and DD
-        if (($parentName == 'dt' || $parentName == 'dd') && ($name == 'dt' || $name == 'dd')) {
-            return true;
-        }
-
-        // RP and RT
-        if (($parentName == 'rp' || $parentName == 'rt') && ($name == 'rp' || $name == 'rt')) {
-            return true;
-        }
-        */
 		return false;
 	}
 
@@ -438,92 +381,11 @@ class PagstractAbstractToken extends AbstractToken
 		}
 		if (!empty($elementMatches[2])) {
 			$this->isClosing = true;
-			return ''; //$elementMatches[2];
-			//.mb_strtolower($elementMatches[3]);
+			return ''; 
 		}
 		return mb_strtolower($elementMatches[3]);
 	}
 
-	/**
-	 * Will parse the script and style contents correctly.
-	 *
-	 * @param string $tag
-	 * @param string $html
-	 *
-	 * @return string The remaining HTML.
-	 * /
-    private function parseForeignContents($tag, $html)
-    {
-        $remainingHtml = ltrim($html);
-
-        // Get token position.
-        $positionArray = MarkupTokenizer::getPosition($remainingHtml);
-
-        // Find all contents.
-        $matchingResult = preg_match(
-            "/(<\/\s*" . $tag . "\s*>)/i",
-            $html,
-            $endOfScriptMatches
-        );
-        if ($matchingResult === 0) {
-            $value = trim($remainingHtml);
-            $remainingHtml = '';
-        } else {
-            $closingTag = $endOfScriptMatches[1];
-            $value = trim(
-                mb_substr($remainingHtml, 0, mb_strpos($remainingHtml, $closingTag))
-            );
-            $remainingHtml = mb_substr(
-                mb_strstr($remainingHtml, $closingTag),
-                mb_strlen($closingTag)
-            );
-        }
-
-        // Handle no contents.
-        if ($value == '') {
-            return $remainingHtml;
-        }
-
-        $text = new Text($this, $this->getThrowOnError(), $value);
-        $text->setLine($positionArray['line']);
-        $text->setPosition($positionArray['position']);
-        $this->children[] = $text;
-
-        return $remainingHtml;
-    }
-
-    /**
-	 * Will not parse the contents of an element.
-	 *
-	 * "iframe" elements.
-	 *
-	 * @param string $tag
-	 * @param string $html
-	 *
-	 * @return string The remaining HTML.
-	 * /
-    private function parseNoContents($tag, $html)
-    {
-        $remainingHtml = ltrim($html);
-        $matchingResult = preg_match(
-            "/(<\/\s*" . $tag . "\s*>)/i",
-            $html,
-            $endOfScriptMatches
-        );
-        if ($matchingResult === 0) {
-            return '';
-        }
-
-        $closingTag = $endOfScriptMatches[1];
-
-        return mb_substr(
-            mb_strstr($remainingHtml, $closingTag),
-            mb_strlen($closingTag)
-        );
-    }
-	 */
-    
-    
 	/**
 	 * Getter for 'attributes'.
 	 *
@@ -573,7 +435,7 @@ class PagstractAbstractToken extends AbstractToken
 	/**
 	 * Getter for 'value'.
 	 *
-	 * @return string
+	 * @return mixed
 	 */
 	public function getValue()
 	{
@@ -584,7 +446,7 @@ class PagstractAbstractToken extends AbstractToken
 	 * Getter/Setter for 'nested'.
 	 *
 	 * @return boolean
-	 * @return string
+	 * @return boolean
 	 */
 	public function nested($nested = null)
 	{
@@ -620,9 +482,7 @@ class PagstractAbstractToken extends AbstractToken
 				}
 			}
 		}
-        
-		//$result["closing"] = !!$this->isClosing;
-
+		
 		return $result;
 	}
 

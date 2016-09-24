@@ -138,4 +138,27 @@ abstract class AbstractSymbol implements Symbol
 		$this->name = $name;
 	}
     
+	/**
+	 * get the property
+	 *
+	 * @return Symbol
+	 */
+	public function getParent() 
+	{
+		if ($this->parent === null) {
+			return $this;
+		}
+		return $this->parent;
+	}
+    
+	/**
+	 * set the property
+	 *
+	 */
+	public function setParent(AbstractPropertySymbol $parent) 
+	{
+		$this->parent = $parent;
+		return $this;
+	}
+
 }

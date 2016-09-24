@@ -2,9 +2,8 @@
 
 namespace PHPagstract\Token\Tokens;
 
-
 /**
- * 'Text' token object class, aka. everything that is not a property reference
+ * abstract 'Text' token object class, aka. everything that is not a property reference
  *
  * @package   PHPagstract
  * @author    Björn Bartels <coding@bjoernbartels.earth>
@@ -30,9 +29,10 @@ class PagstractTextAbstract extends PagstractAbstractToken
 	/**
 	 * token constructor
 	 * 
+	 * @param string  $type
 	 * @param Token  $parent
-	 * @param string $throwOnError
-	 * @param string $forcedValue
+	 * @param boolean $throwOnError
+	 * @param mixed $forcedValue
 	 */
 	public function __construct($type, Token $parent = null, $throwOnError = false, $forcedValue = null)
 	{

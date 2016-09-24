@@ -156,13 +156,9 @@ class PropertyReferenceResolver {
         
         
 		if (strpos($reference, "../") === 0) {
-			// we have a parental reference here, so get parent
+			// we have a parental reference here, so get parent and recurse
 			$data = $this->getContext()->getParent();
 			$parentsName = $data->getName();
-			if (($parentsName === "0") || is_numeric($parentsName)) {
-				// we are in a list and actual parent is the numeric index item, so get parent's parent
-				// check if this one here is really needed anymore
-			}
 			$reference = mb_substr($reference, 3);
 			$this->setContext($data);
 			$this->getPropertyByReference($reference);

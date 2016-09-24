@@ -60,7 +60,6 @@ class SymbolResolver
 				if (method_exists($currentToken, 'hasChildren') && $currentToken->hasChildren()) {
 					$tokenChildren = $currentToken->getChildren();
 					$children = new TokenCollection();
-					$symbolChildren = array();
 					foreach ($tokenChildren as $idx => $child) {
 						$children[] = $child;
 					}

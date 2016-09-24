@@ -5,7 +5,7 @@ namespace PHPagstract\Token\Tokens;
 use PHPagstract\Token\PropertyReferenceTokenizer;
 
 /**
- * 'Text' token object class, aka. everything that is not a property reference
+ * property reference parsing 'Text' token object class, aka. everything that is not a property reference
  *
  * @package   PHPagstract
  * @author    Björn Bartels <coding@bjoernbartels.earth>
@@ -32,8 +32,8 @@ class PagstractPropertyReferenceText extends PagstractAbstractToken
 	 * token constructor
 	 * 
 	 * @param Token  $parent
-	 * @param string $throwOnError
-	 * @param string $forcedValue
+	 * @param boolean $throwOnError
+	 * @param mixed $forcedValue
 	 */
 	public function __construct(Token $parent = null, $throwOnError = false, $forcedValue = null)
 	{

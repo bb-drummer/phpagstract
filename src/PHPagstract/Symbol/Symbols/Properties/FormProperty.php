@@ -16,7 +16,8 @@ class FormProperty extends ComponentProperty {
 	/**
 	 */
 	public function __construct($name, $parent) {
-		parent::__construct('form', $name, $parent);
+		parent::__construct($name, $parent);
+		$this->setType('form');
 	}
     
 }

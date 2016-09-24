@@ -5,7 +5,7 @@ namespace PHPagstract\Token\Tokens;
 use PHPagstract\Token\ResourceTokenizer;
 
 /**
- * PagstractSimpleValue 'pma:value' token object class
+ * PagstractResource 'resource://' and 'resource_ext://' token object class
  *
  * @package   PHPagstract
  * @author    Björn Bartels <coding@bjoernbartels.earth>
@@ -40,7 +40,7 @@ class PagstractResource extends PagstractAbstractToken
 	 * token constructor
 	 * 
 	 * @param Token  $parent
-	 * @param string $throwOnError
+	 * @param boolean $throwOnError
 	 */
 	public function __construct(Token $parent = null, $throwOnError = false)
 	{
@@ -58,7 +58,6 @@ class PagstractResource extends PagstractAbstractToken
 	 */
 	public function parse($html)
 	{
-		$html = ($html);
 
 		// Get token position.
 		$positionArray = ResourceTokenizer::getPosition($html);

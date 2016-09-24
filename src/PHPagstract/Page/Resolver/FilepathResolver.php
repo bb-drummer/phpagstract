@@ -47,7 +47,6 @@ class FilepathResolver {
         $paths = $this->findThemePaths($themeId);
         // finally add base/
         $paths[] = $this->getBaseDir();
-        $resultPath = null;
         foreach ($paths as $idx => $path) {
             $filepath = $path.$filename;
             $tplFilepath = $path.'templates/'.$filename;

@@ -33,8 +33,6 @@ class PagstractTokenizer extends MarkupTokenizer
 	public function __construct($throwOnError = false)
 	{
 		$this->throwOnError = (boolean) $throwOnError;
-
-		//PagstractMarkup::$nested = false;
         
 		TokenFactory::clearMatchings();
 

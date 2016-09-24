@@ -71,7 +71,6 @@ abstract class AbstractTokenSymbol extends AbstractSymbol {
 				'line' => $this->getToken()->getLine(),
 				'position' => $this->getToken()->getPosition(),
 				'token' => $this->getToken()->getType(),
-				//'closing' => $this->isClosing(),
 		);
 
 		if ($this->isClosing()) {

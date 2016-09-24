@@ -3,7 +3,9 @@
 namespace PHPagstract\Token\Tokens;
 
 /**
- * PagstractSimpleValue 'pma:value' token object class
+ * PagstractMarkup token object class 
+ * 
+ * representing any other tag which is not mentioned by one of the other tokens
  *
  * @package   PHPagstract
  * @author    Björn Bartels <coding@bjoernbartels.earth>
@@ -18,7 +20,7 @@ class PagstractMarkup extends PagstractAbstractToken
 	 */
 	public static $matching = array(
 			"start" => "/^\s*<[a-z]|^\s*<(?!(\/pma))/i", 
-			//"start" => "/(^\s*<[a-z]|^\s*<\/\s*[a-z])|^\s*<(?!(\/pma))/i", 
+			// another regex : "/(^\s*<[a-z]|^\s*<\/\s*[a-z])|^\s*<(?!(\/pma))/i", 
 			"end" => ">"
 	);
 
@@ -31,7 +33,7 @@ class PagstractMarkup extends PagstractAbstractToken
 	 * token constructor
 	 * 
 	 * @param Token  $parent
-	 * @param string $throwOnError
+	 * @param boolean $throwOnError
 	 */
 	public function __construct(Token $parent = null, $throwOnError = false)
 	{

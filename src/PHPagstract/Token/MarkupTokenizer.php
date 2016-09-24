@@ -34,7 +34,6 @@ class MarkupTokenizer extends AbstractTokenizer
 	{
 		$this->throwOnError = (boolean) $throwOnError;
 
-		//Element::$nested = true;
 		TokenFactory::clearMatchings();
 		TokenFactory::registerMatching("Php");
 		TokenFactory::registerMatching("Comment");

@@ -1,11 +1,10 @@
 <?php
-
 namespace PHPagstract\Token\Tokens;
 
 use PHPagstract\Token\ResourceTokenizer;
 
 /**
- * 'Text' token object class, aka. everything that is not a property reference
+ * resource parsing 'Text' token object class, aka. everything that is not a resource reference
  *
  * @package   PHPagstract
  * @author    Björn Bartels <coding@bjoernbartels.earth>
@@ -19,8 +18,8 @@ class PagstractResourceText extends PagstractTextAbstract
 	 * token constructor
 	 * 
 	 * @param Token  $parent
-	 * @param string $throwOnError
-	 * @param string $forcedValue
+	 * @param boolean $throwOnError
+	 * @param mixed $forcedValue
 	 */
 	public function __construct(Token $parent = null, $throwOnError = false, $forcedValue = null)
 	{

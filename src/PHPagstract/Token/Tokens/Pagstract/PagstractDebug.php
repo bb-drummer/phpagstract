@@ -3,7 +3,7 @@
 namespace PHPagstract\Token\Tokens;
 
 /**
- * PagstractSimpleValue 'pma:value' token object class
+ * PagstractDebug 'pma:debug' token object class
  *
  * @package   PHPagstract
  * @author    Björn Bartels <coding@bjoernbartels.earth>
@@ -30,7 +30,7 @@ class PagstractDebug extends PagstractAbstractToken
 	 * token constructor
 	 * 
 	 * @param Token  $parent
-	 * @param string $throwOnError
+	 * @param boolean $throwOnError
 	 */
 	public function __construct(Token $parent = null, $throwOnError = false)
 	{

@@ -253,7 +253,7 @@ class AbstractSymbolTest extends \PHPUnit_Framework_TestCase {
          
     }
         
-    public function testPropertySymbolsSetGetParents() 
+    public function testPropertySymbolSetGetParents() 
     {
         $root = new RootProperty();
         
@@ -267,6 +267,22 @@ class AbstractSymbolTest extends \PHPUnit_Framework_TestCase {
         $testProp = $prop->getParent();
         
         $this->assertEquals($root, $testProp);
+    }
+        
+    public function testAbstractSymbolsSetGetParents() 
+    {
+        $parent = new RootProperty;
+
+        $symbol = $this->getMockForAbstractClass('PHPagstract\\Symbol\\Symbols\\AbstractSymbol');
+        
+        $testNull = $symbol->getParent();
+         
+        $this->assertEquals($symbol, $testNull);
+        
+        $symbol->setParent($parent);
+        $testSymbol = $symbol->getParent();
+        
+        $this->assertEquals($parent, $testSymbol);
     }
     
 }

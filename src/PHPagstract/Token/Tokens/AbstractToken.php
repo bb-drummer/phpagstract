@@ -1,5 +1,4 @@
 <?php
-
 namespace PHPagstract\Token\Tokens;
 
 /**
@@ -272,5 +271,22 @@ abstract class AbstractToken implements Token
 			|| $type === Token::ELEMENT
 			|| $type === Token::PHP
 			|| $type === Token::TEXT;
+	}
+
+	/**
+	 * Will return the current token value or null if none.
+	 *
+	 */
+	public function getValue() 
+	{
+	}
+
+	/**
+	 * Will return the current token attributes or null if none.
+	 *
+	 */
+	public function getAttributes() 
+	{ 
+		return array(); 
 	}
 }

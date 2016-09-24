@@ -6,7 +6,7 @@ use PHPagstract\Token\MarkupTokenizer;
 use PHPagstract\Token\Exception\TokenizerException;
 
 /**
- * 'CData' token object class
+ * Property reference '¢{...}' token object class
  *
  * @package   PHPagstract
  * @author    Björn Bartels <coding@bjoernbartels.earth>
@@ -33,7 +33,7 @@ class PagstractPropertyReference extends PagstractAbstractToken
 	 * token constructor
 	 * 
 	 * @param Token  $parent
-	 * @param string $throwOnError
+	 * @param boolean $throwOnError
 	 */
 	public function __construct(Token $parent = null, $throwOnError = false)
 	{
@@ -60,7 +60,7 @@ class PagstractPropertyReference extends PagstractAbstractToken
 
 		// Parse token.
 		$posOfEndOfCData = mb_strpos($html, '}');
-		if ($posOfEndOfCData == false) {
+		if ($posOfEndOfCData === false) {
 			if ($this->getThrowOnError()) {
 				throw new TokenizerException('Invalid Property in line: '.$this->getLine().', position: '.$this->getPosition().'');
 			}

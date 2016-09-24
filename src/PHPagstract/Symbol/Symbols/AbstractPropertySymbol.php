@@ -16,7 +16,7 @@ abstract class AbstractPropertySymbol {
 	/**
 	 * symbol name
 	 *
-	 * @var Name
+	 * @var string
 	 */
 	private $name = 'Symbol';
     
@@ -43,6 +43,8 @@ abstract class AbstractPropertySymbol {
 
 	/**
 	 * @param string $type
+	 * @param string $name
+	 * @param null|AbstractPropertySymbol $parent
 	 */
 	public function __construct($type, $name, AbstractPropertySymbol & $parent = null) {
 		if ($parent !== null) {
@@ -117,7 +119,7 @@ abstract class AbstractPropertySymbol {
 	/**
 	 * get the property
 	 *
-	 * @return AbstractPropertySymbol
+	 * @return Symbol
 	 */
 	public function getParent() 
 	{
@@ -200,17 +202,5 @@ abstract class AbstractPropertySymbol {
 		return $this;
 	}
 
-
-	/**
-	 * 'magic' debug info assembler
-	 *
-	 * @param string $name
-	 * /
-    public function __debugInfo() {
-        $result = get_object_vars($this);
-        //if ( isset($result["parent"]) )unset($result["parent"]);
-        return $result;
-    } 
-	 */
 }
 
