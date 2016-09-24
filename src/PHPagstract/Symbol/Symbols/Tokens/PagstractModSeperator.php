@@ -13,10 +13,10 @@ namespace PHPagstract\Symbol\Symbols\Tokens;
  */
 class PagstractModSeperator extends PagstractMarkup {
     
-    /**
-     */
-    public function __construct() {
-        parent::__construct();
-    }
+	/**
+	 */
+	public function __construct() {
+		parent::__construct();
+	}
 }
 

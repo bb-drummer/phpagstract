@@ -16,14 +16,14 @@ class FilepathResolver {
      * path to base template set
      * @var string 
      */
-    public $baseDir = "path/to/base";    // ..../shop/base/
+    public $baseDir = "path/to/base"; // ..../shop/base/
     
 
     /**
      * path to themes template set
      * @var string
      */
-    public $themesDir = "path/to/themes";  // ..../shop/mandant/{n.m}/
+    public $themesDir = "path/to/themes"; // ..../shop/mandant/{n.m}/
     
     /**
      * selected theme
@@ -49,11 +49,11 @@ class FilepathResolver {
         $paths[] = $this->getBaseDir();
         $resultPath = null;
         foreach ($paths as $idx => $path) {
-            $filepath = $path . $filename;
-            $tplFilepath = $path . 'templates/' . $filename;
-            if ( file_exists($filepath) ) {
+            $filepath = $path.$filename;
+            $tplFilepath = $path.'templates/'.$filename;
+            if (file_exists($filepath)) {
                 return $filepath;
-            } else if ( file_exists($tplFilepath) ) {
+            } else if (file_exists($tplFilepath)) {
                 return $tplFilepath;
             }
         }
@@ -86,7 +86,7 @@ class FilepathResolver {
      *  "themes/a/",
      * ]
      * 
-     * @param int|string $themeId
+     * @param integer $themeId
      * @return array of theme related folders
      */
     public function findThemePaths($themeId, $result = []) {
@@ -95,10 +95,10 @@ class FilepathResolver {
         
         // look for .../themes/{themeId.parent}/
         foreach ($paths as $idx => $file) {
-            if ( !in_array($file , ['.','..']) && is_dir($themesDir.$file) ) {
-                if ( ( ( ($file == $themeId) && is_dir($themesDir.$file) ) || (strpos($file, $themeId.'.') === 0))  && !in_array($file, $result) ) {
-                    $result[] = $themesDir . $file . "/";
-                    if ( (strpos($file, '.') !== false) ) {
+            if (!in_array($file, ['.', '..']) && is_dir($themesDir.$file)) {
+                if (((($file == $themeId) && is_dir($themesDir.$file)) || (strpos($file, $themeId.'.') === 0)) && !in_array($file, $result)) {
+                    $result[] = $themesDir.$file."/";
+                    if ((strpos($file, '.') !== false)) {
                         $ids = explode('.', $file, 2);
                         $parents = $this->findThemePaths($ids[1], $result);
                         foreach ($parents as $key => $value) {
@@ -115,7 +115,7 @@ class FilepathResolver {
     }
     
     /**
-     * @return the $baseDir
+     * @return string $baseDir
      */
     public function getBaseDir() {
         return $this->baseDir;
@@ -129,7 +129,7 @@ class FilepathResolver {
     }
 
     /**
-     * @return the $themesDir
+     * @return string $themesDir
      */
     public function getThemesDir() {
         return $this->themesDir;
@@ -143,7 +143,7 @@ class FilepathResolver {
     }
 
     /**
-     * @return the $themeId
+     * @return integer $themeId
      */
     public function getThemeId() {
         return $this->themeId;

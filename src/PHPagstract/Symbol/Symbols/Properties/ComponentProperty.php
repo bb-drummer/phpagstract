@@ -13,11 +13,11 @@ namespace PHPagstract\Symbol\Symbols\Properties;
  */
 class ComponentProperty extends ObjectProperty {
     
-    /**
-     */
-    public function __construct($name, $parent) {
-        parent::__construct($name, $parent);
-        $this->setType('component');
-    }
+	/**
+	 */
+	public function __construct($name, $parent) {
+		parent::__construct($name, $parent);
+		$this->setType('component');
+	}
 }
 

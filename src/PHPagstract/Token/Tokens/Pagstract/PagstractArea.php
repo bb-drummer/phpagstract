@@ -13,29 +13,29 @@ namespace PHPagstract\Token\Tokens;
  */
 class PagstractArea extends PagstractAbstractToken
 {
-    /**
-     * @var array the $matching
-     */
-    public static $matching = array(
-            "start" => "/^\s*<area[ ]/i", 
-            "end" => ">"
-    );
+	/**
+	 * @var array the $matching
+	 */
+	public static $matching = array(
+			"start" => "/^\s*<area[ ]/i", 
+			"end" => ">"
+	);
 
-    /**
-     * @var boolean 
-     */
-    public $nested = false;
+	/**
+	 * @var boolean 
+	 */
+	public $nested = false;
     
-    /**
-     * token constructor
-     * 
-     * @param Token  $parent
-     * @param string $throwOnError
-     */
-    public function __construct(Token $parent = null, $throwOnError = false)
-    {
-        parent::__construct(Token::PAGSTRACTAREA, $parent, $throwOnError);
+	/**
+	 * token constructor
+	 * 
+	 * @param Token  $parent
+	 * @param string $throwOnError
+	 */
+	public function __construct(Token $parent = null, $throwOnError = false)
+	{
+		parent::__construct(Token::PAGSTRACTAREA, $parent, $throwOnError);
         
-    }
+	}
 
 }
