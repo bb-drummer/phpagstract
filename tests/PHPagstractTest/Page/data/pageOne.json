@@ -1,0 +1,97 @@
+{
+  "root": {
+    "pageTitle": "Test Page One",
+    "mainText": "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.",
+    "navigation": [
+      {
+        "label": "nav 1",
+        "url": "http://example.org/path/1/",
+        "active": true
+      },
+      {
+        "label": "nav 2",
+        "url": "http://example.org/path/2/",
+        "active": false
+      },
+      {
+        "label": "nav 3",
+        "url": "http://example.org/path/3/",
+        "active": false,
+        "subnavigation": [
+          {
+            "label": "nav 3.1",
+            "url": "http://example.org/path/3.1/",
+            "active": false
+          },
+          {
+            "label": "nav 3.2",
+            "url": "http://example.org/path/3.2/",
+            "active": false
+          }
+        ]
+      }
+    ],
+    "footerText": {
+      "copyright": "&copy; 2016",
+      "company": "CrashBoomBang Ltd."
+    },
+    "myproperty": "myvalue @ page one",
+    "justAnotherProperty": "other value @ page one",
+    "propertyfalse": false,
+    "propertytrue": true,
+    "propertynull": null,
+    "propertyint": 123,
+    "propertyfloat": 123.45,
+    "property": {
+      "child": {
+        "more": {
+          "child": "child-value @ page one"
+        }
+      }
+    },
+    "otherproperty": [
+      {
+        "otherChild": "otherValue @ page one",
+        "moreChildren": {
+          "something": "good bye @ page one",
+          "text": "fare well @ page one"
+        }
+      },
+      {
+        "hello": "world @ page one",
+        "child": {
+          "more": {
+            "child": "child-value @ page one"
+          },
+          "other": [
+            {
+              "odd": "'odd' val @ page one",
+              "text": "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren,"
+            },
+            {
+              "even": {
+                "more": {
+                  "properties": [
+                    {
+                      "something": "here @ page one",
+                      "text": "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren,"
+                    },
+                    {
+                      "something": "there @ page one",
+                      "text": "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren,"
+                    },
+                    {
+                      "something": "another deepvalue @ page one",
+                      "text": "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren,"
+                    }
+                  ]
+                }
+              },
+              "text": "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren,"
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

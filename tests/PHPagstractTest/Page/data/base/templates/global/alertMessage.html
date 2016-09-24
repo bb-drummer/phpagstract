@@ -1,0 +1,23 @@
+<!-- pma:tileVariable test... -->
+<!-- 
+    -tvAlertDismissable : true|false
+    _tvAlertType        : info|danger|success|warning
+    _tvAlertHeader      : text
+    _tvAlertInfo        : text
+    _tvAlertHint        : text
+ -->
+<pma:switch pma:name="._tvAlertDismissable">
+<div class="alert alert-${._tvAlertType}">
+<object pma:case="true">
+<div class="alert alert-${._tvAlertType} alert-dismissable">
+    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">
+        ×
+    </button>
+</object>
+</pma:switch>
+
+    <pma:if-visible pma:name=".tvAlertHeader"><h4>${._tvAlertHeader}</h4></pma:if-visible>
+    <pma:if-visible pma:name=".tvAlertInfo"><strong>${._tvAlertInfo}</strong></pma:if-visible>
+    <pma:if-visible pma:name=".tvAlertHint"><span>${._tvAlertHint}</span></pma:if-visible>
+    
+</div>

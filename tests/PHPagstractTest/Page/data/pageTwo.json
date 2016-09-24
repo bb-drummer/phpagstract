@@ -1,0 +1,97 @@
+{
+  "root": {
+    "pageTitle": "Test Page Two",
+    "mainText": "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.",
+    "navigation": [
+      {
+        "label": "nav 1",
+        "url": "http://example.org/path/1/",
+        "active": false
+      },
+      {
+        "label": "nav 2",
+        "url": "http://example.org/path/2/",
+        "active": true
+      },
+      {
+        "label": "nav 3",
+        "url": "http://example.org/path/3/",
+        "active": false,
+        "subnavigation": [
+          {
+            "label": "nav 3.1",
+            "url": "http://example.org/path/3.1/",
+            "active": false
+          },
+          {
+            "label": "nav 3.2",
+            "url": "http://example.org/path/3.2/",
+            "active": false
+          }
+        ]
+      }
+    ],
+    "footerText": {
+      "copyright": "&copy; 2016",
+      "company": "CrashBoomBang Ltd."
+    },
+    "myproperty": "myvalue @ page two",
+    "justAnotherProperty": "other value @ page two",
+    "propertyfalse": false,
+    "propertytrue": true,
+    "propertynull": null,
+    "propertyint": 123,
+    "propertyfloat": 123.45,
+    "property": {
+      "child": {
+        "more": {
+          "child": "child-value @ page two"
+        }
+      }
+    },
+    "otherproperty": [
+      {
+        "otherChild": "otherValue @ page two",
+        "moreChildren": {
+          "something": "good bye @ page two",
+          "text": "fare well @ page two"
+        }
+      },
+      {
+        "hello": "world @ page two",
+        "child": {
+          "more": {
+            "child": "child-value @ page two"
+          },
+          "other": [
+            {
+              "odd": "'odd' val @ page two",
+              "text": "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren,"
+            },
+            {
+              "even": {
+                "more": {
+                  "properties": [
+                    {
+                      "something": "here @ page two",
+                      "text": "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren,"
+                    },
+                    {
+                      "something": "there @ page two",
+                      "text": "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren,"
+                    },
+                    {
+                      "something": "another deepvalue @ page two",
+                      "text": "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren,"
+                    }
+                  ]
+                }
+              },
+              "text": "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren,"
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

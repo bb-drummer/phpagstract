@@ -10,7 +10,7 @@ qa-metrics.sh
 ## dirs
 src_ns
 tests/shop
-data/
+testdata/
 vendor/
 public/
 
