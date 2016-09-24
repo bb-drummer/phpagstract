@@ -15,10 +15,10 @@ use PHPagstract\Symbol\Symbols\AbstractTokenSymbol;
  */
 class Element extends AbstractTokenSymbol {
     
-	/**
-	 */
-	public function __construct($parent = null, $throwOnError = false) {
-		parent::__construct($parent, $throwOnError);
-	}
+    /**
+     */
+    public function __construct($parent = null, $throwOnError = false) {
+        parent::__construct($parent, $throwOnError);
+    }
 }
 

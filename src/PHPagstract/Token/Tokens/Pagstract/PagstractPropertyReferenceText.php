@@ -15,92 +15,92 @@ use PHPagstract\Token\PropertyReferenceTokenizer;
  */
 class PagstractPropertyReferenceText extends PagstractAbstractToken
 {
-	/**
-	 * @var array the $matching
-	 */
-	public static $matching = array(
-			"start" => "/^[^\$]/", 
-			"end" => '${'
-	);
+    /**
+     * @var array the $matching
+     */
+    public static $matching = array(
+            "start" => "/^[^\$]/", 
+            "end" => '${'
+    );
     
-	/**
-	 * @var boolean 
-	 */
-	public $nested = false;
+    /**
+     * @var boolean 
+     */
+    public $nested = false;
     
-	/**
-	 * token constructor
-	 * 
-	 * @param Token  $parent
-	 * @param string $throwOnError
-	 * @param string $forcedValue
-	 */
-	public function __construct(Token $parent = null, $throwOnError = false, $forcedValue = null)
-	{
-		parent::__construct(Token::PAGSTRACTPROPERTYREFERENCETEXT, $parent, $throwOnError);
+    /**
+     * token constructor
+     * 
+     * @param Token  $parent
+     * @param string $throwOnError
+     * @param string $forcedValue
+     */
+    public function __construct(Token $parent = null, $throwOnError = false, $forcedValue = null)
+    {
+        parent::__construct(Token::PAGSTRACTPROPERTYREFERENCETEXT, $parent, $throwOnError);
 
-		$this->value = $forcedValue;
-	}
+        $this->value = $forcedValue;
+    }
 
-	/**
-	 * parse for everything that is not a property reference
-	 * {@inheritDoc}
-	 *
-	 * @see \PHPagstract\Token\Tokens\PagstractAbstractToken::parse()
-	 */
-	public function parse($html)
-	{
-		// Get token position.
-		$positionArray = PropertyReferenceTokenizer::getPosition($html);
-		$this->setLine($positionArray['line']);
-		$this->setPosition($positionArray['position']);
+    /**
+     * parse for everything that is not a property reference
+     * {@inheritDoc}
+     *
+     * @see \PHPagstract\Token\Tokens\PagstractAbstractToken::parse()
+     */
+    public function parse($html)
+    {
+        // Get token position.
+        $positionArray = PropertyReferenceTokenizer::getPosition($html);
+        $this->setLine($positionArray['line']);
+        $this->setPosition($positionArray['position']);
 
-		// Collapse whitespace before TEXT.
-		$startingWhitespace = '';
-		if (preg_match("/(^\s)/", $html) === 1) {
-			$startingWhitespace = ' ';
-		}
+        // Collapse whitespace before TEXT.
+        $startingWhitespace = '';
+        if (preg_match("/(^\s)/", $html) === 1) {
+            $startingWhitespace = ' ';
+        }
         
-		$posOfNextElement = mb_strpos($html, '${');
-		if ($posOfNextElement === false) {
-			$this->value = $startingWhitespace.trim($html);
+        $posOfNextElement = mb_strpos($html, '${');
+        if ($posOfNextElement === false) {
+            $this->value = $startingWhitespace.trim($html);
 
-			return '';
-		}
+            return '';
+        }
 
-		// Find full length of TEXT.
-		$text = mb_substr($html, 0, $posOfNextElement);
-		if (trim($text) == '') {
-			$this->value = ' ';
+        // Find full length of TEXT.
+        $text = mb_substr($html, 0, $posOfNextElement);
+        if (trim($text) == '') {
+            $this->value = ' ';
 
-			return mb_substr($html, $posOfNextElement);
-		}
+            return mb_substr($html, $posOfNextElement);
+        }
 
-		// Collapse whitespace after TEXT.
-		$endingWhitespace = '';
-		if (preg_match("/(\s$)/", $text) === 1) {
-			$endingWhitespace = ' ';
-		}
+        // Collapse whitespace after TEXT.
+        $endingWhitespace = '';
+        if (preg_match("/(\s$)/", $text) === 1) {
+            $endingWhitespace = ' ';
+        }
 
-		$this->value = $startingWhitespace.trim($text).$endingWhitespace;
+        $this->value = $startingWhitespace.trim($text).$endingWhitespace;
 
-		return mb_substr($html, $posOfNextElement);
-	}
+        return mb_substr($html, $posOfNextElement);
+    }
 
-	/**
-	 * export token data 
-	 * {@inheritDoc}
-	 *
-	 * @see \PHPagstract\Token\Tokens\PagstractAbstractToken::toArray()
-	 */
-	public function toArray()
-	{
-		return array(
-			'type' => 'text',
-			'value' => $this->getValue(),
-			'line' => $this->getLine(),
-			'position' => $this->getPosition()
-		);
-	}
+    /**
+     * export token data 
+     * {@inheritDoc}
+     *
+     * @see \PHPagstract\Token\Tokens\PagstractAbstractToken::toArray()
+     */
+    public function toArray()
+    {
+        return array(
+            'type' => 'text',
+            'value' => $this->getValue(),
+            'line' => $this->getLine(),
+            'position' => $this->getPosition()
+        );
+    }
 }
 

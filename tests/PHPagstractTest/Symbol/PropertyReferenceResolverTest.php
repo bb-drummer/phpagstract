@@ -48,7 +48,7 @@ class PropertyReferenceResolverTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($root, $componentProperty->getParent());
     }
     
-	
+    
     /**
      * @dataProvider parsePropertyReferenceStringsDataProvider
      */
@@ -85,96 +85,96 @@ class PropertyReferenceResolverTest extends \PHPUnit_Framework_TestCase
             'single property name' => array(
                 'myproperty',
                 array (
-	                array (
-					    '',
-					    'myproperty',
-					    '',
-					)	
+                    array (
+                        '',
+                        'myproperty',
+                        '',
+                    )    
                 )
             ),
             'single property name with leading dot' => array(
                 '.myproperty',
                 array (
-	                array (
-					    '.',
-					    'myproperty',
-					    '',
-					)	
+                    array (
+                        '.',
+                        'myproperty',
+                        '',
+                    )    
                 )
             ),
             'parent property name' => array(
                 '../.myproperty',
                 array (
-	                array (
-					    '../.',
-					    'myproperty',
-					    '',
-					)	
+                    array (
+                        '../.',
+                        'myproperty',
+                        '',
+                    )    
                 )
             ),
             'multiple chained property names' => array(
                 'property.child',
                 array (
-	                array (
-					    '',
-					    'property',
-					    '',
-					),
-	                array (
-					    '.',
-					    'child',
-					    '',
-					)	
+                    array (
+                        '',
+                        'property',
+                        '',
+                    ),
+                    array (
+                        '.',
+                        'child',
+                        '',
+                    )    
                 )
             ),
             'multiple chained property names with leading dot' => array(
                 '.property.child',
                 array (
-	                array (
-					    '.',
-					    'property',
-					    '',
-					),
-	                array (
-					    '.',
-					    'child',
-					    '',
-					)	
+                    array (
+                        '.',
+                        'property',
+                        '',
+                    ),
+                    array (
+                        '.',
+                        'child',
+                        '',
+                    )    
                 )
             ),
             'multiple chained property names with list index' => array(
                 '.otherproperty[0].child',
                 array (
-	                array (
-					    '.',
-					    'otherproperty',
-					    '0',
-					),
-	                array (
-					    '.',
-					    'child',
-					    '',
-					)	
+                    array (
+                        '.',
+                        'otherproperty',
+                        '0',
+                    ),
+                    array (
+                        '.',
+                        'child',
+                        '',
+                    )    
                 )
             ),
             'multiple chained property names with another list index at the end' => array(
                 '.otherproperty[0].child.other[1]',
                 array (
-	                array (
-					    '.',
-					    'otherproperty',
-					    '0',
-					),
-	                array (
-					    '.',
-					    'child',
-					    '',
-					)	,
-	                array (
-					    '.',
-					    'other',
-					    '1',
-					)	
+                    array (
+                        '.',
+                        'otherproperty',
+                        '0',
+                    ),
+                    array (
+                        '.',
+                        'child',
+                        '',
+                    )    ,
+                    array (
+                        '.',
+                        'other',
+                        '1',
+                    )    
                 )
             ),
         );
@@ -189,8 +189,8 @@ class PropertyReferenceResolverTest extends \PHPUnit_Framework_TestCase
         
         $resolver = new PropertyReferenceResolver();
         $context = json_decode($jsondata);
-		$rootSymbolTree = $resolver->symbolize($context);
-		$resolver->setContext($rootSymbolTree);
+        $rootSymbolTree = $resolver->symbolize($context);
+        $resolver->setContext($rootSymbolTree);
         
         $property = $resolver->getPropertyByReference($expectedName);
         
@@ -215,211 +215,211 @@ class PropertyReferenceResolverTest extends \PHPUnit_Framework_TestCase
     public function lookupPropertyAndSerializeDataProvider()
     {
         return array(
-        		
-        	"scalar property (string)" => array(
-        		'{"property": "value"}', // json
-        		'PHPagstract\\Symbol\\Symbols\\Properties\\ScalarProperty', // expected classname
-        		'property', // expected name 
-        		'scalar', // expected type 
-        		array
-				(
-				    "name" => "property",
-				    "type" => "scalar",
-				    "property" => "value",
-				), // expected value 
-        		
-        		false // true = debug on
-        	),
-        		
-        	"scalar property (zero)" => array(
-        		'{"property": 0}', // json
-        		'PHPagstract\\Symbol\\Symbols\\Properties\\ScalarProperty', // expected classname
-        		'property', // expected name 
-        		'scalar', // expected type 
-        		array
-				(
-				    "name" => "property",
-				    "type" => "scalar",
-				    "property" => 0,
-				), // expected value 
-        		
-        		false // true = debug on
-        	),
-        		
-        	"scalar property (integer)" => array(
-        		'{"property": 123}', // json
-        		'PHPagstract\\Symbol\\Symbols\\Properties\\ScalarProperty', // expected classname
-        		'property', // expected name 
-        		'scalar', // expected type 
-        		array
-				(
-				    "name" => "property",
-				    "type" => "scalar",
-				    "property" => 123,
-				), // expected value 
-        		
-        		false // true = debug on
-        	),
-        		
-        	"scalar property (negative integer)" => array(
-        		'{"property": -123}', // json
-        		'PHPagstract\\Symbol\\Symbols\\Properties\\ScalarProperty', // expected classname
-        		'property', // expected name 
-        		'scalar', // expected type 
-        		array
-				(
-				    "name" => "property",
-				    "type" => "scalar",
-				    "property" => -123,
-				), // expected value 
-        		
-        		false // true = debug on
-        	),
-        		
-        	"scalar property (float)" => array(
-        		'{"property": 123.45}', // json
-        		'PHPagstract\\Symbol\\Symbols\\Properties\\ScalarProperty', // expected classname
-        		'property', // expected name 
-        		'scalar', // expected type 
-        		array
-				(
-				    "name" => "property",
-				    "type" => "scalar",
-				    "property" => 123.45,
-				), // expected value 
-        		
-        		false // true = debug on
-        	),
-        		
-        	"scalar property (negative float)" => array(
-        		'{"property": -123.45}', // json
-        		'PHPagstract\\Symbol\\Symbols\\Properties\\ScalarProperty', // expected classname
-        		'property', // expected name 
-        		'scalar', // expected type 
-        		array
-				(
-				    "name" => "property",
-				    "type" => "scalar",
-				    "property" => -123.45,
-				), // expected value 
-        		
-        		false // true = debug on
-        	),
-        		
-        	"scalar property (boolean false)" => array(
-        		'{"property": false}', // json
-        		'PHPagstract\\Symbol\\Symbols\\Properties\\ScalarProperty', // expected classname
-        		'property', // expected name 
-        		'scalar', // expected type 
-        		array
-				(
-				    "name" => "property",
-				    "type" => "scalar",
-				    "property" => false,
-				), // expected value 
-        		
-        		false // true = debug on
-        	),
-        		
-        	"scalar property (boolean true)" => array(
-        		'{"property": true}', // json
-        		'PHPagstract\\Symbol\\Symbols\\Properties\\ScalarProperty', // expected classname
-        		'property', // expected name 
-        		'scalar', // expected type 
-        		array
-				(
-				    "name" => "property",
-				    "type" => "scalar",
-				    "property" => true,
-				), // expected value 
-        		
-        		false // true = debug on
-        	),
-        		
-        	"scalar property (null)" => array(
-        		'{"property": null}', // json
-        		'PHPagstract\\Symbol\\Symbols\\Properties\\ScalarProperty', // expected classname
-        		'property', // expected name 
-        		'scalar', // expected type 
-        		array
-				(
-				    "name" => "property",
-				    "type" => "scalar",
-				    "property" => null,
-				), // expected value 
-        		
-        		false // true = debug on
-        	),
-        		
-        	"object property" => array(
-        		'{"property": { "other": "value"} }', // json
-        		'PHPagstract\\Symbol\\Symbols\\Properties\\ObjectProperty', // expected classname
-        		'property', // expected name 
-        		'object', // expected type 
-        		array (
-				  'name' => 'property',
-				  'type' => 'object',
-				  'property' => NULL,
-				  'properties' => 
-				  (object)(array(
-				     'other' => 
-				    array (
-				      'name' => 'other',
-				      'type' => 'scalar',
-				      'property' => 'value',
-				    ),
-				  )),
-				), // expected value 
-        		
-        		false // true = debug on
-        	),
-        		
-        	"list property" => array(
-        		'{"property": [ { "other-A": "val1"}, { "other-B": "val2"} ] }', // json
-        		'PHPagstract\\Symbol\\Symbols\\Properties\\ListProperty', // expected classname
-        		'property', // expected name 
-        		'list', // expected type 
-        		array (
-				  'name' => 'property',
-				  'type' => 'list',
-				  'property' => NULL,
-				  'items' => 
-				  array (
-				    0 => 
-				    array (
-				      'name' => 0,
-				      'type' => 'object',
-				      'property' => NULL,
-				      'properties' => 
-				      (object)(array(
-				         'other-A' => 
-				        array (
-				          'name' => 'other-A',
-				          'type' => 'scalar',
-				          'property' => 'val1',
-				        ),
-				      )),
-				    ),
-				    1 => 
-				    array (
-				      'name' => 1,
-				      'type' => 'object',
-				      'property' => NULL,
-				      'properties' => 
-				      (object)(array(
-				         'other-B' => 
-				        array (
-				          'name' => 'other-B',
-				          'type' => 'scalar',
-				          'property' => 'val2',
-				        ),
-				      )),
-				    ),
-				  ),
-				), // expected value 
-        		
-        		false // true = debug on
-        	),
+                
+            "scalar property (string)" => array(
+                '{"property": "value"}', // json
+                'PHPagstract\\Symbol\\Symbols\\Properties\\ScalarProperty', // expected classname
+                'property', // expected name 
+                'scalar', // expected type 
+                array
+                (
+                    "name" => "property",
+                    "type" => "scalar",
+                    "property" => "value",
+                ), // expected value 
+                
+                false // true = debug on
+            ),
+                
+            "scalar property (zero)" => array(
+                '{"property": 0}', // json
+                'PHPagstract\\Symbol\\Symbols\\Properties\\ScalarProperty', // expected classname
+                'property', // expected name 
+                'scalar', // expected type 
+                array
+                (
+                    "name" => "property",
+                    "type" => "scalar",
+                    "property" => 0,
+                ), // expected value 
+                
+                false // true = debug on
+            ),
+                
+            "scalar property (integer)" => array(
+                '{"property": 123}', // json
+                'PHPagstract\\Symbol\\Symbols\\Properties\\ScalarProperty', // expected classname
+                'property', // expected name 
+                'scalar', // expected type 
+                array
+                (
+                    "name" => "property",
+                    "type" => "scalar",
+                    "property" => 123,
+                ), // expected value 
+                
+                false // true = debug on
+            ),
+                
+            "scalar property (negative integer)" => array(
+                '{"property": -123}', // json
+                'PHPagstract\\Symbol\\Symbols\\Properties\\ScalarProperty', // expected classname
+                'property', // expected name 
+                'scalar', // expected type 
+                array
+                (
+                    "name" => "property",
+                    "type" => "scalar",
+                    "property" => -123,
+                ), // expected value 
+                
+                false // true = debug on
+            ),
+                
+            "scalar property (float)" => array(
+                '{"property": 123.45}', // json
+                'PHPagstract\\Symbol\\Symbols\\Properties\\ScalarProperty', // expected classname
+                'property', // expected name 
+                'scalar', // expected type 
+                array
+                (
+                    "name" => "property",
+                    "type" => "scalar",
+                    "property" => 123.45,
+                ), // expected value 
+                
+                false // true = debug on
+            ),
+                
+            "scalar property (negative float)" => array(
+                '{"property": -123.45}', // json
+                'PHPagstract\\Symbol\\Symbols\\Properties\\ScalarProperty', // expected classname
+                'property', // expected name 
+                'scalar', // expected type 
+                array
+                (
+                    "name" => "property",
+                    "type" => "scalar",
+                    "property" => -123.45,
+                ), // expected value 
+                
+                false // true = debug on
+            ),
+                
+            "scalar property (boolean false)" => array(
+                '{"property": false}', // json
+                'PHPagstract\\Symbol\\Symbols\\Properties\\ScalarProperty', // expected classname
+                'property', // expected name 
+                'scalar', // expected type 
+                array
+                (
+                    "name" => "property",
+                    "type" => "scalar",
+                    "property" => false,
+                ), // expected value 
+                
+                false // true = debug on
+            ),
+                
+            "scalar property (boolean true)" => array(
+                '{"property": true}', // json
+                'PHPagstract\\Symbol\\Symbols\\Properties\\ScalarProperty', // expected classname
+                'property', // expected name 
+                'scalar', // expected type 
+                array
+                (
+                    "name" => "property",
+                    "type" => "scalar",
+                    "property" => true,
+                ), // expected value 
+                
+                false // true = debug on
+            ),
+                
+            "scalar property (null)" => array(
+                '{"property": null}', // json
+                'PHPagstract\\Symbol\\Symbols\\Properties\\ScalarProperty', // expected classname
+                'property', // expected name 
+                'scalar', // expected type 
+                array
+                (
+                    "name" => "property",
+                    "type" => "scalar",
+                    "property" => null,
+                ), // expected value 
+                
+                false // true = debug on
+            ),
+                
+            "object property" => array(
+                '{"property": { "other": "value"} }', // json
+                'PHPagstract\\Symbol\\Symbols\\Properties\\ObjectProperty', // expected classname
+                'property', // expected name 
+                'object', // expected type 
+                array (
+                  'name' => 'property',
+                  'type' => 'object',
+                  'property' => NULL,
+                  'properties' => 
+                  (object)(array(
+                     'other' => 
+                    array (
+                      'name' => 'other',
+                      'type' => 'scalar',
+                      'property' => 'value',
+                    ),
+                  )),
+                ), // expected value 
+                
+                false // true = debug on
+            ),
+                
+            "list property" => array(
+                '{"property": [ { "other-A": "val1"}, { "other-B": "val2"} ] }', // json
+                'PHPagstract\\Symbol\\Symbols\\Properties\\ListProperty', // expected classname
+                'property', // expected name 
+                'list', // expected type 
+                array (
+                  'name' => 'property',
+                  'type' => 'list',
+                  'property' => NULL,
+                  'items' => 
+                  array (
+                    0 => 
+                    array (
+                      'name' => 0,
+                      'type' => 'object',
+                      'property' => NULL,
+                      'properties' => 
+                      (object)(array(
+                         'other-A' => 
+                        array (
+                          'name' => 'other-A',
+                          'type' => 'scalar',
+                          'property' => 'val1',
+                        ),
+                      )),
+                    ),
+                    1 => 
+                    array (
+                      'name' => 1,
+                      'type' => 'object',
+                      'property' => NULL,
+                      'properties' => 
+                      (object)(array(
+                         'other-B' => 
+                        array (
+                          'name' => 'other-B',
+                          'type' => 'scalar',
+                          'property' => 'val2',
+                        ),
+                      )),
+                    ),
+                  ),
+                ), // expected value 
+                
+                false // true = debug on
+            ),
         );
     }
     
@@ -429,8 +429,8 @@ class PropertyReferenceResolverTest extends \PHPUnit_Framework_TestCase
         $resolver = new PropertyReferenceResolver();
         $jsondata = (file_get_contents(__DIR__."/Json/json-parse-test.json"));
         $context = json_decode($jsondata);
-		$rootSymbolTree = $resolver->symbolize($context);
-		$resolver->setContext($rootSymbolTree);
+        $rootSymbolTree = $resolver->symbolize($context);
+        $resolver->setContext($rootSymbolTree);
         
         $intermediateContext = $resolver->getPropertyByReference('property');
 
@@ -443,9 +443,9 @@ class PropertyReferenceResolverTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals( 'scalar',  ($property->getType()) );
         $this->assertEquals( 'myvalue',  ($property->getProperty()) );
         $this->assertSame( array (
-        		'name' => 'myproperty',
-        		'type' => 'scalar',
-        		'property' => 'myvalue',
+                'name' => 'myproperty',
+                'type' => 'scalar',
+                'property' => 'myvalue',
         ),  ($property->serialize()) );
         
 
@@ -461,8 +461,8 @@ class PropertyReferenceResolverTest extends \PHPUnit_Framework_TestCase
         $resolver = new PropertyReferenceResolver();
         $jsondata = (file_get_contents(__DIR__."/Json/json-parse-test.json"));
         $context = json_decode($jsondata);
-		$rootSymbolTree = $resolver->symbolize($context);
-		$resolver->setContext($rootSymbolTree);
+        $rootSymbolTree = $resolver->symbolize($context);
+        $resolver->setContext($rootSymbolTree);
         
         $property = $resolver->getPropertyByReference('otherproperty[0]');
 
@@ -487,8 +487,8 @@ class PropertyReferenceResolverTest extends \PHPUnit_Framework_TestCase
         $resolver = new PropertyReferenceResolver();
         $jsondata = (file_get_contents(__DIR__."/Json/json-parse-test.json"));
         $context = json_decode($jsondata);
-		$rootSymbolTree = $resolver->symbolize($context);
-		$resolver->setContext($rootSymbolTree);
+        $rootSymbolTree = $resolver->symbolize($context);
+        $resolver->setContext($rootSymbolTree);
         
         $intermediateContext = $resolver->getPropertyByReference('otherproperty[1].child');
 
@@ -500,9 +500,9 @@ class PropertyReferenceResolverTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals( 'scalar',  ($property->getType()) );
         $this->assertEquals( 'world',  ($property->getProperty()) );
         $this->assertSame( array (
-        		'name' => 'hello',
-        		'type' => 'scalar',
-        		'property' => 'world',
+                'name' => 'hello',
+                'type' => 'scalar',
+                'property' => 'world',
         ),  ($property->serialize()) );
         
     }
@@ -516,15 +516,15 @@ class PropertyReferenceResolverTest extends \PHPUnit_Framework_TestCase
         $jsondata = (file_get_contents($filename));
         
         if (is_string($expectedData) && file_exists($expectedData)) {
-	        $expectedData = include ($expectedData);
+            $expectedData = include ($expectedData);
         }
         $context = json_decode($jsondata);
-		$rootSymbolTree = $resolver->symbolize($context);
-		$resolver->setContext($rootSymbolTree);
+        $rootSymbolTree = $resolver->symbolize($context);
+        $resolver->setContext($rootSymbolTree);
 
-		$property = $resolver->getPropertyByReference($reference);
-		
-		if ($debug) {
+        $property = $resolver->getPropertyByReference($reference);
+        
+        if ($debug) {
             echo "data: "; var_export($jsondata); echo PHP_EOL;
             echo "file: "; var_export($filename); echo PHP_EOL;
             echo "to parse: "; var_export($reference); echo PHP_EOL;
@@ -549,13 +549,13 @@ class PropertyReferenceResolverTest extends \PHPUnit_Framework_TestCase
         $jsondata = (file_get_contents($filename));
         
         if (is_string($expectedData) && file_exists($expectedData)) {
-	        $expectedData = include ($expectedData);
+            $expectedData = include ($expectedData);
         }
         $context = json_decode($jsondata);
-		$rootSymbolTree = $resolver->symbolize($context);
-		$resolver->setContext($rootSymbolTree);
+        $rootSymbolTree = $resolver->symbolize($context);
+        $resolver->setContext($rootSymbolTree);
 
-		$propertyValue = $resolver->getValueByReference($reference);
+        $propertyValue = $resolver->getValueByReference($reference);
 
         if ($debug) {
             echo "data: "; var_export($jsondata); echo PHP_EOL;
@@ -563,337 +563,337 @@ class PropertyReferenceResolverTest extends \PHPUnit_Framework_TestCase
             echo "to parse: "; var_export($reference); echo PHP_EOL;
             echo "expected: "; var_export($expectedData); echo PHP_EOL;
             if ( is_object($propertyValue) && method_exists($propertyValue, "serialize") ) { 
-            	echo "serialized: "; var_export($propertyValue->serialize()); echo PHP_EOL; 
+                echo "serialized: "; var_export($propertyValue->serialize()); echo PHP_EOL; 
             } else {
-            	echo "serialized: "; var_export($propertyValue); echo PHP_EOL; 
+                echo "serialized: "; var_export($propertyValue); echo PHP_EOL; 
             }
         }
         
         if ($expectedData['type'] == 'list') {
-        	$this->assertCount( count($expectedData['items']),  $propertyValue );
+            $this->assertCount( count($expectedData['items']),  $propertyValue );
         } else if ($expectedData['type'] == 'object') {
-        	foreach ($expectedData['properties'] as $idx => $expectedItem) {
-        		$this->assertEquals( ($expectedItem['name']),  $propertyValue->$idx->getName() );
-        		$this->assertEquals( ($expectedItem['type']),  $propertyValue->$idx->getType() );
-        	}
+            foreach ($expectedData['properties'] as $idx => $expectedItem) {
+                $this->assertEquals( ($expectedItem['name']),  $propertyValue->$idx->getName() );
+                $this->assertEquals( ($expectedItem['type']),  $propertyValue->$idx->getType() );
+            }
         } else {
-        	$this->assertEquals( $expectedData['property'],  $propertyValue );
+            $this->assertEquals( $expectedData['property'],  $propertyValue );
         }
     }
     
     public function getPropertyByReferencesDataProvider()
     {
-    	return array(
-    			
-    		"string value" => array(
-    			__DIR__."/Json/json-values.json",
-    			"stringValue",
-    			array (
-				  'name' => 'stringValue',
-				  'type' => 'scalar',
-				  'property' => 'this is a text...',
-				),
-    			$debug = false
-    		),
-    			
-    		"integer value" => array(
-    			__DIR__."/Json/json-values.json",
-    			"integerValue",
-    			array (
-				  'name' => 'integerValue',
-				  'type' => 'scalar',
-				  'property' => 123,
-				),
-    			$debug = false
-    		),
-    			
-    		"float value" => array(
-    			__DIR__."/Json/json-values.json",
-    			"floatValue",
-    			array (
-				  'name' => 'floatValue',
-				  'type' => 'scalar',
-				  'property' => 1.23,
-				),
-    			$debug = false
-    		),
-    			
-    		"boolean value (true)" => array(
-    			__DIR__."/Json/json-values.json",
-    			"trueValue",
-    			array (
-				  'name' => 'trueValue',
-				  'type' => 'scalar',
-				  'property' => true,
-				),
-    			$debug = false
-    		),
-    			
-    		"boolean value (false)" => array(
-    			__DIR__."/Json/json-values.json",
-    			"falseValue",
-    			array (
-				  'name' => 'falseValue',
-				  'type' => 'scalar',
-				  'property' => false,
-				),
-    			$debug = false
-    		),
-    			
-    		"null value" => array(
-    			__DIR__."/Json/json-values.json",
-    			"nullValue",
-    			array (
-				  'name' => 'nullValue',
-				  'type' => 'scalar',
-				  'property' => null,
-				),
-    			$debug = false
-    		),
-    			
-    		"list of scalars" => array(
-    			__DIR__."/Json/json-listOfValues.json",
-    			"scalarList",
-    			array (
-				  'name' => 'scalarList',
-				  'type' => 'list',
-				  'property' => null,
-    			  'items' =>
-    					array (
-    							0 =>
-    							array (
-    									'name' => 0,
-    									'type' => 'scalar',
-    									'property' => 'this is a text...',
-    							),
-    							1 =>
-    							array (
-    									'name' => 1,
-    									'type' => 'scalar',
-    									'property' => 'this is some other text...',
-    							),
-    							2 =>
-    							array (
-    									'name' => 2,
-    									'type' => 'scalar',
-    									'property' => 'this is another text...',
-    							),
-    							3 =>
-    							array (
-    									'name' => 3,
-    									'type' => 'scalar',
-    									'property' => 'this is more text...',
-    							),
-    							4 =>
-    							array (
-    									'name' => 4,
-    									'type' => 'scalar',
-    									'property' => 'this is even more text...',
-    							),
-    							5 =>
-    							array (
-    									'name' => 5,
-    									'type' => 'scalar',
-    									'property' => 123,
-    							),
-    							6 =>
-    							array (
-    									'name' => 6,
-    									'type' => 'scalar',
-    									'property' => 123.45,
-    							),
-    							7 =>
-    							array (
-    									'name' => 7,
-    									'type' => 'scalar',
-    									'property' => NULL,
-    							),
-    							8 =>
-    							array (
-    									'name' => 8,
-    									'type' => 'scalar',
-    									'property' => false,
-    							),
-    							9 =>
-    							array (
-    									'name' => 9,
-    									'type' => 'scalar',
-    									'property' => true,
-    							),
-    					),
-				),
-    			$debug = false
-    		),
-    			
-    		"first of list of scalars" => array(
-    			__DIR__."/Json/json-listOfValues.json",
-    			"scalarList[0]",
-    			array (
-				  'name' => 0,
-				  'type' => 'scalar',
-				  'property' => 'this is a text...',
-				),
-    			$debug = false
-    		),
-    			
-    		"second of list of scalars" => array(
-    			__DIR__."/Json/json-listOfValues.json",
-    			"scalarList[1]",
-    			array (
-				  'name' => 1,
-				  'type' => 'scalar',
-				  'property' => 'this is some other text...',
-				),
-    			$debug = false
-    		),
-    			
-    		"objects" => array(
-    			__DIR__."/Json/json-objects.json",
-    			"object1",
-    			array (
-				  'name' => 'object1',
-				  'type' => 'object',
-				  'property' => NULL,
-				  'properties' => 
-				  (object)(array(
-				     'text1' => 
-				    array (
-				      'name' => 'text1',
-				      'type' => 'scalar',
-				      'property' => 'this is a text...',
-				    ),
-				     'text2' => 
-				    array (
-				      'name' => 'text2',
-				      'type' => 'scalar',
-				      'property' => 'this is another text...',
-				    ),
-				  )),
-				),
-    			$debug = false
-    		),
-    		
-    		"list of objects" => array(
-    			__DIR__."/Json/json-listOfObjects.json",
-    			"objectList",
-    			array (
-				  'name' => 'objectList',
-				  'type' => 'list',
-				  'property' => NULL,
-				  'items' => 
-				  array (
-				    0 => 
-				    array (
-				      'name' => 0,
-				      'type' => 'object',
-				      'property' => NULL,
-				      'properties' => 
-				      (object)(array(
-				         'text' => 
-				        array (
-				          'name' => 'text',
-				          'type' => 'scalar',
-				          'property' => 'this is a text...',
-				        ),
-				      )),
-				    ),
-				    1 => 
-				    array (
-				      'name' => 1,
-				      'type' => 'object',
-				      'property' => NULL,
-				      'properties' => 
-				      (object)(array(
-				         'text' => 
-				        array (
-				          'name' => 'text',
-				          'type' => 'scalar',
-				          'property' => 'this is some other text...',
-				        ),
-				      )),
-				    ),
-				    2 => 
-				    array (
-				      'name' => 2,
-				      'type' => 'object',
-				      'property' => NULL,
-				      'properties' => 
-				      (object)(array(
-				         'text' => 
-				        array (
-				          'name' => 'text',
-				          'type' => 'scalar',
-				          'property' => 'this is another text...',
-				        ),
-				      )),
-				    ),
-				    3 => 
-				    array (
-				      'name' => 3,
-				      'type' => 'object',
-				      'property' => NULL,
-				      'properties' => 
-				      (object)(array(
-				         'text' => 
-				        array (
-				          'name' => 'text',
-				          'type' => 'scalar',
-				          'property' => 'this is more text...',
-				        ),
-				      )),
-				    ),
-				    4 => 
-				    array (
-				      'name' => 4,
-				      'type' => 'object',
-				      'property' => NULL,
-				      'properties' => 
-				      (object)(array(
-				         'text' => 
-				        array (
-				          'name' => 'text',
-				          'type' => 'scalar',
-				          'property' => 'this is even more text...',
-				        ),
-				      )),
-				    ),
-				  ),
-				),
-    			$debug = false
-    		),
-    		
-    		"object in list of objects" => array(
-    			__DIR__."/Json/json-listOfObjects.json",
-    			"objectList[1]",
-    			array (
-				  'name' => 1,
-				  'type' => 'object',
-				  'property' => NULL,
-				  'properties' => 
-				  (object)(array(
-				     'text' => 
-				    array (
-				      'name' => 'text',
-				      'type' => 'scalar',
-				      'property' => 'this is some other text...',
-				    ),
-				  )),
-				),
-    			$debug = false
-    		),
-    		
-    		/* "object in list of objects" => array(
-    			__DIR__."/Json/json-listOfObjects.json",
-    			"objectList[1]",
-    			array (
-    				'name' => 1,
-    				'type' => 'object',
-    				'property' => 'this is some other text...',
-    			),
-    			$debug = true
-    		), */
-    			
-    	);
+        return array(
+                
+            "string value" => array(
+                __DIR__."/Json/json-values.json",
+                "stringValue",
+                array (
+                  'name' => 'stringValue',
+                  'type' => 'scalar',
+                  'property' => 'this is a text...',
+                ),
+                $debug = false
+            ),
+                
+            "integer value" => array(
+                __DIR__."/Json/json-values.json",
+                "integerValue",
+                array (
+                  'name' => 'integerValue',
+                  'type' => 'scalar',
+                  'property' => 123,
+                ),
+                $debug = false
+            ),
+                
+            "float value" => array(
+                __DIR__."/Json/json-values.json",
+                "floatValue",
+                array (
+                  'name' => 'floatValue',
+                  'type' => 'scalar',
+                  'property' => 1.23,
+                ),
+                $debug = false
+            ),
+                
+            "boolean value (true)" => array(
+                __DIR__."/Json/json-values.json",
+                "trueValue",
+                array (
+                  'name' => 'trueValue',
+                  'type' => 'scalar',
+                  'property' => true,
+                ),
+                $debug = false
+            ),
+                
+            "boolean value (false)" => array(
+                __DIR__."/Json/json-values.json",
+                "falseValue",
+                array (
+                  'name' => 'falseValue',
+                  'type' => 'scalar',
+                  'property' => false,
+                ),
+                $debug = false
+            ),
+                
+            "null value" => array(
+                __DIR__."/Json/json-values.json",
+                "nullValue",
+                array (
+                  'name' => 'nullValue',
+                  'type' => 'scalar',
+                  'property' => null,
+                ),
+                $debug = false
+            ),
+                
+            "list of scalars" => array(
+                __DIR__."/Json/json-listOfValues.json",
+                "scalarList",
+                array (
+                  'name' => 'scalarList',
+                  'type' => 'list',
+                  'property' => null,
+                  'items' =>
+                        array (
+                                0 =>
+                                array (
+                                        'name' => 0,
+                                        'type' => 'scalar',
+                                        'property' => 'this is a text...',
+                                ),
+                                1 =>
+                                array (
+                                        'name' => 1,
+                                        'type' => 'scalar',
+                                        'property' => 'this is some other text...',
+                                ),
+                                2 =>
+                                array (
+                                        'name' => 2,
+                                        'type' => 'scalar',
+                                        'property' => 'this is another text...',
+                                ),
+                                3 =>
+                                array (
+                                        'name' => 3,
+                                        'type' => 'scalar',
+                                        'property' => 'this is more text...',
+                                ),
+                                4 =>
+                                array (
+                                        'name' => 4,
+                                        'type' => 'scalar',
+                                        'property' => 'this is even more text...',
+                                ),
+                                5 =>
+                                array (
+                                        'name' => 5,
+                                        'type' => 'scalar',
+                                        'property' => 123,
+                                ),
+                                6 =>
+                                array (
+                                        'name' => 6,
+                                        'type' => 'scalar',
+                                        'property' => 123.45,
+                                ),
+                                7 =>
+                                array (
+                                        'name' => 7,
+                                        'type' => 'scalar',
+                                        'property' => NULL,
+                                ),
+                                8 =>
+                                array (
+                                        'name' => 8,
+                                        'type' => 'scalar',
+                                        'property' => false,
+                                ),
+                                9 =>
+                                array (
+                                        'name' => 9,
+                                        'type' => 'scalar',
+                                        'property' => true,
+                                ),
+                        ),
+                ),
+                $debug = false
+            ),
+                
+            "first of list of scalars" => array(
+                __DIR__."/Json/json-listOfValues.json",
+                "scalarList[0]",
+                array (
+                  'name' => 0,
+                  'type' => 'scalar',
+                  'property' => 'this is a text...',
+                ),
+                $debug = false
+            ),
+                
+            "second of list of scalars" => array(
+                __DIR__."/Json/json-listOfValues.json",
+                "scalarList[1]",
+                array (
+                  'name' => 1,
+                  'type' => 'scalar',
+                  'property' => 'this is some other text...',
+                ),
+                $debug = false
+            ),
+                
+            "objects" => array(
+                __DIR__."/Json/json-objects.json",
+                "object1",
+                array (
+                  'name' => 'object1',
+                  'type' => 'object',
+                  'property' => NULL,
+                  'properties' => 
+                  (object)(array(
+                     'text1' => 
+                    array (
+                      'name' => 'text1',
+                      'type' => 'scalar',
+                      'property' => 'this is a text...',
+                    ),
+                     'text2' => 
+                    array (
+                      'name' => 'text2',
+                      'type' => 'scalar',
+                      'property' => 'this is another text...',
+                    ),
+                  )),
+                ),
+                $debug = false
+            ),
+            
+            "list of objects" => array(
+                __DIR__."/Json/json-listOfObjects.json",
+                "objectList",
+                array (
+                  'name' => 'objectList',
+                  'type' => 'list',
+                  'property' => NULL,
+                  'items' => 
+                  array (
+                    0 => 
+                    array (
+                      'name' => 0,
+                      'type' => 'object',
+                      'property' => NULL,
+                      'properties' => 
+                      (object)(array(
+                         'text' => 
+                        array (
+                          'name' => 'text',
+                          'type' => 'scalar',
+                          'property' => 'this is a text...',
+                        ),
+                      )),
+                    ),
+                    1 => 
+                    array (
+                      'name' => 1,
+                      'type' => 'object',
+                      'property' => NULL,
+                      'properties' => 
+                      (object)(array(
+                         'text' => 
+                        array (
+                          'name' => 'text',
+                          'type' => 'scalar',
+                          'property' => 'this is some other text...',
+                        ),
+                      )),
+                    ),
+                    2 => 
+                    array (
+                      'name' => 2,
+                      'type' => 'object',
+                      'property' => NULL,
+                      'properties' => 
+                      (object)(array(
+                         'text' => 
+                        array (
+                          'name' => 'text',
+                          'type' => 'scalar',
+                          'property' => 'this is another text...',
+                        ),
+                      )),
+                    ),
+                    3 => 
+                    array (
+                      'name' => 3,
+                      'type' => 'object',
+                      'property' => NULL,
+                      'properties' => 
+                      (object)(array(
+                         'text' => 
+                        array (
+                          'name' => 'text',
+                          'type' => 'scalar',
+                          'property' => 'this is more text...',
+                        ),
+                      )),
+                    ),
+                    4 => 
+                    array (
+                      'name' => 4,
+                      'type' => 'object',
+                      'property' => NULL,
+                      'properties' => 
+                      (object)(array(
+                         'text' => 
+                        array (
+                          'name' => 'text',
+                          'type' => 'scalar',
+                          'property' => 'this is even more text...',
+                        ),
+                      )),
+                    ),
+                  ),
+                ),
+                $debug = false
+            ),
+            
+            "object in list of objects" => array(
+                __DIR__."/Json/json-listOfObjects.json",
+                "objectList[1]",
+                array (
+                  'name' => 1,
+                  'type' => 'object',
+                  'property' => NULL,
+                  'properties' => 
+                  (object)(array(
+                     'text' => 
+                    array (
+                      'name' => 'text',
+                      'type' => 'scalar',
+                      'property' => 'this is some other text...',
+                    ),
+                  )),
+                ),
+                $debug = false
+            ),
+            
+            /* "object in list of objects" => array(
+                __DIR__."/Json/json-listOfObjects.json",
+                "objectList[1]",
+                array (
+                    'name' => 1,
+                    'type' => 'object',
+                    'property' => 'this is some other text...',
+                ),
+                $debug = true
+            ), */
+                
+        );
     }
 
 }

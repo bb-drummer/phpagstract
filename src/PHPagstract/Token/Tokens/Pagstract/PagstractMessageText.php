@@ -15,46 +15,46 @@ use PHPagstract\Token\MessageTokenizer;
  */
 class PagstractMessageText extends PagstractTextAbstract
 {
-	/**
-	 * token constructor
-	 * 
-	 * @param Token  $parent
-	 * @param string $throwOnError
-	 * @param string $forcedValue
-	 */
-	public function __construct(Token $parent = null, $throwOnError = false, $forcedValue = null)
-	{
-		parent::__construct(Token::PAGSTRACTMESSAGETEXT, $parent, $throwOnError);
+    /**
+     * token constructor
+     * 
+     * @param Token  $parent
+     * @param string $throwOnError
+     * @param string $forcedValue
+     */
+    public function __construct(Token $parent = null, $throwOnError = false, $forcedValue = null)
+    {
+        parent::__construct(Token::PAGSTRACTMESSAGETEXT, $parent, $throwOnError);
 
-		$this->value = $forcedValue;
-	}
+        $this->value = $forcedValue;
+    }
 
-	/**
-	 * parse for everything that is not a property reference
-	 * {@inheritDoc}
-	 *
-	 * @see \PHPagstract\Token\Tokens\PagstractAbstractToken::parse()
-	 */
-	public function parse($html)
-	{
-		// Get token position.
-		$positionArray = MessageTokenizer::getPosition($html);
-		$this->setLine($positionArray['line']);
-		$this->setPosition($positionArray['position']);
+    /**
+     * parse for everything that is not a property reference
+     * {@inheritDoc}
+     *
+     * @see \PHPagstract\Token\Tokens\PagstractAbstractToken::parse()
+     */
+    public function parse($html)
+    {
+        // Get token position.
+        $positionArray = MessageTokenizer::getPosition($html);
+        $this->setLine($positionArray['line']);
+        $this->setPosition($positionArray['position']);
 
-		$posOfNextElement = mb_strpos($html, 'msg://');
-		if ($posOfNextElement === false) {
-			$this->value = ($html);
+        $posOfNextElement = mb_strpos($html, 'msg://');
+        if ($posOfNextElement === false) {
+            $this->value = ($html);
 
-			return '';
-		}
+            return '';
+        }
 
-		// Find full length of TEXT.
-		$text = mb_substr($html, 0, $posOfNextElement);
-		$this->value = $text;
+        // Find full length of TEXT.
+        $text = mb_substr($html, 0, $posOfNextElement);
+        $this->value = $text;
 
-		return mb_substr($html, $posOfNextElement);
-	}
+        return mb_substr($html, $posOfNextElement);
+    }
 
 }
 

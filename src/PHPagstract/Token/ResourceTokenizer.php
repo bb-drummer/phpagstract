@@ -17,28 +17,28 @@ use PHPagstract\Token\MarkupTokenizer;
  */
 class ResourceTokenizer extends MarkupTokenizer
 {
-	/**
-	 * @var boolean 
-	 */
-	protected $throwOnError;
+    /**
+     * @var boolean 
+     */
+    protected $throwOnError;
 
-	/**
-	 * @var string 
-	 */
-	protected static $allHtml = '';
+    /**
+     * @var string 
+     */
+    protected static $allHtml = '';
 
-	/**
-	 * Constructor
-	 */
-	public function __construct($throwOnError = false)
-	{
-		$this->throwOnError = (boolean) $throwOnError;
+    /**
+     * Constructor
+     */
+    public function __construct($throwOnError = false)
+    {
+        $this->throwOnError = (boolean) $throwOnError;
 
-		TokenFactory::clearMatchings();
+        TokenFactory::clearMatchings();
         
-		TokenFactory::registerMatching(Token::PAGSTRACTRESOURCE);
+        TokenFactory::registerMatching(Token::PAGSTRACTRESOURCE);
         
-		TokenFactory::registerMatching(Token::PAGSTRACTRESOURCETEXT);
-	}
+        TokenFactory::registerMatching(Token::PAGSTRACTRESOURCETEXT);
+    }
     
 }

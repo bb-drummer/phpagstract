@@ -170,15 +170,15 @@ class ParserTest extends TestCase
     }
     
     public function files2parseDataProvider () {
-    	return array(
-	    	"HTML file 01" => array(
-	    		"tokenizer" => "PHPagstract\\Token\\MarkupTokenizer",
-	    		"filename" => __DIR__."/Token/Html/bootstrap-com.html",
-	    	),
-	    	"Pagstract file 01" => array(
-	    		"tokenizer" => "PHPagstract\\Token\\PagstractTokenizer",
-	    		"filename" => __DIR__."/Token/Html/pagstract-test.html",
-	    	),
+        return array(
+            "HTML file 01" => array(
+                "tokenizer" => "PHPagstract\\Token\\MarkupTokenizer",
+                "filename" => __DIR__."/Token/Html/bootstrap-com.html",
+            ),
+            "Pagstract file 01" => array(
+                "tokenizer" => "PHPagstract\\Token\\PagstractTokenizer",
+                "filename" => __DIR__."/Token/Html/pagstract-test.html",
+            ),
         );
     }
 }

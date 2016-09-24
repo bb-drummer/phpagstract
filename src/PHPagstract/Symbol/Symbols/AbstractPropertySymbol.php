@@ -13,204 +13,204 @@ namespace PHPagstract\Symbol\Symbols;
  */
 abstract class AbstractPropertySymbol {
     
-	/**
-	 * symbol name
-	 *
-	 * @var Name
-	 */
-	private $name = 'Symbol';
+    /**
+     * symbol name
+     *
+     * @var Name
+     */
+    private $name = 'Symbol';
     
-	/**
-	 * property type
-	 *
-	 * @var string
-	 */
-	private $type = null;
+    /**
+     * property type
+     *
+     * @var string
+     */
+    private $type = null;
 
-	/**
-	 * parent symbol
-	 * 
-	 * @var Symbol
-	 */
-	private $parent;
+    /**
+     * parent symbol
+     * 
+     * @var Symbol
+     */
+    private $parent;
 
-	/**
-	 * property container/reference
-	 *
-	 * @var \stdClass
-	 */
-	private $property = null;
+    /**
+     * property container/reference
+     *
+     * @var \stdClass
+     */
+    private $property = null;
 
-	/**
-	 * @param string $type
-	 */
-	public function __construct($type, $name, AbstractPropertySymbol & $parent = null) {
-		if ($parent !== null) {
-			$this->parent = & $parent;
-		}
-		$this->setName($name);
-		$this->setType($type);
-	}
+    /**
+     * @param string $type
+     */
+    public function __construct($type, $name, AbstractPropertySymbol & $parent = null) {
+        if ($parent !== null) {
+            $this->parent = & $parent;
+        }
+        $this->setName($name);
+        $this->setType($type);
+    }
     
-	/**
-	 * convert symbol data to array
-	 *
-	 * @return array
-	 */
-	public function serialize()
-	{
-		$result = get_object_vars($this);
-		if (isset($result["parent"])) {
-			unset($result["parent"]);
-		}
-		if (isset($result["items"])) {
-			$items = [];
-			foreach ($result["items"] as $key => $item) {
-				$items[] = $item->serialize();
-			}
-			$result["items"] = $items;
-		}
-		if (isset($result["properties"])) {
-			$properties = get_object_vars($result["properties"]);
-			$items = [];
-			foreach ($properties as $key => $item) {
-				$items[$key] = $item->serialize();
-			}
-			$result["properties"] = (object) $items;
-		}
-		return $result;
-	}
+    /**
+     * convert symbol data to array
+     *
+     * @return array
+     */
+    public function serialize()
+    {
+        $result = get_object_vars($this);
+        if (isset($result["parent"])) {
+            unset($result["parent"]);
+        }
+        if (isset($result["items"])) {
+            $items = [];
+            foreach ($result["items"] as $key => $item) {
+                $items[] = $item->serialize();
+            }
+            $result["items"] = $items;
+        }
+        if (isset($result["properties"])) {
+            $properties = get_object_vars($result["properties"]);
+            $items = [];
+            foreach ($properties as $key => $item) {
+                $items[$key] = $item->serialize();
+            }
+            $result["properties"] = (object) $items;
+        }
+        return $result;
+    }
     
-	//
-	// get/set new property
-	//
+    //
+    // get/set new property
+    //
     
-	/**
-	 * get a property's value
-	 * 
-	 * @param string $property the property name
-	 * @return mixed|NULL
-	 */
-	public function get($property) {
-		if (isset($this->$property)) {
-			return $this->$property;
-		}
-		return null;
-	}
+    /**
+     * get a property's value
+     * 
+     * @param string $property the property name
+     * @return mixed|NULL
+     */
+    public function get($property) {
+        if (isset($this->$property)) {
+            return $this->$property;
+        }
+        return null;
+    }
     
-	/**
-	 * set a property's value
-	 * 
-	 * @param string $property the property name
-	 * @param mixed $value
-	 * @return self
-	 */
-	public function set($property, $value) {
-		$this->$property = $value;
-		return $this;
-	}
+    /**
+     * set a property's value
+     * 
+     * @param string $property the property name
+     * @param mixed $value
+     * @return self
+     */
+    public function set($property, $value) {
+        $this->$property = $value;
+        return $this;
+    }
     
-	//
-	// getter/setters
-	//
+    //
+    // getter/setters
+    //
 
-	/**
-	 * get the property
-	 *
-	 * @return AbstractPropertySymbol
-	 */
-	public function getParent() 
-	{
-		if ($this->parent === null) {
-			return $this;
-		}
-		return $this->parent;
-	}
+    /**
+     * get the property
+     *
+     * @return AbstractPropertySymbol
+     */
+    public function getParent() 
+    {
+        if ($this->parent === null) {
+            return $this;
+        }
+        return $this->parent;
+    }
     
-	/**
-	 * set the property
-	 *
-	 */
-	public function setParent(AbstractPropertySymbol $parent) 
-	{
-		$this->parent = $parent;
-		return $this;
-	}
+    /**
+     * set the property
+     *
+     */
+    public function setParent(AbstractPropertySymbol $parent) 
+    {
+        $this->parent = $parent;
+        return $this;
+    }
 
-	/**
-	 * get the property
-	 *
-	 * @return \stdClass
-	 */
-	public function getProperty() 
-	{
-		return $this->property;
-	}
+    /**
+     * get the property
+     *
+     * @return \stdClass
+     */
+    public function getProperty() 
+    {
+        return $this->property;
+    }
     
-	/**
-	 * set the property
-	 *
-	 * @param mixed $property
-	 */
-	public function setProperty($property) 
-	{
-		$this->property = $property;
-		return $this;
-	}
+    /**
+     * set the property
+     *
+     * @param mixed $property
+     */
+    public function setProperty($property) 
+    {
+        $this->property = $property;
+        return $this;
+    }
 
-	/**
-	 * get the property type
-	 *
-	 * @return string
-	 */
-	public function getType() 
-	{
-		return $this->type;
-	}
+    /**
+     * get the property type
+     *
+     * @return string
+     */
+    public function getType() 
+    {
+        return $this->type;
+    }
     
-	/**
-	 * set the property type
-	 *
-	 * @param string $type
-	 */
-	public function setType($type) 
-	{
-		$this->type = $type;
-		return $this;
-	}
+    /**
+     * set the property type
+     *
+     * @param string $type
+     */
+    public function setType($type) 
+    {
+        $this->type = $type;
+        return $this;
+    }
     
-	/**
-	 * get the name
-	 *
-	 * @return string
-	 */
-	public function getName() 
-	{
-		return (string) $this->name;
-	}
+    /**
+     * get the name
+     *
+     * @return string
+     */
+    public function getName() 
+    {
+        return (string) $this->name;
+    }
     
-	/**
-	 * set the name
-	 *
-	 * @param string $name
-	 */
-	public function setName($name) 
-	{
-		$this->name = $name;
-		return $this;
-	}
+    /**
+     * set the name
+     *
+     * @param string $name
+     */
+    public function setName($name) 
+    {
+        $this->name = $name;
+        return $this;
+    }
 
 
-	/**
-	 * 'magic' debug info assembler
-	 *
-	 * @param string $name
-	 * /
+    /**
+     * 'magic' debug info assembler
+     *
+     * @param string $name
+     * /
     public function __debugInfo() {
-    	$result = get_object_vars($this);
-    	//if ( isset($result["parent"]) )unset($result["parent"]);
-    	return $result;
+        $result = get_object_vars($this);
+        //if ( isset($result["parent"]) )unset($result["parent"]);
+        return $result;
     } 
-	 */
+     */
 }
 

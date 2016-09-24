@@ -94,44 +94,44 @@ class SymbolFactoryTest extends \PHPUnit_Framework_TestCase
     
     public function buildFromHtmlPropertyReferenceDataProvider()
     {
-    	return array(
-    			"default text" => array(
-    					'asdf',
-    					'PHPagstract\\Symbol\\Symbols\\Tokens\\PagstractPropertyReferenceText'
-    			),
-    			"a property reference" => array(
-    					'${proptery}',
-    					'PHPagstract\\Symbol\\Symbols\\Tokens\\PagstractPropertyReference'
-    			),
-    	);
+        return array(
+                "default text" => array(
+                        'asdf',
+                        'PHPagstract\\Symbol\\Symbols\\Tokens\\PagstractPropertyReferenceText'
+                ),
+                "a property reference" => array(
+                        '${proptery}',
+                        'PHPagstract\\Symbol\\Symbols\\Tokens\\PagstractPropertyReference'
+                ),
+        );
     }
     
     public function buildFromHtmlResourceDataProvider()
     {
-    	return array(
-    			"default text" => array(
-    					'asdf',
-    					'PHPagstract\\Symbol\\Symbols\\Tokens\\Text'
-    			),
-    			"a resource reference" => array(
-    					'resource://',
-    					'PHPagstract\\Symbol\\Symbols\\Tokens\\PagstractResource'
-    			),
-    	);
+        return array(
+                "default text" => array(
+                        'asdf',
+                        'PHPagstract\\Symbol\\Symbols\\Tokens\\Text'
+                ),
+                "a resource reference" => array(
+                        'resource://',
+                        'PHPagstract\\Symbol\\Symbols\\Tokens\\PagstractResource'
+                ),
+        );
     }
     
     public function buildFromHtmlMessageDataProvider()
     {
-    	return array(
-    			"default text" => array(
-    					'asdf',
-    					'PHPagstract\\Symbol\\Symbols\\Tokens\\Text'
-    			),
-    			"a message reference" => array(
-    					'msg://',
-    					'PHPagstract\\Symbol\\Symbols\\Tokens\\PagstractMessage'
-    			),
-    	);
+        return array(
+                "default text" => array(
+                        'asdf',
+                        'PHPagstract\\Symbol\\Symbols\\Tokens\\Text'
+                ),
+                "a message reference" => array(
+                        'msg://',
+                        'PHPagstract\\Symbol\\Symbols\\Tokens\\PagstractMessage'
+                ),
+        );
     }
     
     public function buildFromHtmlDataProvider()
@@ -203,7 +203,7 @@ class SymbolFactoryTest extends \PHPUnit_Framework_TestCase
                 '<? asdf; ?>',
                 'PHPagstract\\Symbol\\Symbols\\Tokens\\Php'
             ),
-        		
+                
             "markup tag (self-closed)" => array(
                 '<asdf />',
                 'PHPagstract\\Symbol\\Symbols\\Tokens\\PagstractMarkup'

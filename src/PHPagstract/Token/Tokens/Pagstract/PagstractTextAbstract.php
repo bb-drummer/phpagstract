@@ -14,57 +14,57 @@ namespace PHPagstract\Token\Tokens;
  */
 class PagstractTextAbstract extends PagstractAbstractToken
 {
-	/**
-	 * @var array the $matching
-	 */
-	public static $matching = array(
-			"start" => "/^(.)/", 
-			"end" => PHP_EOL
-	);
+    /**
+     * @var array the $matching
+     */
+    public static $matching = array(
+            "start" => "/^(.)/", 
+            "end" => PHP_EOL
+    );
     
-	/**
-	 * @var boolean 
-	 */
-	public $nested = false;
+    /**
+     * @var boolean 
+     */
+    public $nested = false;
     
-	/**
-	 * token constructor
-	 * 
-	 * @param Token  $parent
-	 * @param string $throwOnError
-	 * @param string $forcedValue
-	 */
-	public function __construct($type, Token $parent = null, $throwOnError = false, $forcedValue = null)
-	{
-		parent::__construct(Token::TEXT, $parent, $throwOnError);
+    /**
+     * token constructor
+     * 
+     * @param Token  $parent
+     * @param string $throwOnError
+     * @param string $forcedValue
+     */
+    public function __construct($type, Token $parent = null, $throwOnError = false, $forcedValue = null)
+    {
+        parent::__construct(Token::TEXT, $parent, $throwOnError);
 
-		$this->value = $forcedValue;
-	}
+        $this->value = $forcedValue;
+    }
 
-	/**
-	 * parse for everything that is not a reference
-	 * {@inheritDoc}
-	 *
-	 * @see \PHPagstract\Token\Tokens\PagstractAbstractToken::parse()
-	 */
-	public function parse($html)
-	{
-	}
+    /**
+     * parse for everything that is not a reference
+     * {@inheritDoc}
+     *
+     * @see \PHPagstract\Token\Tokens\PagstractAbstractToken::parse()
+     */
+    public function parse($html)
+    {
+    }
 
-	/**
-	 * export token data 
-	 * {@inheritDoc}
-	 *
-	 * @see \PHPagstract\Token\Tokens\PagstractAbstractToken::toArray()
-	 */
-	public function toArray()
-	{
-		return array(
-			'type' => 'text',
-			'value' => $this->getValue(),
-			'line' => $this->getLine(),
-			'position' => $this->getPosition()
-		);
-	}
+    /**
+     * export token data 
+     * {@inheritDoc}
+     *
+     * @see \PHPagstract\Token\Tokens\PagstractAbstractToken::toArray()
+     */
+    public function toArray()
+    {
+        return array(
+            'type' => 'text',
+            'value' => $this->getValue(),
+            'line' => $this->getLine(),
+            'position' => $this->getPosition()
+        );
+    }
 }
 

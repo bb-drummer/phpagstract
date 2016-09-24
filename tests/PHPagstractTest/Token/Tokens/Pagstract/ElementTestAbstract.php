@@ -96,14 +96,14 @@ class ElementTestAbstract extends \PHPUnit_Framework_TestCase
     {
         if (in_array($this->elementTagname, $this->noChildrenElements)) return ;
         $classname = $this->getElementClassname($this->elementClassname);
-	    $element = new $classname();
+        $element = new $classname();
         if ( $element->nested === true ) {
-	        $element = new $classname();
-	        $this->assertFalse($element->hasChildren());
-	        //var_dump($this->elementTagname);
-	        $element->parse('<' . $this->elementTagname . '>asdf</' . $this->elementTagname . '>');
-	        $this->assertTrue($element->hasChildren());
-	        $this->assertEquals(1, count($element->getChildren()));
+            $element = new $classname();
+            $this->assertFalse($element->hasChildren());
+            //var_dump($this->elementTagname);
+            $element->parse('<' . $this->elementTagname . '>asdf</' . $this->elementTagname . '>');
+            $this->assertTrue($element->hasChildren());
+            $this->assertEquals(1, count($element->getChildren()));
         }
     }
     
@@ -156,7 +156,7 @@ class ElementTestAbstract extends \PHPUnit_Framework_TestCase
         }
 
         /*if ( $classname::$nested === false ) {
-        	unset($expectedArray["children"]);
+            unset($expectedArray["children"]);
         }*/
         $this->assertEquals($expectedArray, $element->toArray());
     }
@@ -165,12 +165,12 @@ class ElementTestAbstract extends \PHPUnit_Framework_TestCase
     {
         $classname = $this->getElementClassname($this->elementClassname);
         $element = new $classname();
-    	$current = $element->nested();
-    	
-    	$this->assertTrue($element->nested(true));
-    	$this->assertFalse($element->nested(false));
-    	
-    	$this->assertEquals($current, $element->nested($current));
+        $current = $element->nested();
+        
+        $this->assertTrue($element->nested(true));
+        $this->assertFalse($element->nested(false));
+        
+        $this->assertEquals($current, $element->nested($current));
     }
     
     //

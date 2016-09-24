@@ -50,15 +50,15 @@ class CollectionTest extends TestCase
     public function testGetSetOnlyValidType() 
     {
 
-    	$collection = new AbstractCollection();
-    	
-    	$collection->onlyValidType(true);
-    	$testFlag = $collection->onlyValidType();
-    	$this->assertTrue($testFlag);
-    	
-    	$collection->onlyValidType(false);
-    	$testFlag = $collection->onlyValidType();
-    	$this->assertFalse($testFlag);
+        $collection = new AbstractCollection();
+        
+        $collection->onlyValidType(true);
+        $testFlag = $collection->onlyValidType();
+        $this->assertTrue($testFlag);
+        
+        $collection->onlyValidType(false);
+        $testFlag = $collection->onlyValidType();
+        $this->assertFalse($testFlag);
         
     }
 

@@ -111,52 +111,52 @@ class PagstractTokenizerTest extends \PHPUnit_Framework_TestCase
             ),
             'token nesting' => array(
                 '<pma:switch pma:name=".prop">default text <object pma:case="val">${.prop}  </object>    </pma:switch>  ',
-				array (
-				  0 => 
-				  array (
-				    'type' => 'PagstractSwitch',
-				    'name' => 'pma:switch',
-				    'value' => NULL,
-				    'line' => 0,
-				    'position' => 0,
-				    'attributes' => 
-				    array (
-				      'pma:name' => '.prop',
-				    ),
-				    'children' => 
-				    array (
-				      0 => 
-				      array (
-				        'type' => 'text',
-				        'value' => 'default text ',
-				        'line' => 0,
-				        'position' => 29,
-				      ),
-				      1 => 
-				      array (
-				        'type' => 'PagstractObject',
-				        'name' => 'object',
-				        'value' => NULL,
-				        'line' => 0,
-				        'position' => 42,
-				        'attributes' => 
-				        array (
-				          'pma:case' => 'val',
-				        ),
-				        'children' => 
-				        array (
-				          0 => 
-				          array (
-				            'type' => 'text',
-				            'value' => '${.prop} ',
-				            'line' => 0,
-				            'position' => 65,
-				          ),
-				        ),
-				      ),
-				    ),
-				  ),
-				)
+                array (
+                  0 => 
+                  array (
+                    'type' => 'PagstractSwitch',
+                    'name' => 'pma:switch',
+                    'value' => NULL,
+                    'line' => 0,
+                    'position' => 0,
+                    'attributes' => 
+                    array (
+                      'pma:name' => '.prop',
+                    ),
+                    'children' => 
+                    array (
+                      0 => 
+                      array (
+                        'type' => 'text',
+                        'value' => 'default text ',
+                        'line' => 0,
+                        'position' => 29,
+                      ),
+                      1 => 
+                      array (
+                        'type' => 'PagstractObject',
+                        'name' => 'object',
+                        'value' => NULL,
+                        'line' => 0,
+                        'position' => 42,
+                        'attributes' => 
+                        array (
+                          'pma:case' => 'val',
+                        ),
+                        'children' => 
+                        array (
+                          0 => 
+                          array (
+                            'type' => 'text',
+                            'value' => '${.prop} ',
+                            'line' => 0,
+                            'position' => 65,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                )
             ),
         );
     }

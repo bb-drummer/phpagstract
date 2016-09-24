@@ -15,10 +15,10 @@ use PHPagstract\Symbol\Symbols\AbstractPropertySymbol;
  */
 class ScalarProperty extends AbstractPropertySymbol {
     
-	/**
-	 */
-	public function __construct($name, $parent) {
-		parent::__construct('scalar', $name, $parent);
-	}
+    /**
+     */
+    public function __construct($name, $parent) {
+        parent::__construct('scalar', $name, $parent);
+    }
 }
 

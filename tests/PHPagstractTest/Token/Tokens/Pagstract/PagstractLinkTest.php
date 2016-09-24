@@ -21,7 +21,7 @@ class PagstractLinkTest extends ElementTestAbstract
         }
 
         /*if ( $classname::$nested === false ) {
-        	unset($expectedArray["children"]);
+            unset($expectedArray["children"]);
         }*/
         $this->assertEquals($expectedArray, $element->toArray());
     }
