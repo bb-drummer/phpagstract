@@ -65,6 +65,7 @@ class PropertyReferenceResolver {
 				  $data = $data->root;
 			}
 			$rootProperties = get_object_vars($data);
+			$properties = [];
 			foreach ($rootProperties as $name => $value) {
 				$properties[$name] = $this->symbolize($value, $root, $name);
 			}
@@ -205,9 +206,12 @@ class PropertyReferenceResolver {
 	{
 		$property = $this->getPropertyByReference($reference);
 		switch ($property->getType()) {
-			case 'object' : return $property->get('properties');
-			case 'list' : return $property->get('items');
-			default : return $property->getProperty();
+			case 'object': 
+				return $property->get('properties');
+			case 'list': 
+				return $property->get('items');
+			default: 
+				return $property->getProperty();
 		}
 	}
     
