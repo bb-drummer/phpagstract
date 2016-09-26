@@ -6,7 +6,8 @@
     "composer/installers": "~1.0",
     "php" : "^5.2 || ^7.0",
     "phpunit/phpunit" : "~5",
-    "symfony/polyfill-mbstring" : "~1.1"
+    "symfony/polyfill-mbstring" : "~1.1",
+    "codeclimate/php-test-reporter" : "*"
   },
   "license" : "Apache2.0",
   "keywords" : [ "xml", "template", "engine", "pagstract", "templating", "framework" ],
@@ -26,7 +27,7 @@
   } ],
   "autoload" : {
     "psr-0" : {
-      "Profiler" : [ "./src/" ]
+      "PHPagstract" : [ "./src/" ]
     },
     "classmap" : [ "./src/","./tests/" ]
   }
