@@ -15,10 +15,21 @@ In einem typischen Anwendungsfall, stellt die Anwendung die notwendigen Daten al
 
 
 
-### TODO
+### WIP (work in progress)
 
-...well... "everything" :D we're just beginning...
+done so far:
 
+	* generic tokenizing
+	* markup/pagstract tokenizing and symbolizing, creating abstract symbol tree
+	* reference resolving and symbolizing, abstract data properties
+    * (theme inheriting) filename/path resolving
+	 
+	 
+still to do:
+
+    * symbolize special data/component properties
+    * final page assembly
+    
 
 
 ## Installation
@@ -38,14 +49,17 @@ then pass it to `tar`:
 
 ## Status
 
-[![Build Status](https://travis-ci.org/bb-drummer/phpagstract.svg?branch=master)](https://travis-ci.org/bb-drummer/phpagstract)
+[![Travis CI Build Status](https://travis-ci.org/bb-drummer/phpagstract.svg?branch=master)](https://travis-ci.org/bb-drummer/phpagstract)
 
-[![build status](https://gitlab.com/php.bjoernbartels.earth/phpagstract/badges/master/build.svg)](https://gitlab.com/php.bjoernbartels.earth/phpagstract/commits/master)
+[![GitLab.com Build Status](https://gitlab.com/php.bjoernbartels.earth/phpagstract/badges/master/build.svg)](https://gitlab.com/php.bjoernbartels.earth/phpagstract/commits/master)
 
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/bb-drummer/phpagstract/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/bb-drummer/phpagstract/?branch=master)
 [![Code Coverage](https://scrutinizer-ci.com/g/bb-drummer/phpagstract/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/bb-drummer/phpagstract/?branch=master)
 [![Build Status](https://scrutinizer-ci.com/g/bb-drummer/phpagstract/badges/build.png?b=master)](https://scrutinizer-ci.com/g/bb-drummer/phpagstract/build-status/master)
 
+[![Code Climate](https://codeclimate.com/github/bb-drummer/phpagstract/badges/gpa.svg)](https://codeclimate.com/github/bb-drummer/phpagstract)
+
+[![CII Best Practices](https://bestpractices.coreinfrastructure.org/projects/398/badge)](https://bestpractices.coreinfrastructure.org/projects/398)
 
 
 ## LICENSE
