@@ -16,62 +16,62 @@ use PHPagstract\Token\Exception\TokenizerException;
  */
 class PagstractPropertyReference extends PagstractAbstractToken
 {
-	/**
-	 * @var array the $matching
-	 */
-	public static $matching = array(
-			"start" => "/([$][{])/i", 
-			"end" => "}"
-	);
+    /**
+     * @var array the $matching
+     */
+    public static $matching = array(
+            "start" => "/([$][{])/i", 
+            "end" => "}"
+    );
 
-	/**
-	 * @var boolean 
-	 */
-	public $nested = false;
+    /**
+     * @var boolean 
+     */
+    public $nested = false;
 
-	/**
-	 * token constructor
-	 * 
-	 * @param Token  $parent
-	 * @param boolean $throwOnError
-	 */
-	public function __construct(Token $parent = null, $throwOnError = false)
-	{
-		parent::__construct(Token::PAGSTRACTPROPERTYREFERENCE, null, $throwOnError);
-		$this->throwOnError = (boolean) $throwOnError;
+    /**
+     * token constructor
+     * 
+     * @param Token  $parent
+     * @param boolean $throwOnError
+     */
+    public function __construct(Token $parent = null, $throwOnError = false)
+    {
+        parent::__construct(Token::PAGSTRACTPROPERTYREFERENCE, null, $throwOnError);
+        $this->throwOnError = (boolean) $throwOnError;
 
-		$this->value = null;
-	}
+        $this->value = null;
+    }
 
-	/**
-	 * parse for property reference
-	 * {@inheritDoc}
-	 *
-	 * @see \PHPagstract\Token\Tokens\PagstractAbstractToken::parse()
-	 */
-	public function parse($html)
-	{
-		$html = ltrim($html);
+    /**
+     * parse for property reference
+     * {@inheritDoc}
+     *
+     * @see \PHPagstract\Token\Tokens\PagstractAbstractToken::parse()
+     */
+    public function parse($html)
+    {
+        $html = ltrim($html);
 
-		// Get token position.
-		$positionArray = MarkupTokenizer::getPosition($html);
-		$this->setLine($positionArray['line']);
-		$this->setPosition($positionArray['position']);
+        // Get token position.
+        $positionArray = MarkupTokenizer::getPosition($html);
+        $this->setLine($positionArray['line']);
+        $this->setPosition($positionArray['position']);
 
-		// Parse token.
-		$posOfEndOfCData = mb_strpos($html, '}');
-		if ($posOfEndOfCData === false) {
-			if ($this->getThrowOnError()) {
-				throw new TokenizerException('Invalid Property in line: '.$this->getLine().', position: '.$this->getPosition().'');
-			}
+        // Parse token.
+        $posOfEndOfCData = mb_strpos($html, '}');
+        if ($posOfEndOfCData === false) {
+            if ($this->getThrowOnError()) {
+                throw new TokenizerException('Invalid Property in line: '.$this->getLine().', position: '.$this->getPosition().'');
+            }
 
-			return '';
-		}
-		$propertyReference = mb_substr($html, 2, $posOfEndOfCData - 2);
+            return '';
+        }
+        $propertyReference = mb_substr($html, 2, $posOfEndOfCData - 2);
         
-		$this->name = ($propertyReference);
-		$this->value = ($propertyReference);
+        $this->name = ($propertyReference);
+        $this->value = ($propertyReference);
 
-		return mb_substr($html, $posOfEndOfCData + 1);
-	}
+        return mb_substr($html, $posOfEndOfCData + 1);
+    }
 }

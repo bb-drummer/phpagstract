@@ -16,20 +16,20 @@ use PHPagstract\AbstractCollection;
  */
 class TokenCollection extends AbstractCollection
 {
-	/**
-	 * flag if item to add/set must be an instance of $type
-	 *
-	 * @var boolean
-	 */
-	protected $onlyValidType = true;
+    /**
+     * flag if item to add/set must be an instance of $type
+     *
+     * @var boolean
+     */
+    protected $onlyValidType = true;
     
     
-	/**
-	 * valid type/classname items to add/set must ba an instance of
-	 *
-	 * @var string
-	 */
-	protected $type = 'PHPagstract\\Token\\Tokens\\Token';
+    /**
+     * valid type/classname items to add/set must ba an instance of
+     *
+     * @var string
+     */
+    protected $type = 'PHPagstract\\Token\\Tokens\\Token';
     
 
 }

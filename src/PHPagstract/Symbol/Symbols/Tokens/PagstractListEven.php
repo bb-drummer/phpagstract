@@ -13,10 +13,10 @@ namespace PHPagstract\Symbol\Symbols\Tokens;
  */
 class PagstractListEven extends PagstractMarkup {
     
-	/**
-	 */
-	public function __construct() {
-		parent::__construct();
-	}
+    /**
+     */
+    public function __construct() {
+        parent::__construct();
+    }
 }
 

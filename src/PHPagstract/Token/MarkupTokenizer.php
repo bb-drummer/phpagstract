@@ -17,85 +17,85 @@ use PHPagstract\Token\Tokens\Element;
  */
 class MarkupTokenizer extends AbstractTokenizer
 {
-	/**
-	 * @var boolean 
-	 */
-	protected $throwOnError;
+    /**
+     * @var boolean 
+     */
+    protected $throwOnError;
 
-	/**
-	 * @var string 
-	 */
-	protected static $allHtml = '';
+    /**
+     * @var string 
+     */
+    protected static $allHtml = '';
 
-	/**
-	 * Constructor
-	 */
-	public function __construct($throwOnError = false)
-	{
-		$this->throwOnError = (boolean) $throwOnError;
+    /**
+     * Constructor
+     */
+    public function __construct($throwOnError = false)
+    {
+        $this->throwOnError = (boolean) $throwOnError;
 
-		TokenFactory::clearMatchings();
-		TokenFactory::registerMatching("Php");
-		TokenFactory::registerMatching("Comment");
-		TokenFactory::registerMatching("CData");
-		TokenFactory::registerMatching("DocType");
-		TokenFactory::registerMatching("Element");
-		TokenFactory::registerMatching("Text");
-	}
+        TokenFactory::clearMatchings();
+        TokenFactory::registerMatching("Php");
+        TokenFactory::registerMatching("Comment");
+        TokenFactory::registerMatching("CData");
+        TokenFactory::registerMatching("DocType");
+        TokenFactory::registerMatching("Element");
+        TokenFactory::registerMatching("Text");
+    }
 
-	/**
-	 * Will parse html into tokens.
-	 *
-	 * @param $html string The HTML to tokenize.
-	 *
-	 * @return TokenCollection
-	 */
-	public function parse($html)
-	{
-		self::$allHtml = $html;
-		$tokens = new TokenCollection();
-		$remainingHtml = trim((string) $html);
-		while (mb_strlen($remainingHtml) > 0) {
-			$token = TokenFactory::buildFromHtml(
-				$remainingHtml,
-				null,
-				$this->throwOnError
-			);
-			if ($token === false) {
-				// Error has occurred, so we stop.
-				break;
-			}
+    /**
+     * Will parse html into tokens.
+     *
+     * @param $html string The HTML to tokenize.
+     *
+     * @return TokenCollection
+     */
+    public function parse($html)
+    {
+        self::$allHtml = $html;
+        $tokens = new TokenCollection();
+        $remainingHtml = trim((string) $html);
+        while (mb_strlen($remainingHtml) > 0) {
+            $token = TokenFactory::buildFromHtml(
+                $remainingHtml,
+                null,
+                $this->throwOnError
+            );
+            if ($token === false) {
+                // Error has occurred, so we stop.
+                break;
+            }
 
-			$remainingHtml = $token->parse($remainingHtml);
-			$tokens[] = $token;
-		}
+            $remainingHtml = $token->parse($remainingHtml);
+            $tokens[] = $token;
+        }
 
-		return $tokens;
-	}
+        return $tokens;
+    }
 
-	/**
-	 * get position array (line, position)
-	 * 
-	 * @param  string $partialHtml
-	 * @return array
-	 */
-	public static function getPosition($partialHtml)
-	{
-		$position = mb_strrpos(self::$allHtml, $partialHtml);
-		$parsedHtml = mb_substr(self::$allHtml, 0, $position);
-		$line = mb_substr_count($parsedHtml, "\n");
-		if ($line === 0) {
-			return array(
-				'line' => 0,
-				'position' => $position
-			);
-		}
+    /**
+     * get position array (line, position)
+     * 
+     * @param  string $partialHtml
+     * @return array
+     */
+    public static function getPosition($partialHtml)
+    {
+        $position = mb_strrpos(self::$allHtml, $partialHtml);
+        $parsedHtml = mb_substr(self::$allHtml, 0, $position);
+        $line = mb_substr_count($parsedHtml, "\n");
+        if ($line === 0) {
+            return array(
+                'line' => 0,
+                'position' => $position
+            );
+        }
 
-		$lastNewLinePosition = mb_strrpos($parsedHtml, "\n");
+        $lastNewLinePosition = mb_strrpos($parsedHtml, "\n");
 
-		return array(
-			'line' => $line,
-			'position' => mb_strlen(mb_substr($parsedHtml, $lastNewLinePosition))
-		);
-	}
+        return array(
+            'line' => $line,
+            'position' => mb_strlen(mb_substr($parsedHtml, $lastNewLinePosition))
+        );
+    }
 }

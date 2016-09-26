@@ -13,29 +13,29 @@ namespace PHPagstract\Token\Tokens;
  */
 class PagstractLink extends PagstractAbstractToken
 {
-	/**
-	 * @var array the $matching
-	 */
-	public static $matching = array(
-			"start" => "/^\s*<a[ ]/i", 
-			"end" => ">"
-	);
+    /**
+     * @var array the $matching
+     */
+    public static $matching = array(
+            "start" => "/^\s*<a[ ]/i", 
+            "end" => ">"
+    );
 
-	/**
-	 * @var boolean 
-	 */
-	public $nested = false;
+    /**
+     * @var boolean 
+     */
+    public $nested = false;
     
-	/**
-	 * token constructor
-	 * 
-	 * @param Token  $parent
-	 * @param boolean $throwOnError
-	 */
-	public function __construct(Token $parent = null, $throwOnError = false)
-	{
-		parent::__construct(Token::PAGSTRACTLINK, $parent, $throwOnError);
+    /**
+     * token constructor
+     * 
+     * @param Token  $parent
+     * @param boolean $throwOnError
+     */
+    public function __construct(Token $parent = null, $throwOnError = false)
+    {
+        parent::__construct(Token::PAGSTRACTLINK, $parent, $throwOnError);
         
-	}
+    }
 
 }

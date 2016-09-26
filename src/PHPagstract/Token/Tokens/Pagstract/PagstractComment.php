@@ -16,59 +16,59 @@ use PHPagstract\Token\Exception\TokenizerException;
  */
 class PagstractComment extends PagstractAbstractToken
 {
-	/**
-	 * @var array the $matching
-	 */
-	public static $matching = array(
-			"start" => "/^\s*<!---/", 
-			"end" => "-->"
-	);
+    /**
+     * @var array the $matching
+     */
+    public static $matching = array(
+            "start" => "/^\s*<!---/", 
+            "end" => "-->"
+    );
 
-	/**
-	 * @var boolean 
-	 */
-	public $nested = false;
+    /**
+     * @var boolean 
+     */
+    public $nested = false;
 
-	/**
-	 * token constructor
-	 * 
-	 * @param Token  $parent
-	 * @param boolean $throwOnError
-	 */
-	public function __construct(Token $parent = null, $throwOnError = false)
-	{
-		parent::__construct(Token::PAGSTRACTCOMMENT, $parent, $throwOnError);
+    /**
+     * token constructor
+     * 
+     * @param Token  $parent
+     * @param boolean $throwOnError
+     */
+    public function __construct(Token $parent = null, $throwOnError = false)
+    {
+        parent::__construct(Token::PAGSTRACTCOMMENT, $parent, $throwOnError);
 
-		$this->value = null;
-	}
+        $this->value = null;
+    }
 
-	/**
-	 * parse for comment
-	 * {@inheritDoc}
-	 *
-	 * @see \PHPagstract\Token\Tokens\PagstractAbstractToken::parse()
-	 */
-	public function parse($html)
-	{
-		$html = ltrim($html);
+    /**
+     * parse for comment
+     * {@inheritDoc}
+     *
+     * @see \PHPagstract\Token\Tokens\PagstractAbstractToken::parse()
+     */
+    public function parse($html)
+    {
+        $html = ltrim($html);
 
-		// Get token position.
-		$positionArray = MarkupTokenizer::getPosition($html);
-		$this->setLine($positionArray['line']);
-		$this->setPosition($positionArray['position']);
+        // Get token position.
+        $positionArray = MarkupTokenizer::getPosition($html);
+        $this->setLine($positionArray['line']);
+        $this->setPosition($positionArray['position']);
 
-		// Parse token.
-		$posOfEndOfComment = mb_strpos($html, '-->');
-		if ($posOfEndOfComment === false) {
-			if ($this->getThrowOnError()) {
-				throw new TokenizerException('Invalid comment.');
-			}
+        // Parse token.
+        $posOfEndOfComment = mb_strpos($html, '-->');
+        if ($posOfEndOfComment === false) {
+            if ($this->getThrowOnError()) {
+                throw new TokenizerException('Invalid comment.');
+            }
 
-			return '';
-		}
+            return '';
+        }
 
-		$this->value = trim(mb_substr($html, 5, $posOfEndOfComment - 5));
+        $this->value = trim(mb_substr($html, 5, $posOfEndOfComment - 5));
 
-		return mb_substr($html, $posOfEndOfComment + 3);
-	}
+        return mb_substr($html, $posOfEndOfComment + 3);
+    }
 }

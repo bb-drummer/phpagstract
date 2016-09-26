@@ -16,67 +16,67 @@ use PHPagstract\Token\Exception\TokenizerException;
  */
 class DocType extends AbstractToken
 {
-	/**
-	 * @var array the $matching
-	 */
-	public static $matching = array(
-			"start" => "/^\s*<!DOCTYPE /i", 
-			"end" => ">"
-	);
+    /**
+     * @var array the $matching
+     */
+    public static $matching = array(
+            "start" => "/^\s*<!DOCTYPE /i", 
+            "end" => ">"
+    );
     
-	/**
-	 * @var string 
-	 */
-	private $value;
+    /**
+     * @var string 
+     */
+    private $value;
 
-	public function __construct(Token $parent = null, $throwOnError = false)
-	{
-		parent::__construct(Token::DOCTYPE, $parent, $throwOnError);
+    public function __construct(Token $parent = null, $throwOnError = false)
+    {
+        parent::__construct(Token::DOCTYPE, $parent, $throwOnError);
 
-		$this->value = null;
-	}
+        $this->value = null;
+    }
 
-	public function parse($html)
-	{
-		$html = ltrim($html);
+    public function parse($html)
+    {
+        $html = ltrim($html);
 
-		// Get token position.
-		$positionArray = MarkupTokenizer::getPosition($html);
-		$this->setLine($positionArray['line']);
-		$this->setPosition($positionArray['position']);
+        // Get token position.
+        $positionArray = MarkupTokenizer::getPosition($html);
+        $this->setLine($positionArray['line']);
+        $this->setPosition($positionArray['position']);
 
-		// Parse token.
-		$posOfEndOfDocType = mb_strpos($html, '>');
-		if ($posOfEndOfDocType === false) {
-			if ($this->getThrowOnError()) {
-				throw new TokenizerException('Invalid DOCTYPE.');
-			}
+        // Parse token.
+        $posOfEndOfDocType = mb_strpos($html, '>');
+        if ($posOfEndOfDocType === false) {
+            if ($this->getThrowOnError()) {
+                throw new TokenizerException('Invalid DOCTYPE.');
+            }
 
-			return '';
-		}
+            return '';
+        }
 
-		$this->value = trim(mb_substr($html, 10, $posOfEndOfDocType - 10));
+        $this->value = trim(mb_substr($html, 10, $posOfEndOfDocType - 10));
 
-		return mb_substr($html, $posOfEndOfDocType + 1);
-	}
+        return mb_substr($html, $posOfEndOfDocType + 1);
+    }
 
-	/**
-	 * Getter for 'value'.
-	 *
-	 * @return string
-	 */
-	public function getValue()
-	{
-		return $this->value;
-	}
+    /**
+     * Getter for 'value'.
+     *
+     * @return string
+     */
+    public function getValue()
+    {
+        return $this->value;
+    }
 
-	public function toArray()
-	{
-		return array(
-			'type' => 'doctype',
-			'value' => $this->value,
-			'line' => $this->getLine(),
-			'position' => $this->getPosition()
-		);
-	}
+    public function toArray()
+    {
+        return array(
+            'type' => 'doctype',
+            'value' => $this->value,
+            'line' => $this->getLine(),
+            'position' => $this->getPosition()
+        );
+    }
 }

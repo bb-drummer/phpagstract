@@ -13,12 +13,12 @@ namespace PHPagstract\Symbol\Symbols\Properties;
  */
 class FormProperty extends ComponentProperty {
     
-	/**
-	 */
-	public function __construct($name, $parent) {
-		parent::__construct($name, $parent);
-		$this->setType('form');
-	}
+    /**
+     */
+    public function __construct($name, $parent) {
+        parent::__construct($name, $parent);
+        $this->setType('form');
+    }
     
 }
 

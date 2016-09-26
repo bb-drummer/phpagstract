@@ -13,29 +13,29 @@ namespace PHPagstract\Token\Tokens;
  */
 class PagstractDebug extends PagstractAbstractToken
 {
-	/**
-	 * @var array the $matching
-	 */
-	public static $matching = array(
-			"start" => "/^\s*<pma:debug[ ]/i", 
-			"end" => ">"
-	);
+    /**
+     * @var array the $matching
+     */
+    public static $matching = array(
+            "start" => "/^\s*<pma:debug[ ]/i", 
+            "end" => ">"
+    );
 
-	/**
-	 * @var boolean 
-	 */
-	public $nested = false;
+    /**
+     * @var boolean 
+     */
+    public $nested = false;
     
-	/**
-	 * token constructor
-	 * 
-	 * @param Token  $parent
-	 * @param boolean $throwOnError
-	 */
-	public function __construct(Token $parent = null, $throwOnError = false)
-	{
-		parent::__construct(Token::PAGSTRACTDEBUG, $parent, $throwOnError);
+    /**
+     * token constructor
+     * 
+     * @param Token  $parent
+     * @param boolean $throwOnError
+     */
+    public function __construct(Token $parent = null, $throwOnError = false)
+    {
+        parent::__construct(Token::PAGSTRACTDEBUG, $parent, $throwOnError);
         
-	}
+    }
 
 }

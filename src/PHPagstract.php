@@ -1,6 +1,6 @@
 <?php
 namespace PHPagstract;
-
+    
 /**
  * php port of the Pagstract Templating Framework, a XML template engine
  * 

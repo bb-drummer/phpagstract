@@ -16,82 +16,82 @@ use PHPagstract\Token\MarkupTokenizer;
 class Text extends AbstractToken
 {
 
-	/**
-	 * @var array the $matching
-	 */
-	public static $matching = array(
-			"start" => "/^[^<]/", 
-			"end" => "<"
-	);
+    /**
+     * @var array the $matching
+     */
+    public static $matching = array(
+            "start" => "/^[^<]/", 
+            "end" => "<"
+    );
     
-	/**
-	 * @var string 
-	 */
-	private $value;
+    /**
+     * @var string 
+     */
+    private $value;
 
-	public function __construct(Token $parent = null, $throwOnError = false, $forcedValue = null)
-	{
-		parent::__construct(Token::TEXT, $parent, $throwOnError);
+    public function __construct(Token $parent = null, $throwOnError = false, $forcedValue = null)
+    {
+        parent::__construct(Token::TEXT, $parent, $throwOnError);
 
-		$this->value = $forcedValue;
-	}
+        $this->value = $forcedValue;
+    }
 
-	public function parse($html)
-	{
-		// Get token position.
-		$positionArray = MarkupTokenizer::getPosition($html);
-		$this->setLine($positionArray['line']);
-		$this->setPosition($positionArray['position']);
+    public function parse($html)
+    {
+        // Get token position.
+        $positionArray = MarkupTokenizer::getPosition($html);
+        $this->setLine($positionArray['line']);
+        $this->setPosition($positionArray['position']);
 
-		// Collapse whitespace before TEXT.
-		$startingWhitespace = '';
-		if (preg_match("/(^\s)/", $html) === 1) {
-			$startingWhitespace = ' ';
-		}
+        // Collapse whitespace before TEXT.
+        $startingWhitespace = '';
+        if (preg_match("/(^\s)/", $html) === 1) {
+            $startingWhitespace = ' ';
+        }
         
-		$posOfNextElement = mb_strpos($html, '<');
-		if ($posOfNextElement === false) {
-			$this->value = $startingWhitespace.trim($html);
+        $posOfNextElement = mb_strpos($html, '<');
+        if ($posOfNextElement === false) {
+            $this->value = $startingWhitespace.trim($html);
 
-			return '';
-		}
+            return '';
+        }
 
-		// Find full length of TEXT.
-		$text = mb_substr($html, 0, $posOfNextElement);
-		if (trim($text) == '') {
-			$this->value = ' ';
+        // Find full length of TEXT.
+        $text = mb_substr($html, 0, $posOfNextElement);
+        if (trim($text) == '') {
+            $this->value = ' ';
 
-			return mb_substr($html, $posOfNextElement);
-		}
+            return mb_substr($html, $posOfNextElement);
+        }
 
-		// Collapse whitespace after TEXT.
-		$endingWhitespace = '';
-		if (preg_match("/(\s$)/", $text) === 1) {
-			$endingWhitespace = ' ';
-		}
+        // Collapse whitespace after TEXT.
+        $endingWhitespace = '';
+        if (preg_match("/(\s$)/", $text) === 1) {
+            $endingWhitespace = ' ';
+        }
 
-		$this->value = $startingWhitespace.trim($text).$endingWhitespace;
+        $this->value = $startingWhitespace.trim($text).$endingWhitespace;
 
-		return mb_substr($html, $posOfNextElement);
-	}
+        return mb_substr($html, $posOfNextElement);
+    }
 
-	/**
-	 * Getter for 'value'.
-	 *
-	 * @return string
-	 */
-	public function getValue()
-	{
-		return $this->value;
-	}
+    /**
+     * Getter for 'value'.
+     *
+     * @return string
+     */
+    public function getValue()
+    {
+        return $this->value;
+    }
 
-	public function toArray()
-	{
-		return array(
-			'type' => 'text',
-			'value' => $this->getValue(),
-			'line' => $this->getLine(),
-			'position' => $this->getPosition()
-		);
-	}
+    public function toArray()
+    {
+        return array(
+            'type' => 'text',
+            'value' => $this->getValue(),
+            'line' => $this->getLine(),
+            'position' => $this->getPosition()
+        );
+    }
 }

@@ -15,30 +15,30 @@ namespace PHPagstract\Token\Tokens;
  */
 class PagstractMarkup extends PagstractAbstractToken
 {
-	/**
-	 * @var array the $matching
-	 */
-	public static $matching = array(
-			"start" => "/^\s*<[a-z]|^\s*<(?!(\/pma))/i", 
-			// another regex : "/(^\s*<[a-z]|^\s*<\/\s*[a-z])|^\s*<(?!(\/pma))/i", 
-			"end" => ">"
-	);
+    /**
+     * @var array the $matching
+     */
+    public static $matching = array(
+            "start" => "/^\s*<[a-z]|^\s*<(?!(\/pma))/i", 
+            // another regex : "/(^\s*<[a-z]|^\s*<\/\s*[a-z])|^\s*<(?!(\/pma))/i", 
+            "end" => ">"
+    );
 
-	/**
-	 * @var boolean 
-	 */
-	public $nested = false;
+    /**
+     * @var boolean 
+     */
+    public $nested = false;
     
-	/**
-	 * token constructor
-	 * 
-	 * @param Token  $parent
-	 * @param boolean $throwOnError
-	 */
-	public function __construct(Token $parent = null, $throwOnError = false)
-	{
-		parent::__construct(Token::PAGSTRACTMARKUP, $parent, $throwOnError);
+    /**
+     * token constructor
+     * 
+     * @param Token  $parent
+     * @param boolean $throwOnError
+     */
+    public function __construct(Token $parent = null, $throwOnError = false)
+    {
+        parent::__construct(Token::PAGSTRACTMARKUP, $parent, $throwOnError);
         
-	}
+    }
 
 }
