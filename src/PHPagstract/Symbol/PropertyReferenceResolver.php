@@ -110,7 +110,6 @@ class PropertyReferenceResolver {
                 // try to detect component
                 $property = new ScalarProperty($name, $parent);
                 $property->setProperty($data);
-            break;
             
         }
         
@@ -199,13 +198,18 @@ class PropertyReferenceResolver {
     public function getValueByReference($reference) 
     {
         $property = $this->getPropertyByReference($reference);
-        switch ($property->getType()) {
+        switch ($property->getType()) 
+        {
+        	
             case 'object': 
                 return $property->get('properties');
+                
             case 'list': 
                 return $property->get('items');
+                
             default: 
                 return $property->getProperty();
+                
         }
     }
     
