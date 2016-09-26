@@ -58,6 +58,7 @@ then pass it to `tar`:
 [![Build Status](https://scrutinizer-ci.com/g/bb-drummer/phpagstract/badges/build.png?b=master)](https://scrutinizer-ci.com/g/bb-drummer/phpagstract/build-status/master)
 
 [![Code Climate](https://codeclimate.com/github/bb-drummer/phpagstract/badges/gpa.svg)](https://codeclimate.com/github/bb-drummer/phpagstract)
+[![Code Climate Test Coverage](https://codeclimate.com/github/bb-drummer/phpagstract/badges/coverage.svg)](https://codeclimate.com/github/bb-drummer/phpagstract/coverage)
 
 [![CII Best Practices](https://bestpractices.coreinfrastructure.org/projects/398/badge)](https://bestpractices.coreinfrastructure.org/projects/398)
 
