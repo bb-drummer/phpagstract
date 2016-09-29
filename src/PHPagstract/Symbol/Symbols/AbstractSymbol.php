@@ -121,7 +121,7 @@ abstract class AbstractSymbol implements Symbol
     /**
      * get the name
      *
-     * @return Name
+     * @return string
      */
     public function getName() 
     {

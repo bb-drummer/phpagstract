@@ -138,11 +138,34 @@ interface Token
      */
     public function getType();
 
+    /**
+     * @return boolean
+     */
     public function isCDATA();
+
+    /**
+     * @return boolean
+     */
     public function isComment();
+
+    /**
+     * @return boolean
+     */
     public function isDocType();
+
+    /**
+     * @return boolean
+     */
     public function isElement();
+
+    /**
+     * @return boolean
+     */
     public function isPhp();
+
+    /**
+     * @return boolean
+     */
     public function isText();
 
     /**

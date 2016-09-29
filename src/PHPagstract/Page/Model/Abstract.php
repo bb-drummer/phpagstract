@@ -93,7 +93,7 @@ abstract class PageModelAbstract
     }
     
     /**
-     * @return the $parser
+     * @return ParserAbstract $parser
      */
     public function getParser() 
     {
@@ -109,7 +109,7 @@ abstract class PageModelAbstract
     }
 
     /**
-     * @return the $name
+     * @return string $name
      */
     public function getName() 
     {
@@ -125,7 +125,7 @@ abstract class PageModelAbstract
     }
 
     /**
-     * @return the $sourcespath
+     * @return string $sourcespath
      */
     public function getSourcespath() 
     {
@@ -141,7 +141,7 @@ abstract class PageModelAbstract
     }
 
     /**
-     * @return the $resources
+     * @return string $resources
      */
     public function getResources() 
     {
@@ -157,7 +157,7 @@ abstract class PageModelAbstract
     }
 
     /**
-     * @return the $resources_ext
+     * @return string $resources_ext
      */
     public function getResources_ext() 
     {
@@ -197,7 +197,7 @@ abstract class PageModelAbstract
     }
 
     /**
-     * @return the $mandantId
+     * @return integer $mandantId
      */
     public function getMandantId() 
     {
