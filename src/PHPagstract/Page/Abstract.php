@@ -33,7 +33,7 @@ abstract class PageAbstract
     
     /**
      * initialize page model instance
-     * @return PHPagstract\Page\PageModelAbstract the $pageModel instance
+     * @return PageModelAbstract the $pageModel instance
      */
     public function initPageModel() 
     {
@@ -50,7 +50,7 @@ abstract class PageAbstract
     }
     
     /**
-     * @return PHPagstract\Page\PageModelAbstract the $pageModel instance
+     * @return PageModelAbstract the $pageModel instance
      */
     public function getPageModel() 
     {

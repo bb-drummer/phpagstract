@@ -137,7 +137,7 @@ abstract class AbstractToken implements Token
     /**
      * Getter for 'position'.
      * 
-     * @return array the $depth
+     * @return integer the $depth
      */
     public function getPosition()
     {
@@ -261,6 +261,7 @@ abstract class AbstractToken implements Token
      * Check for a valid given type.
      *
      * @param  string
+     * @param string $type
      * @return boolean
      */
     protected function isValidType($type)
