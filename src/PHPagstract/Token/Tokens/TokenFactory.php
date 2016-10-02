@@ -2,8 +2,8 @@
 
 namespace PHPagstract\Token\Tokens;
 
-use PHPagstract\Token\Tokens\Token;
 use PHPagstract\Token\Exception\TokenFactoryException;
+use PHPagstract\Token\Tokens\Token;
 
 /**
  * token factory object class

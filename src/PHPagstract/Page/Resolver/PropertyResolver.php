@@ -3,7 +3,6 @@ namespace PHPagstract\Page\Resolver;
 
 use PHPagstract\Page\ScopesTrait;
 use PHPagstract\Page\StreamTrait;
-use PHPagstract\Streams\DataStream;
 use PHPagstract\Symbol\Symbols\AbstractPropertySymbol;
 
 /**
@@ -187,14 +186,14 @@ class PropertyResolver
         switch ($property->getType())
         {
     
-        case 'object': $properties =  $property->get('properties');
-            return $properties;
+            case 'object': $properties =  $property->get('properties');
+                return $properties;
     
-        case 'list': $list = $property->get('items');
-            return $list;
+            case 'list': $list = $property->get('items');
+                return $list;
     
-        default: $value = $property->getProperty();
-            return $value;
+            default: $value = $property->getProperty();
+                return $value;
     
         }
     }
