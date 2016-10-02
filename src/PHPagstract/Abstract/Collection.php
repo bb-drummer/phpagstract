@@ -38,7 +38,8 @@ class AbstractCollection implements \ArrayAccess, \IteratorAggregate
     private $items;
 
     /**
-     * Constructor
+     * class contsructor 
+     * 
      */
     public function __construct()
     {
@@ -48,7 +49,7 @@ class AbstractCollection implements \ArrayAccess, \IteratorAggregate
     /**
      * convert item list/tree to array
      *
-     * @return array[mixed]
+     * @return array
      */
     public function toArray()
     {
@@ -154,8 +155,8 @@ class AbstractCollection implements \ArrayAccess, \IteratorAggregate
     /**
      * set/get 'only valid type' flag
      * 
-     * @param  boolean $setTo
-     * @return boolean|null $onlyValidType
+     * @param  null|boolean $setTo
+     * @return boolean $onlyValidType
      */
     public function onlyValidType($setTo = null) 
     {

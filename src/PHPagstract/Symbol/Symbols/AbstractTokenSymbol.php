@@ -30,7 +30,9 @@ abstract class AbstractTokenSymbol extends AbstractSymbol
     protected $throwOnError;
 
     /**
-     * @param Symbol  $parent
+     * class contsructor 
+     * 
+     * @param null|Symbol  $parent
      * @param boolean $throwOnError
      */
     public function __construct($parent = null, $throwOnError = false) 
@@ -57,7 +59,7 @@ abstract class AbstractTokenSymbol extends AbstractSymbol
     /**
      * get the token attributes
      *
-     * @return array
+     * @return null|array
      */
     public function getAttributes()
     {

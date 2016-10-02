@@ -27,10 +27,10 @@ class TokenFactory
      * build token (tree) from string
      * 
      * @param  string  $html
-     * @param  Token   $parent
+     * @param  null|Token   $parent
      * @param  boolean $throwOnError
      * @throws TokenFactoryException
-     * @return boolean|Token
+     * @return false|object
      */
     public static function buildFromHtml($html, Token $parent = null, $throwOnError = false)
     {
@@ -100,9 +100,9 @@ class TokenFactory
      * add new token/matching to registry
      * 
      * @param  string $className
-     * @param  string $regexStart
-     * @param  string $regexEnd
-     * @return self
+     * @param  null|string $regexStart
+     * @param  null|string $regexEnd
+     * @return null|TokenFactory
      */
     public static function registerMatching($className, $regexStart = null, $regexEnd = null) 
     {

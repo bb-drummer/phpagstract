@@ -118,7 +118,7 @@ class PagstractAbstractToken extends AbstractToken
      * Constructor
      *
      * @param string  $type
-     * @param Token   $parent
+     * @param null|Token   $parent
      * @param boolean $throwOnError
      */
     public function __construct($type, Token $parent = null, $throwOnError = false)
@@ -362,7 +362,7 @@ class PagstractAbstractToken extends AbstractToken
      *
      * @param string $html
      *
-     * @return string The element name.
+     * @return null|string The element name.
      */
     private function parseElementName($html)
     {
@@ -389,7 +389,7 @@ class PagstractAbstractToken extends AbstractToken
     /**
      * Getter for 'attributes'.
      *
-     * @return array
+     * @return null|array
      */
     public function getAttributes()
     {
@@ -407,7 +407,7 @@ class PagstractAbstractToken extends AbstractToken
     /**
      * Getter for 'children'.
      *
-     * @return array
+     * @return null|array
      */
     public function getChildren()
     {
@@ -425,7 +425,7 @@ class PagstractAbstractToken extends AbstractToken
     /**
      * Getter for 'name'.
      *
-     * @return string
+     * @return null|string
      */
     public function getName()
     {
@@ -435,7 +435,7 @@ class PagstractAbstractToken extends AbstractToken
     /**
      * Getter for 'value'.
      *
-     * @return mixed
+     * @return null|mixed
      */
     public function getValue()
     {

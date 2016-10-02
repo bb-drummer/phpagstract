@@ -39,7 +39,7 @@ abstract class ParserAbstract
     /**
      * symbol resolver container
      *
-     * @var PHPagstract\Symbol\GenericSymbolizer
+     * @var GenericSymbolizer|PropertyReferenceSymbolizer
      */
     private $resolver = null;
     
@@ -159,7 +159,7 @@ abstract class ParserAbstract
     }
 
     /**
-     * @return GenericSymbolizer $resolver
+     * @return GenericSymbolizer|PropertyReferenceSymbolizer $resolver
      * @throws ParserException
      */
     public function getResolver() 
@@ -172,7 +172,7 @@ abstract class ParserAbstract
 
     /**
      * 
-     * @param GenericSymbolizer $resolver
+     * @param GenericSymbolizer|PropertyReferenceSymbolizer $resolver
      */
     public function setResolver($resolver) 
     {

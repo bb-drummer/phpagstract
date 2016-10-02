@@ -9,6 +9,7 @@ use PHPagstract\ParserAbstract;
 use PHPagstract\Symbol\GenericSymbolizer;
 use PHPagstract\Token\AbstractTokenizer;
 use PHPagstract\Token\MarkupTokenizer;
+use PHPagstract\PageAbstract;
 
 
 /**
@@ -65,9 +66,12 @@ abstract class PageModelAbstract
     public $throwOnError = false;
     
     /**
+     * class contsructor 
+     * 
+     * @param PageAbstract $page
      * @param boolean $throwOnError throw exception on error?
      */
-    public function __construct(Page $page = null, $throwOnError = false) 
+    public function __construct($page = null, $throwOnError = false) 
     {
         if ($page !== null) {
             $this->setPage($page);

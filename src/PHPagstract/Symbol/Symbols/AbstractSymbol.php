@@ -29,7 +29,7 @@ abstract class AbstractSymbol implements Symbol
      * 
      * @var Symbol
      */
-    private $parent;
+    protected $parent;
 
     /**
      * token container/reference

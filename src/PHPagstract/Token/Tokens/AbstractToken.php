@@ -59,7 +59,7 @@ abstract class AbstractToken implements Token
      * Constructor
      * 
      * @param string  $type
-     * @param Token   $type
+     * @param null|Token   $type
      * @param boolean $type
      */
     public function __construct($type, Token $parent = null, $throwOnError = false)
@@ -127,7 +127,7 @@ abstract class AbstractToken implements Token
     /**
      * Getter for 'parent'.
      * 
-     * @return Token the $parent
+     * @return null|Token the $parent
      */
     public function getParent()
     {

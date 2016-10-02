@@ -34,12 +34,12 @@ class PagstractResource extends PagstractAbstractToken
     /**
      * @var string 
      */
-    private $type;
+    //private $type;
 
     /**
      * token constructor
      * 
-     * @param Token   $parent
+     * @param null|Token   $parent
      * @param boolean $throwOnError
      */
     public function __construct(Token $parent = null, $throwOnError = false)

@@ -146,6 +146,7 @@ class PropertyResolver
         $scopes = array_reverse($scopes);
         // remember current content
         $currentContext = $this->getContext();
+        $propertyInScope = $this->getRootScope();
         foreach ($scopes as $scope) {
             // set current scope to resolver context
             $this->setContext($scope);
