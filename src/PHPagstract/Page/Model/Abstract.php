@@ -2,14 +2,13 @@
 
 namespace PHPagstract\Page;
 
-use PHPagstract\ParserAbstract;
-use PHPagstract\Parser;
-use PHPagstract\Token\MarkupTokenizer;
-use PHPagstract\Symbol\GenericSymbolizer;
-use PHPagstract\Token\MessageTokenizer;
 use PHPagstract\Exception;
-use PHPagstract\Token\AbstractTokenizer;
 use PHPagstract\Page;
+use PHPagstract\Parser;
+use PHPagstract\ParserAbstract;
+use PHPagstract\Symbol\GenericSymbolizer;
+use PHPagstract\Token\AbstractTokenizer;
+use PHPagstract\Token\MarkupTokenizer;
 
 
 /**
@@ -93,7 +92,7 @@ abstract class PageModelAbstract
     }
     
     /**
-     * @return PageAbstract $page
+     * @return \PHPagstract\PageAbstract $page
      */
     public function getPage() 
     {
@@ -144,7 +143,7 @@ abstract class PageModelAbstract
     }
 
     /**
-     * @param \PHPagstract\Symbol\GenericSymbolizer|\PHPagstract\Symbol\PropertyReferenceSymbolizer $symbolizer
+     * @param GenericSymbolizer $symbolizer
      */
     public function setSymbolizer($symbolizer) 
     {

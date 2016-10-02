@@ -23,9 +23,9 @@ class InputStream
     /**
      * @param mixed $input
      */
-    public function __construct( $input = null ) 
+    public function __construct($input = null) 
     {
-        if ($input !== null ) {
+        if ($input !== null) {
             $this->setStream($input);
         }
     }

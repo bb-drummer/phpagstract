@@ -2,13 +2,13 @@
 
 namespace PHPagstract;
 
+use PHPagstract\Parser\Exception as ParserException;
 use PHPagstract\Symbol\GenericSymbolizer;
+use PHPagstract\Symbol\PropertyReferenceSymbolizer;
+use PHPagstract\Symbol\Symbols\Symbol;
 use PHPagstract\Symbol\Symbols\SymbolCollection;
 use PHPagstract\Token\AbstractTokenizer;
 use PHPagstract\Token\Tokens\TokenCollection;
-use PHPagstract\Parser\Exception as ParserException;
-use PHPagstract\Symbol\Symbols\Symbol;
-use PHPagstract\Symbol\PropertyReferenceSymbolizer;
 
 /**
  * parser object abstract
@@ -46,6 +46,8 @@ abstract class ParserAbstract
     
     /**
      * constructor
+     * @param AbstractTokenizer $tokenizer
+     * @param GenericSymbolizer $genericSymbolizer
      */
     public function __construct($tokenizer, $genericSymbolizer, $throwOnError = false) 
     {
@@ -91,7 +93,7 @@ abstract class ParserAbstract
         $symbolsIterator = $symbols->getIterator();
         $symbolsIterator->rewind();
         $symbol = $symbolsIterator->current();
-        while ( $symbol instanceof Symbol ) {
+        while ($symbol instanceof Symbol) {
             
             if (method_exists($symbol, "compile")) {
                 $compiled .= $symbol->compile();
@@ -141,7 +143,7 @@ abstract class ParserAbstract
      */
     public function getTokenizer() 
     {
-        if (($this->tokenizer === null) && $this->throwOnError ) {
+        if (($this->tokenizer === null) && $this->throwOnError) {
             throw new ParserException("no tokenizer set");
         }
         return $this->tokenizer;
@@ -162,7 +164,7 @@ abstract class ParserAbstract
      */
     public function getResolver() 
     {
-        if (($this->resolver === null) && $this->throwOnError ) {
+        if (($this->resolver === null) && $this->throwOnError) {
             throw new ParserException("no symbol resolver set");
         }
         return $this->resolver;
@@ -170,7 +172,7 @@ abstract class ParserAbstract
 
     /**
      * 
-     * @param GenericSymbolizer|PropertyReferenceSymbolizer $resolver
+     * @param GenericSymbolizer $resolver
      */
     public function setResolver($resolver) 
     {

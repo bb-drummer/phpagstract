@@ -25,9 +25,9 @@ class DataStream
     /**
      * @param mixed $data
      */
-    public function __construct( $data = null ) 
+    public function __construct($data = null) 
     {
-        if ($data !== null ) {
+        if ($data !== null) {
             $this->setStream($data);
         }
     }

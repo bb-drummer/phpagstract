@@ -1,8 +1,8 @@
 <?php
 namespace PHPagstract\Token\Tokens;
 
-use PHPagstract\Token\MarkupTokenizer;
 use PHPagstract\Token\Exception\TokenizerException;
+use PHPagstract\Token\MarkupTokenizer;
 
 /**
  * Pagstract token abstract class

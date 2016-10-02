@@ -27,7 +27,7 @@ trait ScopesTrait
      * add a new scope to scope sequence
      * called when encountering a opening 'pma:bean' tag
      * 
-     * @param mixed $scopes
+     * @param mixed $scope
      */
     public function addScope($scope)
     {
@@ -52,7 +52,7 @@ trait ScopesTrait
      */
     public function getRootScope() 
     {
-        if (!isset($this->scopes[0]) ) {
+        if (!isset($this->scopes[0])) {
             return null;
         }
         return $this->scopes[0];
@@ -86,7 +86,7 @@ trait ScopesTrait
     {
         $scopeCount = count($this->getScopes());
         if ($scopeCount > 1) {
-            unset($this->scopes[$scopeCount-1]);
+            unset($this->scopes[$scopeCount - 1]);
         }
         return $this;
     }

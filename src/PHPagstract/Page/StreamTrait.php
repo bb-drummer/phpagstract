@@ -30,7 +30,7 @@ trait StreamTrait
      */
     public function getStream() 
     {
-        $streamReference =& $this->stream;
+        $streamReference = & $this->stream;
         return $streamReference;
     }
 

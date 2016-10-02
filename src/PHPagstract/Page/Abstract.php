@@ -2,14 +2,14 @@
 
 namespace PHPagstract;
 
-use PHPagstract\Page\PageModelAbstract;
 use PHPagstract\Page\PageModel;
+use PHPagstract\Page\PageModelAbstract;
 use PHPagstract\Page\Resolver\FilepathResolver;
-use PHPagstract\Page\ThemeConfigurationTrait;
-use PHPagstract\Page\ResourcesConfigurationTrait;
-use PHPagstract\Streams\InputStream;
-use PHPagstract\Streams\DataStream;
 use PHPagstract\Page\Resolver\PropertyResolver;
+use PHPagstract\Page\ResourcesConfigurationTrait;
+use PHPagstract\Page\ThemeConfigurationTrait;
+use PHPagstract\Streams\DataStream;
+use PHPagstract\Streams\InputStream;
 use PHPagstract\Symbol\PropertyReferenceSymbolizer;
 
 /**
@@ -120,7 +120,7 @@ abstract class PageAbstract
      */
     public function getPageModel() 
     {
-        if (!($this->pageModel instanceof PageModelAbstract) ) {
+        if (!($this->pageModel instanceof PageModelAbstract)) {
             $this->initPageModel();
         }
         return $this->pageModel;
@@ -143,7 +143,7 @@ abstract class PageAbstract
      */
     public function getInputStream() 
     {
-        if (empty($this->inputStream) ) {
+        if (empty($this->inputStream)) {
             return '';
         }
         return $this->inputStream->getStream();
@@ -158,7 +158,7 @@ abstract class PageAbstract
     public function setInputStream($inputStream) 
     {
         $filename = $this->getFilepathResolver()->resolveFilepath($inputStream);
-        if (($filename !== null) && file_exists($filename) ) {
+        if (($filename !== null) && file_exists($filename)) {
             $fileContent = file_get_contents($filename);
             $inputStream = $fileContent;
         }
@@ -175,7 +175,7 @@ abstract class PageAbstract
      */
     public function getDataStream() 
     {
-        if (empty($this->dataStream) ) {
+        if (empty($this->dataStream)) {
             return null;
         }
         return $this->dataStream->getStream();
@@ -189,19 +189,19 @@ abstract class PageAbstract
      */
     public function setDataStream($dataStream) 
     {
-        if (empty($dataStream) ) {
-            $dataStream = (object)[ 
-                "root" => (object)[]    
+        if (empty($dataStream)) {
+            $dataStream = (object) [ 
+                "root" => (object) []    
             ];
         } else if (is_string($dataStream)) {
             $filename = $this->getFilepathResolver()->resolveFilepath($dataStream);
-            if (($filename !== null) && file_exists($filename) ) {
+            if (($filename !== null) && file_exists($filename)) {
                 // file could be resolved
                 $fileContent = file_get_contents($filename);
                 $dataStream = json_decode($fileContent);
             } else {
                 // file could NOT be resolved
-                if (file_exists($dataStream) ) {
+                if (file_exists($dataStream)) {
                     // ... but has been found otherwise
                     $fileContent = file_get_contents($dataStream);
                     $dataStream = json_decode($fileContent);

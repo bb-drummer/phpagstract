@@ -2,8 +2,8 @@
 
 namespace PHPagstract\Token\Tokens;
 
-use PHPagstract\Token\MarkupTokenizer;
 use PHPagstract\Token\Exception\TokenizerException;
+use PHPagstract\Token\MarkupTokenizer;
 
 /**
  * 'Comment' token object class
