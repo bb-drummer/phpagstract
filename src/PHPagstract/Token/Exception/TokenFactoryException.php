@@ -1,5 +1,7 @@
 <?php
-
+/**
+ * TokenFactory exception class
+ */
 namespace PHPagstract\Token\Exception;
 
 /**

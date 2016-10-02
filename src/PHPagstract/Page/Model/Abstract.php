@@ -2,10 +2,24 @@
 
 namespace PHPagstract\Page;
 
-use \PHPagstract\ParserAbstract;
+use PHPagstract\ParserAbstract;
+use PHPagstract\Parser;
+use PHPagstract\Token\MarkupTokenizer;
+use PHPagstract\Symbol\GenericSymbolizer;
+use PHPagstract\Token\MessageTokenizer;
+use PHPagstract\Exception;
+use PHPagstract\Token\AbstractTokenizer;
+use PHPagstract\Page;
+
 
 /**
  * page-model object abstract
+ *
+ * ...
+ * - process markup
+ * - process single property references
+ * - process resource(_ext) references
+ * - process msg references
  *
  * @package   PHPagstract
  * @author    Björn Bartels <coding@bjoernbartels.earth>
@@ -17,6 +31,13 @@ abstract class PageModelAbstract
 {
 
     /**
+     * page instance
+     *
+     * @var \PHPagstract\PageAbstract
+     */
+    protected $page = null;
+    
+    /**
      * parser instance
      *
      * @var \PHPagstract\ParserAbstract
@@ -24,192 +45,133 @@ abstract class PageModelAbstract
     protected $parser = null;
     
     /**
-     * pagemodel name
+     * parser instance
      *
-     * @var string
+     * @var AbstractTokenizer
      */
-    protected $name = null;
+    protected $tokenizer = null;
     
     /**
-     * templates sources path
+     * parser instance
      *
-     * @var string
+     * @var GenericSymbolizer
      */
-    protected $sourcespath = null;
+    protected $symbolizer = null;
     
     /**
-     * replace path for "resource:" urls/links
+     * throw exception on error?
      *
-     * @var string
+     * @var boolean
      */
-    protected $resources = "./";
+    public $throwOnError = false;
     
     /**
-     * replace path for "resource_ext:" urls/links
-     *
-     * @var string
+     * @param boolean $throwOnError throw exception on error?
      */
-    protected $resources_ext = "./";
-    
-    /**
-     * pagemodel data
-     *
-     * @var stdClass|string|mixed
-     */
-    protected $data = null;
-    
-    /**
-     * current 'mandantId'
-     *
-     * @var int
-     */
-    protected $mandantId = 2;
-    
-    /**
-     * 
-     * @param string                $name
-     * @param string                $sourcespath
-     * @param stdClass|string|mixed $data
-     * @param string                $resources
-     * @param string                $resources_ext
-     */
-    public function __construct($name, $sourcespath, $data = array(), $resources = "./", $resources_ext = "./") 
+    public function __construct(Page $page = null, $throwOnError = false) 
     {
-        if (!empty($name)) {
-            $this->setName($name);
+        if ($page !== null) {
+            $this->setPage($page);
         }
-        if (!empty($sourcespath)) { 
-            $this->setSourcespath($sourcespath);
-        }
-        if (!empty($resources)) {
-            $this->setResources($resources);
-        }
-        if (!empty($resources_ext)) {
-            $this->setResources_ext($resources_ext);
-        }
-        if (!empty($data)) {
-            $this->setData($data);
-        }
+        $this->throwOnError = !!($throwOnError);
     }
     
     /**
-     * @return ParserAbstract $parser
+     * @return string 
+     */
+    public function process() 
+    {
+        $result = '';
+        $parser = $this->getParser();
+        $content = $this->getPage()->getInputStream();
+        
+        // simply get the default parsed result here in abstract class
+        $result = $parser->parse($content);
+        
+        $result = trim($result);
+        return $result;
+    }
+    
+    /**
+     * @return PageAbstract $page
+     */
+    public function getPage() 
+    {
+        if ($this->page === null && $this->throwOnError === true) {
+            throw new Exception();
+        }
+        return $this->page;
+    }
+
+    /**
+     * @param \PHPagstract\PageAbstract $page
+     */
+    public function setPage($page) 
+    {
+        $this->page = $page;
+    }
+    
+    /**
+     * @return \PHPagstract\Token\AbstractTokenizer $tokenizer
+     */
+    public function getTokenizer() 
+    {
+        if (!($this->tokenizer instanceof AbstractTokenizer)) {
+            $tokenizer = new MarkupTokenizer($this->throwOnError);
+            $this->setTokenizer($tokenizer);
+        }
+        return $this->tokenizer;
+    }
+
+    /**
+     * @param \PHPagstract\Token\AbstractTokenizer $tokenizer
+     */
+    public function setTokenizer(AbstractTokenizer $tokenizer) 
+    {
+        $this->tokenizer = $tokenizer;
+    }
+
+    /**
+     * @return \PHPagstract\Symbol\GenericSymbolizer $symbolizer
+     */
+    public function getSymbolizer() 
+    {
+        if (!($this->symbolizer instanceof GenericSymbolizer)) {
+            $symbolizer = new GenericSymbolizer($this->throwOnError);
+            $this->setSymbolizer($symbolizer);
+        }
+        return $this->symbolizer;
+    }
+
+    /**
+     * @param \PHPagstract\Symbol\GenericSymbolizer|\PHPagstract\Symbol\PropertyReferenceSymbolizer $symbolizer
+     */
+    public function setSymbolizer($symbolizer) 
+    {
+        $this->symbolizer = $symbolizer;
+    }
+
+    /**
+     * @return \PHPagstract\Parser $parser
      */
     public function getParser() 
     {
+        if (!($this->parser instanceof ParserAbstract)) {
+            $tokenizer  = $this->getTokenizer();
+            $symbolizer = $this->getSymbolizer();
+            $parser = new Parser($tokenizer, $symbolizer, $this->throwOnError);
+            $this->setParser($parser);
+        }
+        
         return $this->parser;
     }
 
     /**
      * @param \PHPagstract\ParserAbstract $parser
      */
-    public function setParser($parser) 
+    public function setParser(ParserAbstract $parser) 
     {
         $this->parser = $parser;
-    }
-
-    /**
-     * @return string $name
-     */
-    public function getName() 
-    {
-        return $this->name;
-    }
-
-    /**
-     * @param string $name
-     */
-    public function setName($name) 
-    {
-        $this->name = $name;
-    }
-
-    /**
-     * @return string $sourcespath
-     */
-    public function getSourcespath() 
-    {
-        return $this->sourcespath;
-    }
-
-    /**
-     * @param string $sourcespath
-     */
-    public function setSourcespath($sourcespath) 
-    {
-        $this->sourcespath = $sourcespath;
-    }
-
-    /**
-     * @return string $resources
-     */
-    public function getResources() 
-    {
-        return $this->resources;
-    }
-
-    /**
-     * @param string $resources
-     */
-    public function setResources($resources) 
-    {
-        $this->resources = $resources;
-    }
-
-    /**
-     * @return string $resources_ext
-     */
-    public function getResources_ext() 
-    {
-        return $this->resources_ext;
-    }
-
-    /**
-     * @param string $resources_ext
-     */
-    public function setResources_ext($resources_ext) 
-    {
-        $this->resources_ext = $resources_ext;
-    }
-
-    /**
-     * @return the $data
-     */
-    public function getData() 
-    {
-        return $this->data;
-    }
-
-    /**
-     * @param stdClass|string|mixed $data
-     */
-    public function setData($data) 
-    {
-        if (is_string($data)) {
-            $obj = json_decode($data);
-            $this->data = ($obj);
-        } else if (is_array($data)) {
-            $obj = json_decode(json_encode($data));
-            $this->data = ($obj);
-        } else if (is_object($data)) {
-            $this->data = ($data);
-        }
-    }
-
-    /**
-     * @return integer $mandantId
-     */
-    public function getMandantId() 
-    {
-        return $this->mandantId;
-    }
-
-    /**
-     * @param int $mandantId
-     */
-    public function setMandantId($mandantId) 
-    {
-        $this->mandantId = $mandantId;
     }
 
     

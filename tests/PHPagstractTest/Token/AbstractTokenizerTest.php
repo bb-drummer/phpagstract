@@ -5,9 +5,9 @@ namespace PHPagstractTest\Token;
 /**
  *
  * @author bba
- *        
  */
-class AbstractTokenizerTest extends \PHPUnit_Framework_TestCase {
+class AbstractTokenizerTest extends \PHPUnit_Framework_TestCase
+{
 
     public function testParse() 
     {

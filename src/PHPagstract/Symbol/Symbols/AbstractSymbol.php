@@ -46,6 +46,16 @@ abstract class AbstractSymbol implements Symbol
     private $name = 'Symbol';
 
     /**
+     * compile symbol to string representation
+     *
+     * @return string
+     */
+    public function compile()
+    {
+        return '';
+    }
+    
+    /**
      * convert symbol to string representation
      *
      * @return string
@@ -153,7 +163,6 @@ abstract class AbstractSymbol implements Symbol
     
     /**
      * set the property
-     *
      */
     public function setParent(Symbol $parent) 
     {

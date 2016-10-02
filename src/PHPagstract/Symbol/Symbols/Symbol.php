@@ -17,6 +17,13 @@ interface Symbol
 {
 
     /**
+     * compile symbol to string representation
+     *
+     * @return string
+     */
+    public function compile();
+
+    /**
      * convert symbol to string representation
      *
      * @return string

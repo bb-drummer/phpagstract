@@ -261,7 +261,7 @@ abstract class AbstractToken implements Token
      * Check for a valid given type.
      *
      * @param  string
-     * @param string $type
+     * @param  string $type
      * @return boolean
      */
     protected function isValidType($type)
@@ -276,7 +276,6 @@ abstract class AbstractToken implements Token
 
     /**
      * Will return the current token value or null if none.
-     *
      */
     public function getValue() 
     {
@@ -284,7 +283,6 @@ abstract class AbstractToken implements Token
 
     /**
      * Will return the current token attributes or null if none.
-     *
      */
     public function getAttributes() 
     { 

@@ -7,17 +7,19 @@ use PHPagstract\Symbol\Symbols\AbstractTokenSymbol;
 /**
  * PHPagstract resource symbol class
  *
- * @package     PHPagstract
- * @author      Björn Bartels <coding@bjoernbartels.earth>
- * @link        https://gitlab.bjoernbartels.earth/groups/zf2
- * @license     http://www.apache.org/licenses/LICENSE-2.0 Apache License, Version 2.0
- * @copyright   copyright (c) 2016 Björn Bartels <coding@bjoernbartels.earth>
+ * @package   PHPagstract
+ * @author    Björn Bartels <coding@bjoernbartels.earth>
+ * @link      https://gitlab.bjoernbartels.earth/groups/zf2
+ * @license   http://www.apache.org/licenses/LICENSE-2.0 Apache License, Version 2.0
+ * @copyright copyright (c) 2016 Björn Bartels <coding@bjoernbartels.earth>
  */
-class PagstractResource extends AbstractTokenSymbol {
+class PagstractResource extends AbstractTokenSymbol
+{
     
     /**
      */
-    public function __construct() {
+    public function __construct() 
+    {
         parent::__construct();
     }
 }

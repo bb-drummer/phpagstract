@@ -31,6 +31,7 @@ abstract class AbstractTokenizer
      */
     public function parse($html) 
     { 
+        self::getPosition($html);
         return ((new TokenCollection())); 
     }
     
@@ -41,6 +42,7 @@ abstract class AbstractTokenizer
      */
     public static function getPosition($html) 
     { 
+        !!($html);
         return array(
             'line' => 0,
             'position' => 0

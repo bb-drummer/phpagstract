@@ -12,7 +12,8 @@ namespace PHPagstract\Symbol\Symbols;
  * @license   http://www.apache.org/licenses/LICENSE-2.0 Apache License, Version 2.0
  * @copyright copyright (c) 2016 Björn Bartels <coding@bjoernbartels.earth>
  */
-abstract class AbstractTokenSymbol extends AbstractSymbol {
+abstract class AbstractTokenSymbol extends AbstractSymbol
+{
     
     /**
      * is closing tag?
@@ -20,10 +21,24 @@ abstract class AbstractTokenSymbol extends AbstractSymbol {
      * @var boolean 
      */
     private $closing;
+    
+    /**
+     * throw exception on error?
+     * 
+     * @var boolean 
+     */
+    protected $throwOnError;
 
     /**
+     * @param Symbol  $parent
+     * @param boolean $throwOnError
      */
-    public function __construct($parent = null, $throwOnError = false) {
+    public function __construct($parent = null, $throwOnError = false) 
+    {
+        if ($parent !== null) {
+            $this->parent = $parent;
+        }
+        $this->throwOnError = !!($throwOnError);
     }
 
     /**
@@ -101,7 +116,7 @@ abstract class AbstractTokenSymbol extends AbstractSymbol {
     /**
      * Setter and getter for 'children'.
      *
-     * @param boolaan
+     * @param  boolaan
      * @return boolean
      */
     public function isClosing($isClosing = null)

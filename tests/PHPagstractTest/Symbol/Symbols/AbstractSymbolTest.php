@@ -8,31 +8,40 @@ use PHPagstract\Symbol\Symbols\Properties\ScalarProperty;
 /**
  * PHPagstract abstract/token symbol class tests
  *
- * @package     PHPagstract
- * @author      Björn Bartels <coding@bjoernbartels.earth>
- * @link        https://gitlab.bjoernbartels.earth/groups/zf2
- * @license     http://www.apache.org/licenses/LICENSE-2.0 Apache License, Version 2.0
- * @copyright   copyright (c) 2016 Björn Bartels <coding@bjoernbartels.earth>
+ * @package   PHPagstract
+ * @author    Björn Bartels <coding@bjoernbartels.earth>
+ * @link      https://gitlab.bjoernbartels.earth/groups/zf2
+ * @license   http://www.apache.org/licenses/LICENSE-2.0 Apache License, Version 2.0
+ * @copyright copyright (c) 2016 Björn Bartels <coding@bjoernbartels.earth>
  */
-class AbstractSymbolTest extends \PHPUnit_Framework_TestCase {
+class AbstractSymbolTest extends \PHPUnit_Framework_TestCase
+{
     
-    public function testToString() {
+    public function testToString() 
+    {
         $symbol = $this->getMockForAbstractClass('PHPagstract\\Symbol\\Symbols\\AbstractSymbol');
         $testString = $symbol->toString();
         
         $this->assertEquals('', $testString);
     }
     
-    public function testSetGetName() {
+    public function testCompile() 
+    {
+        $symbol = $this->getMockForAbstractClass('PHPagstract\\Symbol\\Symbols\\AbstractSymbol');
+        $testString = $symbol->compile();
+        
+        $this->assertEquals('', $testString);
+    }
+    
+    public function testSetGetName() 
+    {
         $symbol = $this
             ->getMockBuilder('PHPagstract\\Symbol\\Symbols\\AbstractSymbol')
             ->setMethods(array('setName', 'getName'))
-            ->getMockForAbstractClass()
-        ;
+            ->getMockForAbstractClass();
         $symbol
             ->method('getName')
-            ->willReturn('my-name')
-        ;
+            ->willReturn('my-name');
         
         $symbol->setName("my-name");
         $testName = $symbol->getName();
@@ -40,7 +49,8 @@ class AbstractSymbolTest extends \PHPUnit_Framework_TestCase {
         $this->assertEquals('my-name', $testName);
     }
     
-    public function testSymbolsTokenGetHasAttributes() {
+    public function testSymbolsTokenGetHasAttributes() 
+    {
         $attr = array(
             "foo" => "bar"
         );
@@ -63,7 +73,8 @@ class AbstractSymbolTest extends \PHPUnit_Framework_TestCase {
         
     }
 
-    public function testSymbolsTokenGetHasNoAttributes() {
+    public function testSymbolsTokenGetHasNoAttributes() 
+    {
         $token = $this->getMockForAbstractClass(
             'PHPagstract\\Token\\Tokens\\AbstractToken', 
             array("element", null, null),
@@ -82,7 +93,8 @@ class AbstractSymbolTest extends \PHPUnit_Framework_TestCase {
         $this->assertFalse($symbol->hasAttributes());
     }
     
-    public function testSymbolsTokenGetValue() {
+    public function testSymbolsTokenGetValue() 
+    {
         $token = $this->getMockForAbstractClass(
             'PHPagstract\\Token\\Tokens\\AbstractToken', 
             array("element", null, null),
@@ -99,7 +111,8 @@ class AbstractSymbolTest extends \PHPUnit_Framework_TestCase {
         $this->assertEquals("my value", $testValue);
     }
     
-    public function testSymbolsTokenMethodsDoNotExist() {
+    public function testSymbolsTokenMethodsDoNotExist() 
+    {
         $token = $this->getMockForAbstractClass(
             'PHPagstract\\Token\\Tokens\\Text'
         );
@@ -123,15 +136,18 @@ class AbstractSymbolTest extends \PHPUnit_Framework_TestCase {
         $this->assertNull($symbol->getValue());
     }
     
-    public function testSetGetChildren() {
+    public function testSetGetChildren() 
+    {
         $childSymbol = $this->getMockForAbstractClass('PHPagstract\\Symbol\\Symbols\\AbstractSymbol');
         
         $symbol = new Element();
         
-        $symbol->setChildren(array(
+        $symbol->setChildren(
+            array(
             $childSymbol,
             $childSymbol
-        ));
+            )
+        );
         
         $testArray = $symbol->getChildren();
         
@@ -164,14 +180,16 @@ class AbstractSymbolTest extends \PHPUnit_Framework_TestCase {
     public function testToArrayWithAttributesAndChildren() 
     {
            $token = $this->getMockForAbstractClass(
-            'PHPagstract\\Token\\Tokens\\AbstractToken',
-            array("text", null, null),
-            '', null, null, null,
-            array('getLine', 'getPosition', 'getAttributes')
-        );
-        $token->method('getAttributes')->willReturn(array(
+               'PHPagstract\\Token\\Tokens\\AbstractToken',
+               array("text", null, null),
+               '', null, null, null,
+               array('getLine', 'getPosition', 'getAttributes')
+           );
+        $token->method('getAttributes')->willReturn(
+            array(
             'foo' => 'bar'
-        ));
+            )
+        );
         
         $symbol = new Element();
         $symbol->setToken($token);
@@ -212,9 +230,11 @@ class AbstractSymbolTest extends \PHPUnit_Framework_TestCase {
         $symbol->setToken($token);
         $symbol->isClosing(true);
         
-        $symbol->setChildren(array(
+        $symbol->setChildren(
+            array(
             $childSymbol, $childSymbol
-        ));
+            )
+        );
         
         $testArray = $symbol->toArray();
         $this->assertEquals(

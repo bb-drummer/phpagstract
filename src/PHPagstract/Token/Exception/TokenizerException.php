@@ -1,5 +1,7 @@
 <?php
-
+/**
+ * Tokenizer exception class
+ */
 namespace PHPagstract\Token\Exception;
 
 /**

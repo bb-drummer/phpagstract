@@ -1,9 +1,11 @@
 <?php
-
+/**
+ * generic PHPagstract token parser exception class
+ */
 namespace PHPagstract\Token\Exception;
 
 /**
- * generic PHPagstract exception class
+ * generic PHPagstract token parser exception class
  *
  * @package   PHPagstract
  * @author    Björn Bartels <coding@bjoernbartels.earth>

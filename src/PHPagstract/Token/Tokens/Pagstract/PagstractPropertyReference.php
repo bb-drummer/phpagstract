@@ -6,7 +6,7 @@ use PHPagstract\Token\MarkupTokenizer;
 use PHPagstract\Token\Exception\TokenizerException;
 
 /**
- * Property reference '¢{...}' token object class
+ * Property reference '${...}' token object class
  *
  * @package   PHPagstract
  * @author    Björn Bartels <coding@bjoernbartels.earth>
@@ -32,7 +32,7 @@ class PagstractPropertyReference extends PagstractAbstractToken
     /**
      * token constructor
      * 
-     * @param Token  $parent
+     * @param Token   $parent
      * @param boolean $throwOnError
      */
     public function __construct(Token $parent = null, $throwOnError = false)

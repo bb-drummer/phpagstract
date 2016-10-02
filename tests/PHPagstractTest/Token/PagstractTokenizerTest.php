@@ -7,11 +7,11 @@ use PHPagstract\Token\PagstractTokenizer;
 /**
  * PHPagstract Pagstract Markup tokenizer class tests
  *
- * @package     PHPagstract
- * @author      Björn Bartels <coding@bjoernbartels.earth>
- * @link        https://gitlab.bjoernbartels.earth/groups/zf2
- * @license     http://www.apache.org/licenses/LICENSE-2.0 Apache License, Version 2.0
- * @copyright   copyright (c) 2016 Björn Bartels <coding@bjoernbartels.earth>
+ * @package   PHPagstract
+ * @author    Björn Bartels <coding@bjoernbartels.earth>
+ * @link      https://gitlab.bjoernbartels.earth/groups/zf2
+ * @license   http://www.apache.org/licenses/LICENSE-2.0 Apache License, Version 2.0
+ * @copyright copyright (c) 2016 Björn Bartels <coding@bjoernbartels.earth>
  */
 class PagstractTokenizerTest extends \PHPUnit_Framework_TestCase
 {
@@ -80,7 +80,7 @@ class PagstractTokenizerTest extends \PHPUnit_Framework_TestCase
                   array (
                     'type' => 'PagstractMarkup',
                     'name' => 'div',
-                    'value' => NULL,
+                    'value' => null,
                     'line' => 0,
                     'position' => 17,
                     'attributes' => 
@@ -99,7 +99,7 @@ class PagstractTokenizerTest extends \PHPUnit_Framework_TestCase
                   array (
                     'type' => 'PagstractMarkup',
                     'name' => '',
-                    'value' => NULL,
+                    'value' => null,
                     'line' => 0,
                     'position' => 58,
                     'attributes' => 
@@ -116,7 +116,7 @@ class PagstractTokenizerTest extends \PHPUnit_Framework_TestCase
                   array (
                     'type' => 'PagstractSwitch',
                     'name' => 'pma:switch',
-                    'value' => NULL,
+                    'value' => null,
                     'line' => 0,
                     'position' => 0,
                     'attributes' => 
@@ -136,7 +136,7 @@ class PagstractTokenizerTest extends \PHPUnit_Framework_TestCase
                       array (
                         'type' => 'PagstractObject',
                         'name' => 'object',
-                        'value' => NULL,
+                        'value' => null,
                         'line' => 0,
                         'position' => 42,
                         'attributes' => 

@@ -1,27 +1,30 @@
 <?php
-namespace PHPagstractTest\Symbol;
+namespace PHPagstractTest;
 
-use PHPagstract\Symbol\PropertyReferenceResolver;
+use PHPUnit_Framework_TestCase as TestCase;
+use PHPagstract\Symbol\PropertyReferenceSymbolizer;
 use PHPagstract\Symbol\Symbols\Properties\RootProperty;
-use PHPagstract\Symbol\Symbols\Properties\ComponentProperty;
+use PHPagstract\Page\Resolver\PropertyResolver;
+
 
 /**
- * PHPagstract property reference resolver class tests
+ * PHPagstract filepath resolver class tests
  *
- * @package     PHPagstract
- * @author      Björn Bartels <coding@bjoernbartels.earth>
- * @link        https://gitlab.bjoernbartels.earth/groups/zf2
- * @license     http://www.apache.org/licenses/LICENSE-2.0 Apache License, Version 2.0
- * @copyright   copyright (c) 2016 Björn Bartels <coding@bjoernbartels.earth>
+ * @package   PHPagstract
+ * @author    Björn Bartels <coding@bjoernbartels.earth>
+ * @link      https://gitlab.bjoernbartels.earth/groups/zf2
+ * @license   http://www.apache.org/licenses/LICENSE-2.0 Apache License, Version 2.0
+ * @copyright copyright (c) 2016 Björn Bartels <coding@bjoernbartels.earth>
  */
-class PropertyReferenceResolverTest extends \PHPUnit_Framework_TestCase 
+
+class PropertyResolverTest extends TestCase
 {
     
     public function testInstantiateObject()
     {
         
         try {
-            $resolver = new PropertyReferenceResolver();
+            $resolver = new PropertyResolver();
             $className = get_class($resolver);
         } catch (Exception $e) {
             $resolver = null;
@@ -30,32 +33,72 @@ class PropertyReferenceResolverTest extends \PHPUnit_Framework_TestCase
 
         $this->assertNotNull($resolver);
         $this->assertNotNull($className);
-        $this->assertInstanceOf("\PHPagstract\Symbol\PropertyReferenceResolver", $resolver);
+        $this->assertInstanceOf("\\PHPagstract\\Page\\Resolver\\PropertyResolver", $resolver);
         
-        $mockResolver = $this->createMock("\PHPagstract\Symbol\PropertyReferenceResolver");
-        $this->assertInstanceOf("\PHPagstract\Symbol\PropertyReferenceResolver", $mockResolver);
+        $mockResolver = $this->createMock("\\PHPagstract\\Page\\Resolver\\PropertyResolver");
+        $this->assertInstanceOf("\\PHPagstract\\Page\\Resolver\\PropertyResolver", $mockResolver);
         
     }
     
-    public function testInstantiateComponentPropertyObject()
+    public function testInstantiateObjectWithDataParameter()
     {
         
-        $root = new RootProperty();
-        $componentProperty = new ComponentProperty('test', $root);
+        try {
+            $data = (object)[ "root" => (object)[] ];
+            $symbolizer = new PropertyReferenceSymbolizer();
+            $properties = $symbolizer->symbolize($data);
+            $resolver = new PropertyResolver($properties);
+            $className = get_class($resolver);
+        } catch (Exception $e) {
+            $resolver = null;
+            $className = null;
+        }
 
-        $this->assertEquals("test", $componentProperty->getName());
-        $this->assertEquals("component", $componentProperty->getType());
-        $this->assertEquals($root, $componentProperty->getParent());
+        $this->assertNotNull($resolver);
+        $this->assertNotNull($className);
+        $this->assertInstanceOf("\\PHPagstract\\Page\\Resolver\\PropertyResolver", $resolver);
+        
+        $scopeProperty = $resolver->getRootScope();
+        $this->assertEquals('PHPagstract\\Symbol\\Symbols\\Properties\\RootProperty', get_class($scopeProperty));
+        $this->assertEquals('root', ($scopeProperty->getName()));
+        $this->assertEquals('root', ($scopeProperty->getType()));
+        $this->assertNull(($scopeProperty->getProperty()));
+        
     }
     
+    /**
+     * @dataProvider simpleGettersSettersDataProvider
+     */
+    public function testSimpleGettersSetters($varname, $value) 
+    {
+        $resolver = new PropertyResolver();
+
+        $setFunc = 'set'.ucfirst($varname);
+        $getFunc = 'get'.ucfirst($varname);
+        
+        $resolver->$setFunc($value);
+        $test = $resolver->$getFunc($value);
+        $this->assertEquals($value, $test);
+    }
+
+    public function simpleGettersSettersDataProvider() 
+    {
+        return [
+            'setGetScopes' => [
+                "scopes", // var/method name
+                [ (object)[ "root" => (object)[] ] ]          // value
+            ],
+        ];
+    }    
     
     /**
      * @dataProvider parsePropertyReferenceStringsDataProvider
      */
     public function testParsePropertyReferenceStrings($reference, array $expectedArray, $debug = false)
     {
+
+        $resolver = new PropertyResolver();
         
-        $resolver = new PropertyReferenceResolver();
         $tokens = $resolver->parsePropertyReferenceString($reference);
         if ($debug) {
             var_export($reference); var_export($expectedArray); var_export($tokens);
@@ -187,10 +230,16 @@ class PropertyReferenceResolverTest extends \PHPUnit_Framework_TestCase
     public function testLookupPropertyAndSerialize($jsondata, $expectedClassname, $expectedName, $expectedType, $expectedValue, $debug = false)
     {
         
-        $resolver = new PropertyReferenceResolver();
+        $resolver = new PropertyReferenceSymbolizer();
         $context = json_decode($jsondata);
         $rootSymbolTree = $resolver->symbolize($context);
-        $resolver->setContext($rootSymbolTree);
+
+        $resolver = new PropertyResolver();
+        $resolver->setStream($rootSymbolTree);
+        $resolver->resetScopes();
+        $resolver->addScope($rootSymbolTree);
+        $rootScope = $resolver->getRootScope();
+        $resolver->setContext($rootScope);
         
         $property = $resolver->getPropertyByReference($expectedName);
         
@@ -203,11 +252,11 @@ class PropertyReferenceResolverTest extends \PHPUnit_Framework_TestCase
             echo "val: "; var_export($property->serialize()); echo PHP_EOL;
         }
 
-        $this->assertEquals( $expectedClassname,  get_class($property) );
-        $this->assertEquals( $expectedName,  ($property->getName()) );
-        $this->assertEquals( $expectedType,  ($property->getType()) );
-        $this->assertEquals( $expectedValue,  ($property->serialize()) );
-        $this->assertSameSize( $expectedValue,  ($property->serialize()) );
+        $this->assertEquals($expectedClassname, get_class($property));
+        $this->assertEquals($expectedName, ($property->getName()));
+        $this->assertEquals($expectedType, ($property->getType()));
+        $this->assertEquals($expectedValue, ($property->serialize()));
+        $this->assertSameSize($expectedValue, ($property->serialize()));
         
     }
 
@@ -359,7 +408,7 @@ class PropertyReferenceResolverTest extends \PHPUnit_Framework_TestCase
                 array (
                   'name' => 'property',
                   'type' => 'object',
-                  'property' => NULL,
+                  'property' => null,
                   'properties' => 
                   (object)(array(
                      'other' => 
@@ -382,14 +431,14 @@ class PropertyReferenceResolverTest extends \PHPUnit_Framework_TestCase
                 array (
                   'name' => 'property',
                   'type' => 'list',
-                  'property' => NULL,
+                  'property' => null,
                   'items' => 
                   array (
                     0 => 
                     array (
                       'name' => 0,
                       'type' => 'object',
-                      'property' => NULL,
+                      'property' => null,
                       'properties' => 
                       (object)(array(
                          'other-A' => 
@@ -404,7 +453,7 @@ class PropertyReferenceResolverTest extends \PHPUnit_Framework_TestCase
                     array (
                       'name' => 1,
                       'type' => 'object',
-                      'property' => NULL,
+                      'property' => null,
                       'properties' => 
                       (object)(array(
                          'other-B' => 
@@ -426,11 +475,8 @@ class PropertyReferenceResolverTest extends \PHPUnit_Framework_TestCase
     
     public function testLookupParentPropertyAndSerialize()
     {
-        $resolver = new PropertyReferenceResolver();
-        $jsondata = (file_get_contents(__DIR__."/Json/json-parse-test.json"));
-        $context = json_decode($jsondata);
-        $rootSymbolTree = $resolver->symbolize($context);
-        $resolver->setContext($rootSymbolTree);
+        
+        $resolver = $this->getPropertyResolver();
         
         $intermediateContext = $resolver->getPropertyByReference('property');
 
@@ -438,72 +484,73 @@ class PropertyReferenceResolverTest extends \PHPUnit_Framework_TestCase
 
         $property = $resolver->getPropertyByReference('../myproperty');
         
-        $this->assertEquals( 'PHPagstract\\Symbol\\Symbols\\Properties\\ScalarProperty',  get_class($property) );
-        $this->assertEquals( 'myproperty',  ($property->getName()) );
-        $this->assertEquals( 'scalar',  ($property->getType()) );
-        $this->assertEquals( 'myvalue',  ($property->getProperty()) );
-        $this->assertSame( array (
+        $this->assertEquals('PHPagstract\\Symbol\\Symbols\\Properties\\ScalarProperty', get_class($property));
+        $this->assertEquals('myproperty', ($property->getName()));
+        $this->assertEquals('scalar', ($property->getType()));
+        $this->assertEquals('myvalue', ($property->getProperty()));
+        $this->assertSame(
+            array (
                 'name' => 'myproperty',
                 'type' => 'scalar',
                 'property' => 'myvalue',
-        ),  ($property->serialize()) );
+            ), ($property->serialize()) 
+        );
         
 
 
         $property = $resolver->getPropertyByReference('../child');
-        $this->assertEquals( null,  ($property) );
+        $this->assertEquals(null, ($property));
         
     }
     
     
     public function testLookupListItemsPropertyAndSerialize()
     {
-        $resolver = new PropertyReferenceResolver();
-        $jsondata = (file_get_contents(__DIR__."/Json/json-parse-test.json"));
-        $context = json_decode($jsondata);
-        $rootSymbolTree = $resolver->symbolize($context);
-        $resolver->setContext($rootSymbolTree);
+        
+        $resolver = $this->getPropertyResolver();
         
         $property = $resolver->getPropertyByReference('otherproperty[0]');
 
-        $this->assertEquals( 'PHPagstract\\Symbol\\Symbols\\Properties\\ObjectProperty',  get_class($property) );
-        $this->assertEquals( '0',  ($property->getName()) );
-        $this->assertEquals( 'object',  ($property->getType()) );
-        $this->assertEquals( null,  ($property->getProperty()) );
+        $this->assertEquals('PHPagstract\\Symbol\\Symbols\\Properties\\ObjectProperty', get_class($property));
+        $this->assertEquals('0', ($property->getName()));
+        $this->assertEquals('object', ($property->getType()));
+        $this->assertEquals(null, ($property->getProperty()));
         
         $property = $resolver->getPropertyByReference('otherproperty[1].child.other[0]');
 
         //echo PHP_EOL . var_export($property->serialize(), true) . PHP_EOL;
-        $this->assertEquals( 'PHPagstract\\Symbol\\Symbols\\Properties\\ObjectProperty',  get_class($property) );
-        $this->assertEquals( '0',  ($property->getName()) );
-        $this->assertEquals( 'object',  ($property->getType()) );
-        $this->assertEquals( null,  ($property->getProperty()) );
+        $this->assertEquals('PHPagstract\\Symbol\\Symbols\\Properties\\ObjectProperty', get_class($property));
+        $this->assertEquals('0', ($property->getName()));
+        $this->assertEquals('object', ($property->getType()));
+        $this->assertEquals(null, ($property->getProperty()));
         
     }
     
     
     public function testLookupListParentPropertyAndSerialize()
     {
-        $resolver = new PropertyReferenceResolver();
-        $jsondata = (file_get_contents(__DIR__."/Json/json-parse-test.json"));
-        $context = json_decode($jsondata);
-        $rootSymbolTree = $resolver->symbolize($context);
-        $resolver->setContext($rootSymbolTree);
+        
+        $resolver = $this->getPropertyResolver();
         
         $intermediateContext = $resolver->getPropertyByReference('otherproperty[1].child');
-
-        $resolver->setContext($intermediateContext);
+        
+        $resolver->addScope($intermediateContext);
 
         $property = $resolver->getPropertyByReference('../hello');
-        $this->assertEquals( 'PHPagstract\\Symbol\\Symbols\\Properties\\ScalarProperty',  get_class($property) );
-        $this->assertEquals( 'hello',  ($property->getName()) );
-        $this->assertEquals( 'scalar',  ($property->getType()) );
-        $this->assertEquals( 'world',  ($property->getProperty()) );
-        $this->assertSame( array (
+        $this->assertEquals('PHPagstract\\Symbol\\Symbols\\Properties\\ScalarProperty', get_class($property));
+        $this->assertEquals('hello', ($property->getName()));
+        $this->assertEquals('scalar', ($property->getType()));
+        $this->assertEquals('world', ($property->getProperty()));
+        $this->assertSame(
+            array (
                 'name' => 'hello',
                 'type' => 'scalar',
                 'property' => 'world',
-        ),  ($property->serialize()) );
+            ), ($property->serialize()) 
+        );
+        
+        // clean up scopes
+        $resolver->unsetLastScope();
         
     }
     
@@ -512,15 +559,21 @@ class PropertyReferenceResolverTest extends \PHPUnit_Framework_TestCase
      */
     public function testGetPropertyByReferences($filename, $reference, $expectedData, $debug = false)
     {
-        $resolver = new PropertyReferenceResolver();
+        $resolver = new PropertyReferenceSymbolizer();
         $jsondata = (file_get_contents($filename));
         
         if (is_string($expectedData) && file_exists($expectedData)) {
-            $expectedData = include ($expectedData);
+            $expectedData = include $expectedData;
         }
         $context = json_decode($jsondata);
         $rootSymbolTree = $resolver->symbolize($context);
-        $resolver->setContext($rootSymbolTree);
+
+        $resolver = new PropertyResolver();
+        $resolver->setStream($rootSymbolTree);
+        $resolver->resetScopes();
+        $resolver->addScope($rootSymbolTree);
+        $rootScope = $resolver->getRootScope();
+        $resolver->setContext($rootScope);
 
         $property = $resolver->getPropertyByReference($reference);
         
@@ -533,11 +586,11 @@ class PropertyReferenceResolverTest extends \PHPUnit_Framework_TestCase
             echo "serialized: "; var_export($property->serialize()); echo PHP_EOL;
         }
         
-        $this->assertInstanceOf( 'PHPagstract\\Symbol\\Symbols\\AbstractPropertySymbol',  $property );
-        $this->assertNotNull( $expectedData,  $property );
+        $this->assertInstanceOf('PHPagstract\\Symbol\\Symbols\\AbstractPropertySymbol', $property);
+        $this->assertNotNull($expectedData, $property);
         //$this->assertSame( $expectedData,  ($property->serialize()) );
-        $this->assertEquals( $expectedData,  ($property->serialize()) );
-        $this->assertSameSize( $expectedData,  ($property->serialize()) );
+        $this->assertEquals($expectedData, ($property->serialize()));
+        $this->assertSameSize($expectedData, ($property->serialize()));
     }
     
     /**
@@ -545,15 +598,21 @@ class PropertyReferenceResolverTest extends \PHPUnit_Framework_TestCase
      */
     public function testGetValueByReferences($filename, $reference, $expectedData, $debug = false)
     {
-        $resolver = new PropertyReferenceResolver();
+        $resolver = new PropertyReferenceSymbolizer();
         $jsondata = (file_get_contents($filename));
         
         if (is_string($expectedData) && file_exists($expectedData)) {
-            $expectedData = include ($expectedData);
+            $expectedData = include $expectedData;
         }
         $context = json_decode($jsondata);
         $rootSymbolTree = $resolver->symbolize($context);
-        $resolver->setContext($rootSymbolTree);
+
+        $resolver = new PropertyResolver();
+        $resolver->setStream($rootSymbolTree);
+        $resolver->resetScopes();
+        $resolver->addScope($rootSymbolTree);
+        $rootScope = $resolver->getRootScope();
+        $resolver->setContext($rootScope);
 
         $propertyValue = $resolver->getValueByReference($reference);
 
@@ -562,7 +621,7 @@ class PropertyReferenceResolverTest extends \PHPUnit_Framework_TestCase
             echo "file: "; var_export($filename); echo PHP_EOL;
             echo "to parse: "; var_export($reference); echo PHP_EOL;
             echo "expected: "; var_export($expectedData); echo PHP_EOL;
-            if ( is_object($propertyValue) && method_exists($propertyValue, "serialize") ) { 
+            if (is_object($propertyValue) && method_exists($propertyValue, "serialize") ) { 
                 echo "serialized: "; var_export($propertyValue->serialize()); echo PHP_EOL; 
             } else {
                 echo "serialized: "; var_export($propertyValue); echo PHP_EOL; 
@@ -570,14 +629,14 @@ class PropertyReferenceResolverTest extends \PHPUnit_Framework_TestCase
         }
         
         if ($expectedData['type'] == 'list') {
-            $this->assertCount( count($expectedData['items']),  $propertyValue );
+            $this->assertCount(count($expectedData['items']), $propertyValue);
         } else if ($expectedData['type'] == 'object') {
             foreach ($expectedData['properties'] as $idx => $expectedItem) {
-                $this->assertEquals( ($expectedItem['name']),  $propertyValue->$idx->getName() );
-                $this->assertEquals( ($expectedItem['type']),  $propertyValue->$idx->getType() );
+                $this->assertEquals(($expectedItem['name']), $propertyValue->$idx->getName());
+                $this->assertEquals(($expectedItem['type']), $propertyValue->$idx->getType());
             }
         } else {
-            $this->assertEquals( $expectedData['property'],  $propertyValue );
+            $this->assertEquals($expectedData['property'], $propertyValue);
         }
     }
     
@@ -586,7 +645,7 @@ class PropertyReferenceResolverTest extends \PHPUnit_Framework_TestCase
         return array(
                 
             "string value" => array(
-                __DIR__."/Json/json-values.json",
+                __DIR__."/../Symbol/Json/json-values.json",
                 "stringValue",
                 array (
                   'name' => 'stringValue',
@@ -597,7 +656,7 @@ class PropertyReferenceResolverTest extends \PHPUnit_Framework_TestCase
             ),
                 
             "integer value" => array(
-                __DIR__."/Json/json-values.json",
+                __DIR__."/../Symbol/Json/json-values.json",
                 "integerValue",
                 array (
                   'name' => 'integerValue',
@@ -608,7 +667,7 @@ class PropertyReferenceResolverTest extends \PHPUnit_Framework_TestCase
             ),
                 
             "float value" => array(
-                __DIR__."/Json/json-values.json",
+                __DIR__."/../Symbol/Json/json-values.json",
                 "floatValue",
                 array (
                   'name' => 'floatValue',
@@ -619,7 +678,7 @@ class PropertyReferenceResolverTest extends \PHPUnit_Framework_TestCase
             ),
                 
             "boolean value (true)" => array(
-                __DIR__."/Json/json-values.json",
+                __DIR__."/../Symbol/Json/json-values.json",
                 "trueValue",
                 array (
                   'name' => 'trueValue',
@@ -630,7 +689,7 @@ class PropertyReferenceResolverTest extends \PHPUnit_Framework_TestCase
             ),
                 
             "boolean value (false)" => array(
-                __DIR__."/Json/json-values.json",
+                __DIR__."/../Symbol/Json/json-values.json",
                 "falseValue",
                 array (
                   'name' => 'falseValue',
@@ -641,7 +700,7 @@ class PropertyReferenceResolverTest extends \PHPUnit_Framework_TestCase
             ),
                 
             "null value" => array(
-                __DIR__."/Json/json-values.json",
+                __DIR__."/../Symbol/Json/json-values.json",
                 "nullValue",
                 array (
                   'name' => 'nullValue',
@@ -652,7 +711,7 @@ class PropertyReferenceResolverTest extends \PHPUnit_Framework_TestCase
             ),
                 
             "list of scalars" => array(
-                __DIR__."/Json/json-listOfValues.json",
+                __DIR__."/../Symbol/Json/json-listOfValues.json",
                 "scalarList",
                 array (
                   'name' => 'scalarList',
@@ -706,7 +765,7 @@ class PropertyReferenceResolverTest extends \PHPUnit_Framework_TestCase
                                 array (
                                         'name' => 7,
                                         'type' => 'scalar',
-                                        'property' => NULL,
+                                        'property' => null,
                                 ),
                                 8 =>
                                 array (
@@ -726,7 +785,7 @@ class PropertyReferenceResolverTest extends \PHPUnit_Framework_TestCase
             ),
                 
             "first of list of scalars" => array(
-                __DIR__."/Json/json-listOfValues.json",
+                __DIR__."/../Symbol/Json/json-listOfValues.json",
                 "scalarList[0]",
                 array (
                   'name' => 0,
@@ -737,7 +796,7 @@ class PropertyReferenceResolverTest extends \PHPUnit_Framework_TestCase
             ),
                 
             "second of list of scalars" => array(
-                __DIR__."/Json/json-listOfValues.json",
+                __DIR__."/../Symbol/Json/json-listOfValues.json",
                 "scalarList[1]",
                 array (
                   'name' => 1,
@@ -748,12 +807,12 @@ class PropertyReferenceResolverTest extends \PHPUnit_Framework_TestCase
             ),
                 
             "objects" => array(
-                __DIR__."/Json/json-objects.json",
+                __DIR__."/../Symbol/Json/json-objects.json",
                 "object1",
                 array (
                   'name' => 'object1',
                   'type' => 'object',
-                  'property' => NULL,
+                  'property' => null,
                   'properties' => 
                   (object)(array(
                      'text1' => 
@@ -774,19 +833,19 @@ class PropertyReferenceResolverTest extends \PHPUnit_Framework_TestCase
             ),
             
             "list of objects" => array(
-                __DIR__."/Json/json-listOfObjects.json",
+                __DIR__."/../Symbol/Json/json-listOfObjects.json",
                 "objectList",
                 array (
                   'name' => 'objectList',
                   'type' => 'list',
-                  'property' => NULL,
+                  'property' => null,
                   'items' => 
                   array (
                     0 => 
                     array (
                       'name' => 0,
                       'type' => 'object',
-                      'property' => NULL,
+                      'property' => null,
                       'properties' => 
                       (object)(array(
                          'text' => 
@@ -801,7 +860,7 @@ class PropertyReferenceResolverTest extends \PHPUnit_Framework_TestCase
                     array (
                       'name' => 1,
                       'type' => 'object',
-                      'property' => NULL,
+                      'property' => null,
                       'properties' => 
                       (object)(array(
                          'text' => 
@@ -816,7 +875,7 @@ class PropertyReferenceResolverTest extends \PHPUnit_Framework_TestCase
                     array (
                       'name' => 2,
                       'type' => 'object',
-                      'property' => NULL,
+                      'property' => null,
                       'properties' => 
                       (object)(array(
                          'text' => 
@@ -831,7 +890,7 @@ class PropertyReferenceResolverTest extends \PHPUnit_Framework_TestCase
                     array (
                       'name' => 3,
                       'type' => 'object',
-                      'property' => NULL,
+                      'property' => null,
                       'properties' => 
                       (object)(array(
                          'text' => 
@@ -846,7 +905,7 @@ class PropertyReferenceResolverTest extends \PHPUnit_Framework_TestCase
                     array (
                       'name' => 4,
                       'type' => 'object',
-                      'property' => NULL,
+                      'property' => null,
                       'properties' => 
                       (object)(array(
                          'text' => 
@@ -863,12 +922,12 @@ class PropertyReferenceResolverTest extends \PHPUnit_Framework_TestCase
             ),
             
             "object in list of objects" => array(
-                __DIR__."/Json/json-listOfObjects.json",
+                __DIR__."/../Symbol/Json/json-listOfObjects.json",
                 "objectList[1]",
                 array (
                   'name' => 1,
                   'type' => 'object',
-                  'property' => NULL,
+                  'property' => null,
                   'properties' => 
                   (object)(array(
                      'text' => 
@@ -895,6 +954,43 @@ class PropertyReferenceResolverTest extends \PHPUnit_Framework_TestCase
                 
         );
     }
+    
+    
+    public function testScopesGetRootScopeReturnsNull()
+    {
+        $resolver = new PropertyResolver();
+        
+        $rootScope = $resolver->getRootScope();
+        $this->assertNull($rootScope);
+    }
+    
+    
+    
+    //
+    // test helpers
+    //
+    
+    /**
+     * retrieve a pre-configured ProperyResolver instance
+     * 
+     * @return PropertyResolver
+     */
+    private function getPropertyResolver( ) 
+    {
+
+        $symbolizer = new PropertyReferenceSymbolizer();
+        $jsondata = (file_get_contents(__DIR__."/../Symbol/Json/json-parse-test.json"));
+        $context = json_decode($jsondata);
+        $rootSymbolTree = $symbolizer->symbolize($context);
+
+        $resolver = new PropertyResolver();
+        $resolver->setStream($rootSymbolTree);
+        $resolver->resetScopes();
+        $resolver->addScope($rootSymbolTree);
+        $rootScope = $resolver->getRootScope();
+        $resolver->setContext($rootScope);
+        
+        return $resolver;
+    }
 
 }
-

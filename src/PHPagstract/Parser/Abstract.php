@@ -2,10 +2,13 @@
 
 namespace PHPagstract;
 
-use PHPagstract\Symbol\SymbolResolver;
+use PHPagstract\Symbol\GenericSymbolizer;
 use PHPagstract\Symbol\Symbols\SymbolCollection;
 use PHPagstract\Token\AbstractTokenizer;
 use PHPagstract\Token\Tokens\TokenCollection;
+use PHPagstract\Parser\Exception as ParserException;
+use PHPagstract\Symbol\Symbols\Symbol;
+use PHPagstract\Symbol\PropertyReferenceSymbolizer;
 
 /**
  * parser object abstract
@@ -36,7 +39,7 @@ abstract class ParserAbstract
     /**
      * symbol resolver container
      *
-     * @var PHPagstract\Symbol\SymbolResolver
+     * @var PHPagstract\Symbol\GenericSymbolizer
      */
     private $resolver = null;
     
@@ -44,14 +47,18 @@ abstract class ParserAbstract
     /**
      * constructor
      */
-    public function __construct($tokenizer, $symbolResolver, $throwOnError = false) 
+    public function __construct($tokenizer, $genericSymbolizer, $throwOnError = false) 
     {
         
         $this->throwOnError = $throwOnError;
         
-        $this->setTokenizer($tokenizer);
+        if ($tokenizer instanceof AbstractTokenizer) {
+            $this->setTokenizer($tokenizer);
+        }
 
-        $this->setResolver($symbolResolver);
+        if ($genericSymbolizer instanceof GenericSymbolizer) {
+            $this->setResolver($genericSymbolizer);
+        }
         
     }
     
@@ -73,19 +80,34 @@ abstract class ParserAbstract
     }
     
     /**
-     * parse the content
+     * comile the content's symbols and return string representation
      * 
-     * @param SymbolCollection $symbols
+     * @param  SymbolCollection $symbols
+     * @return string
      */
     public function compile(SymbolCollection $symbols) 
     {
         $compiled = '';
-        $symbols->toArray();
+        $symbolsIterator = $symbols->getIterator();
+        $symbolsIterator->rewind();
+        $symbol = $symbolsIterator->current();
+        while ( $symbol instanceof Symbol ) {
+            
+            if (method_exists($symbol, "compile")) {
+                $compiled .= $symbol->compile();
+            }
+            
+            if (method_exists($symbol, "toString")) {
+                $compiled .= $symbol->toString();
+            }
+            $symbol = $symbolsIterator->next();
+        }
+        $compiled = trim($compiled);
         return $compiled;
     }
     
     /**
-     * parse the content
+     * tokenize the content
      * 
      * @param  string $content
      * @return TokenCollection
@@ -99,45 +121,56 @@ abstract class ParserAbstract
     }
     
     /**
-     * map the tokens to symbols
+     * map tokens to symbols
      * 
      * @param  TokenCollection $tokens
      * @return SymbolCollection
      */
     public function symbolize($tokens) 
     {
-        $symbolResolver = $this->getResolver();
+        $symbolizer = $this->getResolver();
         
-        $symbolTree = $symbolResolver->resolve($tokens);
+        $symbolTree = $symbolizer->resolve($tokens);
         
         return $symbolTree;
     }
 
     /**
      * @return AbstractTokenizer
+     * @throws ParserException
      */
     public function getTokenizer() 
     {
+        if (($this->tokenizer === null) && $this->throwOnError ) {
+            throw new ParserException("no tokenizer set");
+        }
         return $this->tokenizer;
     }
 
     /**
+     *
+     * @param AbstractTokenizer $tokenizer
      */
-    public function setTokenizer($tokenizer) 
+    public function setTokenizer(AbstractTokenizer $tokenizer) 
     {
         $this->tokenizer = $tokenizer;
     }
 
     /**
-     * @return the $resolver
+     * @return GenericSymbolizer $resolver
+     * @throws ParserException
      */
     public function getResolver() 
     {
+        if (($this->resolver === null) && $this->throwOnError ) {
+            throw new ParserException("no symbol resolver set");
+        }
         return $this->resolver;
     }
 
     /**
-     * @param \PHPagstract\PHPagstract\Symbol\SymbolResolver $resolver
+     * 
+     * @param GenericSymbolizer|PropertyReferenceSymbolizer $resolver
      */
     public function setResolver($resolver) 
     {

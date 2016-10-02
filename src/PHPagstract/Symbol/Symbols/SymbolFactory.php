@@ -3,7 +3,7 @@
 namespace PHPagstract\Symbol\Symbols;
 
 use PHPagstract\Token\Tokens\PagstractAbstractToken;
-use PHPagstract\Symbol\Exception\SymbolResolverException;
+use PHPagstract\Symbol\Exception\GenericSymbolizerException;
 
 /**
  * symbol factory class, token <-> symbol mapper
@@ -20,8 +20,8 @@ class SymbolFactory
     /**
      * generate symbol and map to token
      * 
-     * @param PHPagstract\Token\Tokens\PagstractAbstractToken $token
-     * @param boolean $throwOnError
+     * @param  PHPagstract\Token\Tokens\PagstractAbstractToken $token
+     * @param  boolean                                         $throwOnError
      * @return object|boolean
      */
     public static function symbolize($token, $throwOnError = false) 
@@ -33,7 +33,7 @@ class SymbolFactory
         
         if (!class_exists($symbolClassname)) {
             if ($throwOnError) {
-                throw new SymbolResolverException("Invalid token to symbolize: ".$symbolName);
+                throw new GenericSymbolizerException("Invalid token to symbolize: ".$symbolName);
             }
             return (false);
         }

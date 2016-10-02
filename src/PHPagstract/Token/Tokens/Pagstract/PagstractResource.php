@@ -39,7 +39,7 @@ class PagstractResource extends PagstractAbstractToken
     /**
      * token constructor
      * 
-     * @param Token  $parent
+     * @param Token   $parent
      * @param boolean $throwOnError
      */
     public function __construct(Token $parent = null, $throwOnError = false)

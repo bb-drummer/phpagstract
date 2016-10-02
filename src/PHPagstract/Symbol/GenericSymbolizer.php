@@ -15,14 +15,17 @@ use PHPagstract\Token\Tokens\TokenCollection;
  * @license   http://www.apache.org/licenses/LICENSE-2.0 Apache License, Version 2.0
  * @copyright copyright (c) 2016 Björn Bartels <coding@bjoernbartels.earth>
  */
-class SymbolResolver
+class GenericSymbolizer
 {
     /**
+     * throw exception on error?
+     * 
      * @var boolean 
      */
     protected $throwOnError;
     
     /**
+     * @param boolean $throwOnError throw exception on error?
      */
     public function __construct($throwOnError = false) 
     {
@@ -60,7 +63,7 @@ class SymbolResolver
                 if (method_exists($currentToken, 'hasChildren') && $currentToken->hasChildren()) {
                     $tokenChildren = $currentToken->getChildren();
                     $children = new TokenCollection();
-                    foreach ($tokenChildren as $idx => $child) {
+                    foreach ($tokenChildren as $child) {
                         $children[] = $child;
                     }
                     $symbolChildren = $this->resolve($children);

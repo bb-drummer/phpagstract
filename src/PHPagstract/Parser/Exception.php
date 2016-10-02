@@ -1,9 +1,11 @@
 <?php
-
+/**
+ * parser exception object
+ */
 namespace PHPagstract\Parser;
 
 /**
- * parser exception object class
+ * parser exception object
  * 
  * @package   PHPagstract
  * @author    Björn Bartels <coding@bjoernbartels.earth>

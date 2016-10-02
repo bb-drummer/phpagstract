@@ -8,37 +8,42 @@ class ElementTestAbstract extends \PHPUnit_Framework_TestCase
 {
     /**
      * classes namespace
+     *
      * @var string
      */
     const NS = "PHPagstract\\Token\Tokens\\";
     
     /**
      * current element classname
+     *
      * @var string
      */
     public $elementClassname = 'PagstractAbstractToken';
 
     /**
      * current tag-name classname
+     *
      * @var string
      */
     public $elementTagname = 'pma:test';
     
     /**
      * list of tag-names from elements with no children
+     *
      * @var array
      */
     public $noChildrenElements = array('area', 'input', 'pma:debug');
 
     /**
      * get (fully) qualified classname
-     * @param string $classname
+     *
+     * @param  string $classname
      * @return string
      */
     public function getElementClassname($classname)
     {
-        if ( !class_exists($classname) ) {
-            if ( class_exists(self::NS.$classname) ) {
+        if (!class_exists($classname) ) {
+            if (class_exists(self::NS.$classname) ) {
                 return (self::NS.$classname);
             }
         }
@@ -47,8 +52,9 @@ class ElementTestAbstract extends \PHPUnit_Framework_TestCase
     
     /**
      * create a (empty) element helper
-     * @param string $tag
-     * @param boolean $selfClosing
+     *
+     * @param  string  $tag
+     * @param  boolean $selfClosing
      * @return PagstractAbstractToken
      */
     private function createElement($tag, $selfClosing = false)
@@ -97,7 +103,7 @@ class ElementTestAbstract extends \PHPUnit_Framework_TestCase
         if (in_array($this->elementTagname, $this->noChildrenElements)) return ;
         $classname = $this->getElementClassname($this->elementClassname);
         $element = new $classname();
-        if ( $element->nested === true ) {
+        if ($element->nested === true ) {
             $element = new $classname();
             $this->assertFalse($element->hasChildren());
             //var_dump($this->elementTagname);

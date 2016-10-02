@@ -11,7 +11,8 @@ namespace PHPagstract;
  * @license   http://www.apache.org/licenses/LICENSE-2.0 Apache License, Version 2.0
  * @copyright copyright (c) 2016 Björn Bartels <coding@bjoernbartels.earth>
  */
-class AbstractCollection implements \ArrayAccess, \IteratorAggregate {
+class AbstractCollection implements \ArrayAccess, \IteratorAggregate
+{
 
     /**
      * flag if item to add/set must be an instance of $type
@@ -63,7 +64,7 @@ class AbstractCollection implements \ArrayAccess, \IteratorAggregate {
      * check is item exists at offset
      * required by the ArrayAccess interface
      * 
-     * @param integer $offset
+     * @param  integer $offset
      * @return boolean
      */
     public function offsetExists($offset)
@@ -75,6 +76,7 @@ class AbstractCollection implements \ArrayAccess, \IteratorAggregate {
      * retrieve item at offset
      * required by the ArrayAccess interface
      * 
+     * @param  integer $offset
      * @return mixed
      */
     public function offsetGet($offset)
@@ -87,7 +89,7 @@ class AbstractCollection implements \ArrayAccess, \IteratorAggregate {
      * required by the ArrayAccess interface
      * 
      * @param integer $offset
-     * @param mixed $value
+     * @param mixed   $value
      */
     public function offsetSet($offset, $value)
     {
@@ -110,6 +112,8 @@ class AbstractCollection implements \ArrayAccess, \IteratorAggregate {
     /**
      * unset item at offset
      * required by the ArrayAccess interface
+     * 
+     * @param integer $offset
      */
     public function offsetUnset($offset)
     {
@@ -150,10 +154,11 @@ class AbstractCollection implements \ArrayAccess, \IteratorAggregate {
     /**
      * set/get 'only valid type' flag
      * 
-     * @param boolean $setTo
+     * @param  boolean $setTo
      * @return boolean|null $onlyValidType
      */
-    public function onlyValidType($setTo = null) {
+    public function onlyValidType($setTo = null) 
+    {
         if ($setTo === null) {
             return !!$this->onlyValidType;
         }
@@ -165,7 +170,8 @@ class AbstractCollection implements \ArrayAccess, \IteratorAggregate {
      * 
      * @return string $type
      */
-    public function getType() {
+    public function getType() 
+    {
         return $this->type;
     }
 
@@ -174,7 +180,8 @@ class AbstractCollection implements \ArrayAccess, \IteratorAggregate {
      * 
      * @param string $type
      */
-    public function setType($type) {
+    public function setType($type) 
+    {
         $this->type = $type;
     }
 

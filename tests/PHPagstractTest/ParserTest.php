@@ -1,26 +1,25 @@
 <?php
 namespace PHPagstractTest;
 
-/**
- * PHPagstract page class tests
- *
- * @package     PHPagstract
- * @author      Björn Bartels <coding@bjoernbartels.earth>
- * @link        https://gitlab.bjoernbartels.earth/groups/zf2
- * @license     http://www.apache.org/licenses/LICENSE-2.0 Apache License, Version 2.0
- * @copyright   copyright (c) 2016 Björn Bartels <coding@bjoernbartels.earth>
- */
-
 use PHPUnit_Framework_TestCase as TestCase;
 
 use \PHPagstract\Parser;
 use PHPagstract\Token\Tokens\TokenCollection;
 use PHPagstract\Token\AbstractTokenizer;
 use PHPagstract\Symbol\Symbols\SymbolCollection;
-use PHPagstract\Symbol\SymbolResolver;
+use PHPagstract\Symbol\GenericSymbolizer;
 use PHPagstract\ParserAbstract;
 use PHPagstract\Symbol\Exception\SymbolException;
 
+/**
+ * PHPagstract page class tests
+ *
+ * @package   PHPagstract
+ * @author    Björn Bartels <coding@bjoernbartels.earth>
+ * @link      https://gitlab.bjoernbartels.earth/groups/zf2
+ * @license   http://www.apache.org/licenses/LICENSE-2.0 Apache License, Version 2.0
+ * @copyright copyright (c) 2016 Björn Bartels <coding@bjoernbartels.earth>
+ */
 class ParserTest extends TestCase
 {
     
@@ -29,8 +28,8 @@ class ParserTest extends TestCase
         
         try {
             $mockTokenizer = $this->createMock('PHPagstract\Token\AbstractTokenizer');
-            $mockResolver = $this->createMock('PHPagstract\Symbol\SymbolResolver');
-            $parser = new Parser( $mockTokenizer, $mockResolver );
+            $mockResolver = $this->createMock('PHPagstract\Symbol\GenericSymbolizer');
+            $parser = new Parser($mockTokenizer, $mockResolver);
             $className = get_class($parser);
         } catch (Exception $e) {
             $parser = null;
@@ -46,18 +45,18 @@ class ParserTest extends TestCase
         
     }
     
-    public function testTokenize () 
+    public function testTokenize() 
     {
         
         $parser = $this->getParser();
         $tokens = $parser->tokenize('');
 
         $this->assertInstanceOf('PHPagstract\Token\Tokens\TokenCollection', $tokens);
-        $this->assertEquals( 0, $tokens->count() );
+        $this->assertEquals(0, $tokens->count());
         
     }
     
-    public function testSymbolize () 
+    public function testSymbolize() 
     {
         
         $parser = $this->getParser();
@@ -69,10 +68,10 @@ class ParserTest extends TestCase
         $symbols = $parser->symbolize($tokens);
 
         $this->assertInstanceOf('PHPagstract\Symbol\Symbols\SymbolCollection', $symbols);
-        $this->assertEquals( 1, $symbols->count() );
+        $this->assertEquals(1, $symbols->count());
     }
     
-    public function testSymbolizeStopsOnError () 
+    public function testSymbolizeStopsOnError() 
     {
         
         $parser = $this->getParser();
@@ -84,14 +83,14 @@ class ParserTest extends TestCase
         $symbols = $parser->symbolize($tokens);
 
         $this->assertInstanceOf('PHPagstract\Symbol\Symbols\SymbolCollection', $symbols);
-        $this->assertEquals( 0, $symbols->count() );
+        $this->assertEquals(0, $symbols->count());
         
     }
     
     /**
      * @expectedException PHPagstract\Symbol\Exception\SymbolException
      */
-    public function testSymbolizeThrowsException () 
+    public function testSymbolizeThrowsException() 
     {
         
         $parser = $this->getParser(true);
@@ -105,7 +104,7 @@ class ParserTest extends TestCase
         
     }
     
-    public function testParse () 
+    public function testParse() 
     {
         
         $parser = $this->getParser();
@@ -116,28 +115,60 @@ class ParserTest extends TestCase
         
     }
     
-    public function testSetGetResolver () 
+    public function testCompile() 
     {
         
         $parser = $this->getParser();
-        $resolver = $this->createMock('PHPagstract\\Symbol\\SymbolResolver');
+
+        $mockSymbol = $this->createMock('PHPagstract\\Symbol\\Symbols\\AbstractSymbol');
+        $mockCollection = new SymbolCollection();
+        $mockCollection[] = $mockSymbol;
+        $compiled = $parser->compile($mockCollection);
+        
+        $this->assertEquals($compiled, '');
+        
+    }
+    
+    public function testSetGetResolver() 
+    {
+        
+        $parser = $this->getParser();
+        $resolver = $this->createMock('PHPagstract\\Symbol\\GenericSymbolizer');
         $parser->setResolver($resolver);
         $testResolver = $parser->getResolver();
 
-        $this->assertInstanceOf('PHPagstract\\Symbol\\SymbolResolver', $testResolver);
+        $this->assertInstanceOf('PHPagstract\\Symbol\\GenericSymbolizer', $testResolver);
         $this->assertEquals($resolver, $testResolver);
         
     }
     
     /**
+     * @expectedException PHPagstract\Parser\Exception
+     */
+    public function testGetResolverException() 
+    {
+        $parser = new Parser(null, null, true);
+        $parser->getResolver();
+    }
+    
+    /**
+     * @expectedException PHPagstract\Parser\Exception
+     */
+    public function testGetTokenizerException() 
+    {
+        $parser = new Parser(null, null, true);
+        $parser->getTokenizer();
+    }
+    
+    /**
      * @dataProvider files2parseDataProvider
      */
-    public function testParseMarkup ($tokenizer, $filename, $throwOnError = false) 
+    public function testParseMarkup($tokenizer, $filename, $throwOnError = false) 
     {
-        $mockResolver  = new SymbolResolver($throwOnError); 
+        $mockResolver  = new GenericSymbolizer($throwOnError); 
         $mockTokenizer = new $tokenizer($throwOnError);
         
-        $parser = new Parser( $mockTokenizer, $mockResolver, $throwOnError );
+        $parser = new Parser($mockTokenizer, $mockResolver, $throwOnError);
         $html = file_get_contents($filename);
 
         $pagstracttokens = $parser->tokenize($html);
@@ -150,6 +181,7 @@ class ParserTest extends TestCase
 
     /**
      * create a parser object
+     *
      * @return ParserAbstract
      */
     private function getParser($throwOnError = false) 
@@ -162,14 +194,15 @@ class ParserTest extends TestCase
             ->willReturn($mockTokens);
 
         $mockSymbols    = new SymbolCollection();
-        $mockResolver  = new SymbolResolver($throwOnError); 
+        $mockResolver  = new GenericSymbolizer($throwOnError); 
         
-        $parser = new Parser( $mockTokenizer, $mockResolver, $throwOnError );
+        $parser = new Parser($mockTokenizer, $mockResolver, $throwOnError);
         
         return $parser;
     }
     
-    public function files2parseDataProvider () {
+    public function files2parseDataProvider() 
+    {
         return array(
             "HTML file 01" => array(
                 "tokenizer" => "PHPagstract\\Token\\MarkupTokenizer",

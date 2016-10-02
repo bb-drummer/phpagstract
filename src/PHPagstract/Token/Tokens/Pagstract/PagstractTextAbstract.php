@@ -30,9 +30,9 @@ class PagstractTextAbstract extends PagstractAbstractToken
      * token constructor
      * 
      * @param string  $type
-     * @param Token  $parent
+     * @param Token   $parent
      * @param boolean $throwOnError
-     * @param mixed $forcedValue
+     * @param mixed   $forcedValue
      */
     public function __construct($type, Token $parent = null, $throwOnError = false, $forcedValue = null)
     {

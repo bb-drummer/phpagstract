@@ -32,10 +32,10 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  *
- * @author      Jurian Sluiman <jurian@juriansluiman.nl>
- * @copyright   2012-2013 Jurian Sluiman.
- * @license     http://www.opensource.org/licenses/bsd-license.php  BSD License
- * @link        http://juriansluiman.nl
+ * @author    Jurian Sluiman <jurian@juriansluiman.nl>
+ * @copyright 2012-2013 Jurian Sluiman.
+ * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
+ * @link      http://juriansluiman.nl
  */
 
 chdir(__DIR__);

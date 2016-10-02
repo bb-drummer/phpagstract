@@ -23,6 +23,8 @@ done so far:
 	* markup/pagstract tokenizing and symbolizing, creating abstract symbol tree
 	* reference resolving and symbolizing, abstract data properties
     * (theme inheriting) filename/path resolving
+    * page/model setup
+    * generic page assembly
 	 
 	 
 still to do:

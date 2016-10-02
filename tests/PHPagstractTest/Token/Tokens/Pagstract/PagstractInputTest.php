@@ -11,6 +11,7 @@ class PagstractInputTest extends ElementTestAbstract
     /**
      * element test data provider
      * {@inheritDoc}
+     *
      * @see \PHPagstractTest\Token\Tokens\ElementTestAbstract::toArrayDataProvider()
      */
     public function toArrayDataProvider()
@@ -18,7 +19,7 @@ class PagstractInputTest extends ElementTestAbstract
         $data = parent::toArrayDataProvider();
         $parsed = $data;
         foreach ($data as $key => $item) {
-            if ( isset($item[1]["children"]) ) {
+            if (isset($item[1]["children"]) ) {
                 unset($parsed[$key]);
             }
         }

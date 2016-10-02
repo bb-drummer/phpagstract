@@ -11,7 +11,8 @@ namespace PHPagstract\Symbol\Symbols;
  * @license   http://www.apache.org/licenses/LICENSE-2.0 Apache License, Version 2.0
  * @copyright copyright (c) 2016 Björn Bartels <coding@bjoernbartels.earth>
  */
-abstract class AbstractPropertySymbol {
+abstract class AbstractPropertySymbol
+{
     
     /**
      * symbol name
@@ -42,11 +43,12 @@ abstract class AbstractPropertySymbol {
     private $property = null;
 
     /**
-     * @param string $type
-     * @param string $name
+     * @param string                      $type
+     * @param string                      $name
      * @param null|AbstractPropertySymbol $parent
      */
-    public function __construct($type, $name, AbstractPropertySymbol & $parent = null) {
+    public function __construct($type, $name, AbstractPropertySymbol & $parent = null) 
+    {
         if ($parent !== null) {
             $this->parent = & $parent;
         }
@@ -90,10 +92,11 @@ abstract class AbstractPropertySymbol {
     /**
      * get a property's value
      * 
-     * @param string $property the property name
+     * @param  string $property the property name
      * @return mixed|NULL
      */
-    public function get($property) {
+    public function get($property) 
+    {
         if (isset($this->$property)) {
             return $this->$property;
         }
@@ -103,11 +106,12 @@ abstract class AbstractPropertySymbol {
     /**
      * set a property's value
      * 
-     * @param string $property the property name
-     * @param mixed $value
+     * @param  string $property the property name
+     * @param  mixed  $value
      * @return self
      */
-    public function set($property, $value) {
+    public function set($property, $value) 
+    {
         $this->$property = $value;
         return $this;
     }

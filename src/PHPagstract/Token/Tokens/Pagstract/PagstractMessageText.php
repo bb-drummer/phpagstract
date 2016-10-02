@@ -18,9 +18,9 @@ class PagstractMessageText extends PagstractTextAbstract
     /**
      * token constructor
      * 
-     * @param Token  $parent
+     * @param Token   $parent
      * @param boolean $throwOnError
-     * @param mixed $forcedValue
+     * @param mixed   $forcedValue
      */
     public function __construct(Token $parent = null, $throwOnError = false, $forcedValue = null)
     {

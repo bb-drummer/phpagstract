@@ -4,17 +4,17 @@ namespace PHPagstractTest;
 /**
  * PHPagstract filepath resolver class tests
  *
- * @package     PHPagstract
- * @author      Björn Bartels <coding@bjoernbartels.earth>
- * @link        https://gitlab.bjoernbartels.earth/groups/zf2
- * @license     http://www.apache.org/licenses/LICENSE-2.0 Apache License, Version 2.0
- * @copyright   copyright (c) 2016 Björn Bartels <coding@bjoernbartels.earth>
+ * @package   PHPagstract
+ * @author    Björn Bartels <coding@bjoernbartels.earth>
+ * @link      https://gitlab.bjoernbartels.earth/groups/zf2
+ * @license   http://www.apache.org/licenses/LICENSE-2.0 Apache License, Version 2.0
+ * @copyright copyright (c) 2016 Björn Bartels <coding@bjoernbartels.earth>
  */
 
 use PHPUnit_Framework_TestCase as TestCase;
 use PHPagstract\Page\Resolver\FilepathResolver;
 
-class FilepathResolverTestTest extends TestCase
+class FilepathResolverTest extends TestCase
 {
     
     public function testInstantiateObject()
@@ -40,20 +40,22 @@ class FilepathResolverTestTest extends TestCase
     /**
      * @dataProvider simpleGettersSettersDataProvider
      */
-    public function testSimpleGettersSetters($varname, $value) {
+    public function testSimpleGettersSetters($varname, $value) 
+    {
         $resolver = new FilepathResolver();
 
         $setFunc = 'set'.ucfirst($varname);
         $getFunc = 'get'.ucfirst($varname);
         
         $resolver->$setFunc($value);
-        $this->assertEquals ($value, $resolver->$varname);
+        $this->assertEquals($value, $resolver->$varname);
         
         $test = $resolver->$getFunc($value);
-        $this->assertEquals ($value, $test);
+        $this->assertEquals($value, $test);
     }
 
-    public function simpleGettersSettersDataProvider() {
+    public function simpleGettersSettersDataProvider() 
+    {
         return [
             'setGetThemeId (int)' => [
                 "themeId",
@@ -77,7 +79,8 @@ class FilepathResolverTestTest extends TestCase
     /**
      * @dataProvider findThemePathsDataProvider
      */
-    public function testFindThemePaths($themeId, $expectedPaths) {
+    public function testFindThemePaths($themeId, $expectedPaths) 
+    {
         $resolver = new FilepathResolver();
         $resolver->setBaseDir(__DIR__.'/data/base/');
         $resolver->setThemesDir(__DIR__.'/data/themes/');
@@ -85,10 +88,11 @@ class FilepathResolverTestTest extends TestCase
         $resolver->setThemeId($themeId);
         
         $testPaths = $resolver->findThemePaths($themeId);
-        $this->assertEquals ($expectedPaths, $testPaths);
+        $this->assertEquals($expectedPaths, $testPaths);
     }
     
-    public function findThemePathsDataProvider() {
+    public function findThemePathsDataProvider() 
+    {
         $dataDir = __DIR__.'/data/';
         return [
             'theme id: 1' => [
@@ -118,7 +122,8 @@ class FilepathResolverTestTest extends TestCase
     /**
      * @dataProvider resolveFilepathDataProvider
      */
-    public function testResolveFilepath($themeId, $file, $expectedPath) {
+    public function testResolveFilepath($themeId, $file, $expectedPath) 
+    {
         $resolver = new FilepathResolver();
         
         $resolver->setBaseDir(__DIR__.'/data/base/');
@@ -127,10 +132,11 @@ class FilepathResolverTestTest extends TestCase
         $resolver->setThemeId($themeId);
         
         $testPath = $resolver->resolveFilepath($file);
-        $this->assertEquals ($expectedPath, $testPath);
+        $this->assertEquals($expectedPath, $testPath);
     }
     
-    public function resolveFilepathDataProvider() {
+    public function resolveFilepathDataProvider() 
+    {
         $dataDir = __DIR__.'/data/';
         return [
                 
@@ -178,6 +184,22 @@ class FilepathResolverTestTest extends TestCase
                   null
                ]
         ];
+    }
+
+    public function testResolveFilepathReturnsNullIfFilenameIsTooLong() 
+    {
+        $max = PHP_MAXPATHLEN + 1;
+        $filename = 'x';
+        for ($i = 0; $i <= $max; $i++) {
+            $filename .= 'x';
+        }
+        $resolver = new FilepathResolver();
+        
+        $resolver->setBaseDir(__DIR__.'/data/base/');
+        $resolver->setThemesDir(__DIR__.'/data/themes/');
+        
+        $test = $resolver->resolveFilepath($filename);
+        $this->assertNull($test);
     }
 
 }
