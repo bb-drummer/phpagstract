@@ -69,7 +69,7 @@ abstract class PageModelAbstract
      * class contsructor 
      * 
      * @param PageAbstract $page
-     * @param boolean $throwOnError throw exception on error?
+     * @param boolean      $throwOnError throw exception on error?
      */
     public function __construct($page = null, $throwOnError = false) 
     {

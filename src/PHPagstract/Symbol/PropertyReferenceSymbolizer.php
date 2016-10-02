@@ -62,41 +62,41 @@ class PropertyReferenceSymbolizer
         
         switch (true) {
             
-            case $this->isNull($data):
-                // set null property type
-                $property = new ScalarProperty($name, $parent);
-                $property->setProperty($data);
-                break;
+        case $this->isNull($data):
+            // set null property type
+            $property = new ScalarProperty($name, $parent);
+            $property->setProperty($data);
+            break;
             
-            case $this->isList($data): 
-                // set list property type
-                // try to detect a component?
-                $property = new ListProperty($name, $parent);
-                $items = [];
-                foreach ($data as $idx => $item) {
-                    $items[] = $this->symbolize($item, $property, $idx);
-                }
-                $property->set('items', $items);
-                break;
+        case $this->isList($data): 
+            // set list property type
+            // try to detect a component?
+            $property = new ListProperty($name, $parent);
+            $items = [];
+            foreach ($data as $idx => $item) {
+                $items[] = $this->symbolize($item, $property, $idx);
+            }
+            $property->set('items', $items);
+            break;
             
-            case $this->isObject($data): 
-                // set object property type
-                // try to detect a component?
-                $property = new ObjectProperty($name, $parent);
-                $objProperties = get_object_vars($data);
-                $properties = [];
-                foreach ($objProperties as $xname => $value) {
-                    $properties[$xname] = $this->symbolize($value, $property, $xname);
-                }
-                $property->set('properties', (object) $properties);
-                break;
+        case $this->isObject($data): 
+            // set object property type
+            // try to detect a component?
+            $property = new ObjectProperty($name, $parent);
+            $objProperties = get_object_vars($data);
+            $properties = [];
+            foreach ($objProperties as $xname => $value) {
+                $properties[$xname] = $this->symbolize($value, $property, $xname);
+            }
+            $property->set('properties', (object) $properties);
+            break;
 
-            case $this->isScalar($data):
-            default: 
-                // set scalar property type
-                // try to detect component
-                $property = new ScalarProperty($name, $parent);
-                $property->setProperty($data);
+        case $this->isScalar($data):
+        default: 
+            // set scalar property type
+            // try to detect component
+            $property = new ScalarProperty($name, $parent);
+            $property->setProperty($data);
             
         }
         

@@ -46,6 +46,7 @@ abstract class ParserAbstract
     
     /**
      * constructor
+     *
      * @param AbstractTokenizer $tokenizer
      * @param GenericSymbolizer $genericSymbolizer
      */

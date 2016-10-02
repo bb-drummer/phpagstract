@@ -26,9 +26,9 @@ class TokenFactory
     /**
      * build token (tree) from string
      * 
-     * @param  string  $html
-     * @param  null|Token   $parent
-     * @param  boolean $throwOnError
+     * @param  string     $html
+     * @param  null|Token $parent
+     * @param  boolean    $throwOnError
      * @throws TokenFactoryException
      * @return false|object
      */
@@ -99,7 +99,7 @@ class TokenFactory
     /**
      * add new token/matching to registry
      * 
-     * @param  string $className
+     * @param  string      $className
      * @param  null|string $regexStart
      * @param  null|string $regexEnd
      * @return null|TokenFactory

@@ -187,14 +187,14 @@ class PropertyResolver
         switch ($property->getType())
         {
     
-            case 'object': $properties =  $property->get('properties');
-                return $properties;
+        case 'object': $properties =  $property->get('properties');
+            return $properties;
     
-            case 'list': $list = $property->get('items');
-                return $list;
+        case 'list': $list = $property->get('items');
+            return $list;
     
-            default: $value = $property->getProperty();
-                return $value;
+        default: $value = $property->getProperty();
+            return $value;
     
         }
     }

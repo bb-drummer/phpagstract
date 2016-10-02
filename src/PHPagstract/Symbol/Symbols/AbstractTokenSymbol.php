@@ -32,8 +32,8 @@ abstract class AbstractTokenSymbol extends AbstractSymbol
     /**
      * class contsructor 
      * 
-     * @param null|Symbol  $parent
-     * @param boolean $throwOnError
+     * @param null|Symbol $parent
+     * @param boolean     $throwOnError
      */
     public function __construct($parent = null, $throwOnError = false) 
     {

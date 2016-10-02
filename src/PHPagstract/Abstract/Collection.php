@@ -39,7 +39,6 @@ class AbstractCollection implements \ArrayAccess, \IteratorAggregate
 
     /**
      * class contsructor 
-     * 
      */
     public function __construct()
     {

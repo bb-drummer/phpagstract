@@ -117,9 +117,9 @@ class PagstractAbstractToken extends AbstractToken
     /**
      * Constructor
      *
-     * @param string  $type
-     * @param null|Token   $parent
-     * @param boolean $throwOnError
+     * @param string     $type
+     * @param null|Token $parent
+     * @param boolean    $throwOnError
      */
     public function __construct($type, Token $parent = null, $throwOnError = false)
     {
