@@ -4,12 +4,12 @@ namespace PHPagstract\Page;
 
 use PHPagstract\Exception;
 use PHPagstract\Page;
+use PHPagstract\PageAbstract;
 use PHPagstract\Parser;
 use PHPagstract\ParserAbstract;
 use PHPagstract\Symbol\GenericSymbolizer;
 use PHPagstract\Token\AbstractTokenizer;
 use PHPagstract\Token\MarkupTokenizer;
-use PHPagstract\PageAbstract;
 
 
 /**
