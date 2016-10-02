@@ -173,7 +173,7 @@ abstract class ParserAbstract
 
     /**
      * 
-     * @param GenericSymbolizer|PropertyReferenceSymbolizer $resolver
+     * @param GenericSymbolizer $resolver
      */
     public function setResolver($resolver) 
     {

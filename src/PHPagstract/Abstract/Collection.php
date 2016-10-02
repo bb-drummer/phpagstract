@@ -155,7 +155,7 @@ class AbstractCollection implements \ArrayAccess, \IteratorAggregate
      * set/get 'only valid type' flag
      * 
      * @param  null|boolean $setTo
-     * @return boolean $onlyValidType
+     * @return boolean|null $onlyValidType
      */
     public function onlyValidType($setTo = null) 
     {
