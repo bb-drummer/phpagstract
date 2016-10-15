@@ -30,14 +30,17 @@ class SymbolCollectionTest extends \PHPUnit_Framework_TestCase
         $collection = new SymbolCollection();
         $this->assertEquals(0, $collection->count());
         $this->assertFalse(isset($collection[0]));
+        
         $symbol = $this->createMock('PHPagstract\\Symbol\\Symbols\\AbstractSymbol');
         $collection[0] = $symbol;
         $this->assertEquals(1, $collection->count());
         $this->assertFalse($collection->isEmpty());
         $this->assertTrue(isset($collection[0]));
+        
         $newSymbol = $collection[0];
         $this->assertEquals($symbol, $newSymbol);
         $this->assertEquals(1, $collection->count());
+        
         unset($collection[0]);
         $this->assertEquals(0, $collection->count());
     }
@@ -49,22 +52,6 @@ class SymbolCollectionTest extends \PHPUnit_Framework_TestCase
     {
         $collection = new SymbolCollection();
         $collection[0] = 5;
-    }
-
-    public function testIterator()
-    {
-        $collection = new SymbolCollection();
-        $this->assertTrue($collection->isEmpty());
-        $symbol1 = $this->createMock('PHPagstract\\Symbol\\Symbols\\AbstractSymbol');
-        $symbol2 = $this->createMock('PHPagstract\\Symbol\\Symbols\\AbstractSymbol');
-        $collection[] = $symbol1;
-        $collection[] = $symbol2;
-        $testArray = array();
-        foreach ($collection as $symbol) {
-            $testArray[] = $symbol;
-        }
-
-        $this->assertEquals(array($symbol1, $symbol2), $testArray);
     }
     
     public function testToArray()

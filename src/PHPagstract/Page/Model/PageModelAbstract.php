@@ -1,15 +1,18 @@
 <?php
-
-namespace PHPagstract\Page;
+/**
+ * page-model abstract
+ */
+namespace PHPagstract\Page\Model;
 
 use PHPagstract\Exception;
-use PHPagstract\Page;
-use PHPagstract\PageAbstract;
-use PHPagstract\Parser;
-use PHPagstract\ParserAbstract;
+use PHPagstract\Page\Page;
+use PHPagstract\Page\PageAbstract;
+use PHPagstract\Parser\Parser;
+use PHPagstract\Parser\ParserAbstract;
 use PHPagstract\Symbol\GenericSymbolizer;
 use PHPagstract\Token\AbstractTokenizer;
 use PHPagstract\Token\MarkupTokenizer;
+use PHPagstract\Traits\PageAwareTrait;
 
 
 /**
@@ -29,13 +32,7 @@ use PHPagstract\Token\MarkupTokenizer;
  */
 abstract class PageModelAbstract
 {
-
-    /**
-     * page instance
-     *
-     * @var \PHPagstract\PageAbstract
-     */
-    protected $page = null;
+    use PageAwareTrait;
     
     /**
      * parser instance
@@ -68,7 +65,7 @@ abstract class PageModelAbstract
     /**
      * class contsructor 
      * 
-     * @param PageAbstract $page
+     * @param PageAbstract $page         reference to related page object
      * @param boolean      $throwOnError throw exception on error?
      */
     public function __construct($page = null, $throwOnError = false) 
@@ -80,41 +77,25 @@ abstract class PageModelAbstract
     }
     
     /**
+     * process the content
+     * 
      * @return string 
      */
     public function process() 
     {
-        $result = '';
         $parser = $this->getParser();
         $content = $this->getPage()->getInputStream();
         
-        // simply get the default parsed result here in abstract class
+        // parse the content and create an abstract symbol/syntax tree
         $result = $parser->parse($content);
         
-        $result = trim($result);
         return $result;
     }
     
     /**
-     * @return \PHPagstract\PageAbstract $page
-     */
-    public function getPage() 
-    {
-        if ($this->page === null && $this->throwOnError === true) {
-            throw new Exception();
-        }
-        return $this->page;
-    }
-
-    /**
-     * @param \PHPagstract\PageAbstract $page
-     */
-    public function setPage($page) 
-    {
-        $this->page = $page;
-    }
-    
-    /**
+     * retrieve a (markup) tokenizer instance
+     * if not set, initialize new instance
+     *
      * @return \PHPagstract\Token\AbstractTokenizer $tokenizer
      */
     public function getTokenizer() 
@@ -127,6 +108,8 @@ abstract class PageModelAbstract
     }
 
     /**
+     * set tokenizer
+     * 
      * @param \PHPagstract\Token\AbstractTokenizer $tokenizer
      */
     public function setTokenizer(AbstractTokenizer $tokenizer) 
@@ -135,6 +118,9 @@ abstract class PageModelAbstract
     }
 
     /**
+     * retrieve a (generic) symbolizer instance
+     * if not set, initialize new instance
+     *
      * @return \PHPagstract\Symbol\GenericSymbolizer $symbolizer
      */
     public function getSymbolizer() 
@@ -147,6 +133,8 @@ abstract class PageModelAbstract
     }
 
     /**
+     * the symbolizer
+     * 
      * @param GenericSymbolizer $symbolizer
      */
     public function setSymbolizer($symbolizer) 
@@ -155,6 +143,9 @@ abstract class PageModelAbstract
     }
 
     /**
+     * retrieve parser instance
+     * if not set, initialize new instance
+     *
      * @return \PHPagstract\Parser $parser
      */
     public function getParser() 
@@ -170,6 +161,8 @@ abstract class PageModelAbstract
     }
 
     /**
+     * set parser instance
+     * 
      * @param \PHPagstract\ParserAbstract $parser
      */
     public function setParser(ParserAbstract $parser) 

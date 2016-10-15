@@ -11,13 +11,13 @@ namespace PHPagstract\Token\Tokens;
  * @license   http://www.apache.org/licenses/LICENSE-2.0 Apache License, Version 2.0
  * @copyright copyright (c) 2016 Björn Bartels <coding@bjoernbartels.earth>
  */
-class PagstractModSeperator extends PagstractAbstractToken
+class PagstractModSeparator extends PagstractAbstractToken
 {
     /**
      * @var array the $matching
      */
     public static $matching = array(
-            "start" => "/^\s*<pma:modSeperator/i", 
+            "start" => "/^\s*<pma:modSeparator/i", 
             "end" => ">"
     );
 
@@ -34,7 +34,7 @@ class PagstractModSeperator extends PagstractAbstractToken
      */
     public function __construct(Token $parent = null, $throwOnError = false)
     {
-        parent::__construct(Token::PAGSTRACTMODSEPERATOR, $parent, $throwOnError);
+        parent::__construct(Token::PAGSTRACTMODSEPARATOR, $parent, $throwOnError);
         
     }
 

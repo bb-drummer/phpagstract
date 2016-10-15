@@ -1,5 +1,7 @@
 <?php
-
+/**
+ * token interface class
+ */
 namespace PHPagstract\Token\Tokens;
 
 /**
@@ -45,14 +47,14 @@ interface Token
     const PAGSTRACTLISTFOOTER        = 'PagstractListFooter'; // '<pma:footer...'
     const PAGSTRACTLISTCONTENT       = 'PagstractListContent'; // '<pma:content...'
     const PAGSTRACTLISTNOCONTENT     = 'PagstractListNoContent'; // '<pma:no-content...'
-    const PAGSTRACTLISTSEPERATOR     = 'PagstractListSeperator'; // '<pma:seperator...'
+    const PAGSTRACTLISTSEPARATOR     = 'PagstractListSeparator'; // '<pma:separator...' 
     const PAGSTRACTLISTEVEN          = 'PagstractListEven'; // '<pma:even...'
     const PAGSTRACTLISTODD           = 'PagstractListOdd'; // '<pma:odd...'
     const PAGSTRACTLISTFIRST         = 'PagstractListFirst'; // '<pma:first...'
     const PAGSTRACTLISTLAST          = 'PagstractListLast'; // '<pma:last...'
     
     const PAGSTRACTMODLIST           = 'PagstractModList'; // '<pma:modList...'
-    const PAGSTRACTMODSEPERATOR      = 'PagstractModSeperator'; // '<pma:modSeperator...'
+    const PAGSTRACTMODSEPARATOR      = 'PagstractModSeparator'; // '<pma:modSeparator...'
     const PAGSTRACTMODCONTENT        = 'PagstractModContent'; // '<pma:modContent...'
     
     const PAGSTRACTSWITCH            = 'PagstractSwitch'; // '<pma:switch...'
@@ -121,14 +123,14 @@ interface Token
      * Will return the current token value or null if none.
      *
      * @return mixed
-     */
+     * /
     public function getValue();
 
     /**
      * Will return the current token attributes or null if none.
      *
      * @return null|array
-     */
+     * /
     public function getAttributes();
     
     /**

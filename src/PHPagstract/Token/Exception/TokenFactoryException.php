@@ -1,11 +1,13 @@
 <?php
 /**
- * TokenFactory exception class
+ * TokenFactory exception
  */
 namespace PHPagstract\Token\Exception;
 
 /**
  * TokenFactory exception class
+ * 
+ * exception to throw on token creating related issues
  *
  * @package   PHPagstract
  * @author    Björn Bartels <coding@bjoernbartels.earth>

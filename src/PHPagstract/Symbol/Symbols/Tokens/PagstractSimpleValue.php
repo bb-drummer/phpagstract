@@ -20,5 +20,29 @@ class PagstractSimpleValue extends PagstractMarkup
     {
         parent::__construct();
     }
+    
+    public function toString() 
+    {
+        $EOL = $this->config()->EOL();
+        $attr = ($this->getAttributes());
+        $property = null;
+        if (isset($attr['pma:name'])) {
+            $property = $this->getPropertyResolver()->getPropertyByReference($attr['pma:name']);
+        }
+        $propertyValue = '';
+        /**
+ * @var AbstractPropertySymbol $property 
+*/
+        if ($property !== null) {
+            $propertyValue = $property->getProperty();
+        }
+
+        if ($this->config()->debug()) {
+            $propertyValue .= '<!-- DEBUG: ' . print_r($this->toArray(), true) . ' -->' . $EOL;
+        }
+        //$propertyValue .= parent::toString();
+        
+        return $propertyValue;
+    }
 }
 

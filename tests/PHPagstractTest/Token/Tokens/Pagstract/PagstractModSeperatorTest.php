@@ -2,10 +2,10 @@
 
 namespace PHPagstractTest\Token\Tokens;
 
-class PagstractModSeperatorTest extends ElementTestAbstract
+class PagstractModSeparatorTest extends ElementTestAbstract
 {
-    public $elementClassname = "PagstractModSeperator";
+    public $elementClassname = "PagstractModSeparator";
     
-    public $elementTagname = "pma:modSeperator";
+    public $elementTagname = "pma:modSeparator";
     
 }

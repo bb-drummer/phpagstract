@@ -2,8 +2,8 @@
 
 namespace PHPagstract\Streams;
 
-use PHPagstract\Page\StreamTrait;
-use PHPagstract\Page\ScopesTrait;
+use PHPagstract\Traits\StreamTrait;
+use PHPagstract\Traits\ScopesTrait;
 
 /**
  * data stream handling

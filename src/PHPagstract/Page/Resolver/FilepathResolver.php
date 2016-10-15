@@ -1,7 +1,7 @@
 <?php
 namespace PHPagstract\Page\Resolver;
 
-use PHPagstract\Page\ThemeConfigurationTrait;
+use PHPagstract\Traits\ThemeConfigurationTrait;
 
 /**
  * PHPagstract theme-/file-path resolver class

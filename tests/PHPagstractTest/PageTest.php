@@ -1,6 +1,18 @@
 <?php
 namespace PHPagstractTest;
 
+use PHPUnit_Framework_TestCase as TestCase;
+use PHPagstract\Page\Page;
+use PHPagstract\Page\PageAbstract;
+use PHPagstract\Page\Model\PageModel;
+use PHPagstract\Page\Resolver\FilepathResolver;
+use PHPagstract\Page\Resolver\PropertyResolver;
+use PHPagstract\Streams\InputStream;
+use PHPagstract\Streams\DataStream;
+use PHPagstract\Symbol\PropertyReferenceSymbolizer;
+use PHPagstract\Page\Config\PageConfig;
+use PHPagstract\Renderer\Renderer;
+
 /**
  * PHPagstract page class tests
  *
@@ -10,17 +22,6 @@ namespace PHPagstractTest;
  * @license   http://www.apache.org/licenses/LICENSE-2.0 Apache License, Version 2.0
  * @copyright copyright (c) 2016 Björn Bartels <coding@bjoernbartels.earth>
  */
-
-use PHPUnit_Framework_TestCase as TestCase;
-use PHPagstract\Page;
-use PHPagstract\PageAbstract;
-use PHPagstract\Page\PageModel;
-use PHPagstract\Streams\InputStream;
-use PHPagstract\Streams\DataStream;
-use PHPagstract\Page\Resolver\FilepathResolver;
-use PHPagstract\Symbol\PropertyReferenceSymbolizer;
-use PHPagstract\Page\Resolver\PropertyResolver;
-
 class PageTest extends TestCase
 {
     
@@ -38,9 +39,9 @@ class PageTest extends TestCase
         $this->assertNotNull($page);
         $this->assertNotNull($className);
         
-        $mockPage = $this->createMock("\PHPagstract\Page");
-        $this->assertInstanceOf("\PHPagstract\PageAbstract", $mockPage);
-        $this->assertInstanceOf("\PHPagstract\Page", $mockPage);
+        $mockPage = $this->createMock("\PHPagstract\Page\Page");
+        $this->assertInstanceOf("\PHPagstract\Page\PageAbstract", $mockPage);
+        $this->assertInstanceOf("\PHPagstract\Page\Page", $mockPage);
         
     }
     
@@ -49,11 +50,11 @@ class PageTest extends TestCase
         
         $page = new Page();
 
-        $model  = $this->getMockForAbstractClass('PHPagstract\\Page\\PageModel');
+        $model  = $this->getMockForAbstractClass('PHPagstract\Page\Model\PageModel');
         $page->setPageModel($model);
         $testModel = $page->getPageModel();
 
-        $this->assertInstanceOf('PHPagstract\\Page\\PageModel', $testModel);
+        $this->assertInstanceOf('PHPagstract\Page\Model\PageModel', $testModel);
         $this->assertEquals($model, $testModel);
         
     }
@@ -65,7 +66,7 @@ class PageTest extends TestCase
 
         $testModel = $page->getPageModel();
 
-        $this->assertInstanceOf('PHPagstract\\Page\\PageModel', $testModel);
+        $this->assertInstanceOf('PHPagstract\Page\Model\PageModel', $testModel);
         
     }
 
@@ -130,6 +131,7 @@ class PageTest extends TestCase
         $this->assertNotNull($test);
         $this->assertNotEmpty($test);
         $this->assertInstanceOf('PHPagstract\Symbol\Symbols\AbstractPropertySymbol', $test);
+        $this->assertInstanceOf('PHPagstract\Symbol\Symbols\Properties\RootProperty', $test);
         
     }
 
@@ -142,6 +144,7 @@ class PageTest extends TestCase
         $this->assertNotNull($test);
         $this->assertNotEmpty($test);
         $this->assertInstanceOf('PHPagstract\Symbol\Symbols\AbstractPropertySymbol', $test);
+        $this->assertInstanceOf('PHPagstract\Symbol\Symbols\Properties\RootProperty', $test);
         
     }
 
@@ -154,6 +157,7 @@ class PageTest extends TestCase
         $this->assertNotNull($test);
         $this->assertNotEmpty($test);
         $this->assertInstanceOf('PHPagstract\Symbol\Symbols\AbstractPropertySymbol', $test);
+        $this->assertInstanceOf('PHPagstract\Symbol\Symbols\Properties\RootProperty', $test);
         
     }
 
@@ -166,24 +170,202 @@ class PageTest extends TestCase
         $this->assertNotNull($test);
         $this->assertNotEmpty($test);
         $this->assertInstanceOf('PHPagstract\Symbol\Symbols\AbstractPropertySymbol', $test);
+        $this->assertInstanceOf('PHPagstract\Symbol\Symbols\Properties\RootProperty', $test);
         
     }
 
-    public function testSetDataStreamWithObjectParameter() 
+    public function testSetDataStreamWithObjectParameterWithoutRoot() 
+    {
+        $data = (object)array(
+            "aProperty" => "aValue",
+            "otherProp" => "other value"
+        );
+        $page = $this->getTestPage();
+        $page->setDataStream($data);
+        $test = $page->getDataStream();
+        $this->assertNotNull($test);
+        $this->assertNotEmpty($test);
+        $this->assertInstanceOf('PHPagstract\Symbol\Symbols\AbstractPropertySymbol', $test);
+        $this->assertInstanceOf('PHPagstract\Symbol\Symbols\Properties\RootProperty', $test);
+        
+    }
+
+    public function testSetDataStreamWithObjectParameterAndHasRoot() 
     {
 
+        $data = (object)array(
+                "root" => (object)array(
+                        "aProperty" => "aValue",
+                        "otherProp" => "other value"
+                )
+        );
         $page = $this->getTestPage();
         $page->setDataStream(json_decode(file_get_contents(__DIR__.'/Symbol/Json/json-parse-test.json')));
         $test = $page->getDataStream();
         $this->assertNotNull($test);
         $this->assertNotEmpty($test);
         $this->assertInstanceOf('PHPagstract\Symbol\Symbols\AbstractPropertySymbol', $test);
+        $this->assertInstanceOf('PHPagstract\Symbol\Symbols\Properties\RootProperty', $test);
         
     }
+
+    public function testSetDataStreamWithArrayParameterWithoutRoot() 
+    {
+        $data = array(
+            "aProperty" => "aValue",
+            "otherProp" => "other value"
+        );
+        $page = $this->getTestPage();
+        $page->setDataStream($data);
+        $test = $page->getDataStream();
+        $this->assertNotNull($test);
+        $this->assertNotEmpty($test);
+        $this->assertInstanceOf('PHPagstract\Symbol\Symbols\AbstractPropertySymbol', $test);
+        $this->assertInstanceOf('PHPagstract\Symbol\Symbols\Properties\RootProperty', $test);
+        
+    }
+
+    public function testSetDataStreamWithArrayParameterAndHasRoot() 
+    {
+        $data = array(
+            "root" => array(
+                "aProperty" => "aValue",
+                "otherProp" => "other value"
+            )
+        );
+        $page = $this->getTestPage();
+        $page->setDataStream($data);
+        $test = $page->getDataStream();
+        $this->assertNotNull($test);
+        $this->assertNotEmpty($test);
+        $this->assertInstanceOf('PHPagstract\Symbol\Symbols\AbstractPropertySymbol', $test);
+        $this->assertInstanceOf('PHPagstract\Symbol\Symbols\Properties\RootProperty', $test);
+        
+    }
+
+    public function testSetConfigurationWithArrayParameter() 
+    {
+        $config = array(
+            "configVar" => "value",
+            "anotherVar" => "another value"
+        );
+        $page = $this->getTestPage();
+        $page->setConfiguration($config);
+        $testConfig = $page->getConfiguration();
+        $this->assertNotNull($testConfig->configVar);
+        $this->assertNotEmpty($testConfig->configVar);
+        $this->assertEquals("value", $testConfig->configVar);
+        $this->assertNotNull($testConfig->anotherVar);
+        $this->assertNotEmpty($testConfig->anotherVar);
+        $this->assertEquals("another value", $testConfig->anotherVar);
+        
+    }
+
+    public function testSetConfigurationWithPageConfigParameter() 
+    {
+        $config = new PageConfig();
+        $config->setConfig(
+            array(
+            "configVar" => "value",
+            "anotherVar" => "another value"
+            )
+        );
+        $page = $this->getTestPage();
+        $page->setConfiguration($config);
+        $testConfig = $page->getConfiguration();
+        
+        $this->assertNotNull($testConfig->configVar);
+        $this->assertNotEmpty($testConfig->configVar);
+        $this->assertEquals("value", $testConfig->configVar);
+        $this->assertNotNull($testConfig->anotherVar);
+        $this->assertNotEmpty($testConfig->anotherVar);
+        $this->assertEquals("another value", $testConfig->anotherVar);
+        
+    }
+
+    public function testGetAutoGeneratedRenderer() 
+    {
+        $page = $this->getTestPage();
+        
+        $testRenderer = $page->getRenderer();
+        
+        $this->assertNotNull($testRenderer);
+        $this->assertInstanceOf('PHPagstract\Renderer\Renderer', $testRenderer);
+        
+    }
+
+    public function testSetGetRenderer() 
+    {
+        $page = $this->getTestPage();
+        
+        $renderer = new Renderer();
+        $page->setRenderer($renderer);
+        $testRenderer = $page->getRenderer();
+        
+        $this->assertNotNull($testRenderer);
+        $this->assertInstanceOf('PHPagstract\Renderer\Renderer', $testRenderer);
+        $this->assertSame($renderer, $testRenderer);
+        
+    }
+    
+    
+    //
+    // simple 'output' test
+    //
+    
+    public function testSimpleOutput()
+    {
+        
+        $templateContent = 'this is a template';
+        $jsonFile = __DIR__.'/Page/data/pageOne.json';
+        $jsonData = json_decode(file_get_contents($jsonFile));
+        
+        $pagstractPage = $this->getTestPage();
+        
+        // set the input
+        $pagstractPage->setInputStream($templateContent);
+        $pagstractPage->setDataStream($jsonData);
+        
+        $testResult = $pagstractPage->output();
+
+        $testRenderer = $pagstractPage->getRenderer();
+        $this->assertNotNull($testRenderer);
+        $this->assertInstanceOf('PHPagstract\Renderer\Renderer', $testRenderer);
+
+        $this->assertNotNull($testResult);
+        $this->assertNotEmpty($testResult);
+        $this->assertEquals($templateContent, $testResult);
+        
+    }
+    
+    /*
+    public function testSimpleOutputWithDebug()
+    {
+    
+        $template = 'pageDefault.html';
+        $jsonFile = __DIR__.'/Page/data/pageOne.json';
+        $jsonData = json_decode(file_get_contents($jsonFile));
+    
+        $pagstractPage = $this->getTestPage();
+        $pagstractPage->getConfiguration()->debug(true);
+        // set the input
+        $pagstractPage->setInputStream($template);
+        $pagstractPage->setDataStream($jsonData);
+    
+        $testResult = $pagstractPage->output();
+    
+        $this->assertNotNull($testResult);
+        $this->assertNotEmpty($testResult);
+        $this->assertContains("<!-- DEBUG:", $testResult);
+    
+    }
+    */
+    
     
     //
     // some more traits tests
     //
+    
     
     public function testInputStreamTrait()
     {
@@ -370,7 +552,7 @@ class PageTest extends TestCase
     /**
      * create and retrieve pre-configured test page object
      * 
-     * @return \PHPagstract\Page
+     * @return PHPagstract\Page\Page
      */
     private function getTestPage() 
     {

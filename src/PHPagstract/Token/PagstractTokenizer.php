@@ -54,7 +54,7 @@ class PagstractTokenizer extends MarkupTokenizer
         TokenFactory::registerMatching(Token::PAGSTRACTLISTHEADER);
         TokenFactory::registerMatching(Token::PAGSTRACTLISTCONTENT);
         TokenFactory::registerMatching(Token::PAGSTRACTLISTFOOTER);
-        TokenFactory::registerMatching(Token::PAGSTRACTLISTSEPERATOR);
+        TokenFactory::registerMatching(Token::PAGSTRACTLISTSEPARATOR);
         TokenFactory::registerMatching(Token::PAGSTRACTLISTFIRST);
         TokenFactory::registerMatching(Token::PAGSTRACTLISTLAST);
         TokenFactory::registerMatching(Token::PAGSTRACTLISTEVEN);
@@ -63,7 +63,7 @@ class PagstractTokenizer extends MarkupTokenizer
         
         TokenFactory::registerMatching(Token::PAGSTRACTMODLIST);
         TokenFactory::registerMatching(Token::PAGSTRACTMODCONTENT);
-        TokenFactory::registerMatching(Token::PAGSTRACTMODSEPERATOR);
+        TokenFactory::registerMatching(Token::PAGSTRACTMODSEPARATOR);
 
         TokenFactory::registerMatching(Token::PAGSTRACTSWITCH);
         TokenFactory::registerMatching(Token::PAGSTRACTOBJECT);

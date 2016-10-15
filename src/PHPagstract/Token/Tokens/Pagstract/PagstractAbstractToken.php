@@ -1,4 +1,7 @@
 <?php
+/**
+ * Pagstract token abstract class
+ */
 namespace PHPagstract\Token\Tokens;
 
 use PHPagstract\Token\Exception\TokenizerException;
@@ -24,36 +27,57 @@ class PagstractAbstractToken extends AbstractToken
     );
 
     /**
+     * nesting tags allowed?
+     * 
      * @var boolean 
      */
     public $nested = true;
     
     /**
+     * tag attributes
+     * 
      * @var null|array 
      */
     protected $attributes;
+    
+    /**
+     * list of mandatory attributes
+     * 
+     * @var array
+     */
+    protected $mandatoryAttributes = [];
 
     /**
+     * list of child tokens if nesting tags is allowed
+     * 
      * @var null|array[Token] 
      */
     protected $children;
 
     /**
+     * tag name
+     * 
      * @var string 
      */
     protected $name;
     
     /**
+     * tag value/content
+     *
      * @var mixed 
      */
     protected $value;
     
     /**
+     * is this a closing tag?
+     * 
      * @var boolean 
      */
     protected $isClosing;
     
     /**
+     * list of valid token types
+     * 
      * @var array 
      */
     protected $validTypes = array(
@@ -86,14 +110,14 @@ class PagstractAbstractToken extends AbstractToken
         Token::PAGSTRACTLISTFOOTER,
         Token::PAGSTRACTLISTCONTENT,
         Token::PAGSTRACTLISTNOCONTENT,
-        Token::PAGSTRACTLISTSEPERATOR,
+        Token::PAGSTRACTLISTSEPARATOR,
         Token::PAGSTRACTLISTEVEN,
         Token::PAGSTRACTLISTODD,
         Token::PAGSTRACTLISTFIRST,
         Token::PAGSTRACTLISTLAST,
             
         Token::PAGSTRACTMODLIST,
-        Token::PAGSTRACTMODSEPERATOR,
+        Token::PAGSTRACTMODSEPARATOR,
         Token::PAGSTRACTMODCONTENT,
             
         Token::PAGSTRACTSWITCH,

@@ -1,11 +1,13 @@
 <?php
 /**
- * Tokenizer exception class
+ * Tokenizer exception
  */
 namespace PHPagstract\Token\Exception;
 
 /**
  * Tokenizer exception class
+ * 
+ * exception to throw on tokenizer related issues
  *
  * @package   PHPagstract
  * @author    Björn Bartels <coding@bjoernbartels.earth>

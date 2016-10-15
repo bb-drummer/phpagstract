@@ -1,6 +1,6 @@
 <?php
 
-namespace PHPagstract\Page;
+namespace PHPagstract\Traits;
 
 /**
  * page configuration trait

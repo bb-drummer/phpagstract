@@ -4,6 +4,10 @@ namespace PHPagstractTest\Symbol\Symbols;
 use PHPagstract\Symbol\Symbols\Tokens\Element;
 use PHPagstract\Symbol\Symbols\Properties\RootProperty;
 use PHPagstract\Symbol\Symbols\Properties\ScalarProperty;
+use PHPagstract\Symbol\Symbols\SymbolFactory;
+use PHPagstract\Page\Model\PageModel;
+use PHPagstract\Page\Config\PageConfig;
+use PHPagstract\Renderer\Renderer;
 
 /**
  * PHPagstract abstract/token symbol class tests
@@ -25,7 +29,7 @@ class AbstractSymbolTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('', $testString);
     }
     
-    public function testCompile() 
+    public function testAbstractCompile() 
     {
         $symbol = $this->getMockForAbstractClass('PHPagstract\\Symbol\\Symbols\\AbstractSymbol');
         $testString = $symbol->compile();
@@ -303,6 +307,95 @@ class AbstractSymbolTest extends \PHPUnit_Framework_TestCase
         $testSymbol = $symbol->getParent();
         
         $this->assertEquals($parent, $testSymbol);
+    }
+        
+    public function testAbstractTokenSymbolInitializedWithParent() 
+    {
+        $parent = $this->getMockForAbstractClass('PHPagstract\\Symbol\\Symbols\\AbstractTokenSymbol');
+
+        $symbol = $this->getMockForAbstractClass('PHPagstract\\Symbol\\Symbols\\AbstractTokenSymbol', array($parent, null));
+        
+        $testSymbol = $symbol->getParent();
+
+        $this->assertEquals($parent, $testSymbol);
+        $this->assertSame($parent, $testSymbol);
+    }
+    
+    public function testSetGetPageModel() 
+    {
+
+        $symbol = $this->getMockForAbstractClass('PHPagstract\\Symbol\\Symbols\\AbstractTokenSymbol');
+        $pageModel = new PageModel();
+        
+        $symbol->setPageModel($pageModel);
+        $testPageModel = $symbol->getPageModel();
+
+        $this->assertNotNull($testPageModel);
+        $this->assertEquals($pageModel, $testPageModel);
+        $this->assertSame($pageModel, $testPageModel);
+    }
+    
+    /**
+     * @expectedException \PHPagstract\Exception
+     */
+    public function testGetPageModelThrowsException() 
+    {
+
+        $symbol = $this->getMockForAbstractClass('PHPagstract\\Symbol\\Symbols\\AbstractTokenSymbol', array(null, true));
+        $testPageModel = $symbol->getPageModel();
+    }
+    
+    /**
+     * @expectedException \PHPagstract\Exception
+     */
+    public function testGetRendererThrowsException() 
+    {
+
+        $symbol = $this->getMockForAbstractClass('PHPagstract\\Symbol\\Symbols\\AbstractTokenSymbol', array(null, true));
+        $testRenderer = $symbol->getRenderer();
+    }
+    
+    public function testSetGetRenderer() 
+    {
+        
+        $renderer = new Renderer();
+        $symbol = $this->getMockForAbstractClass('PHPagstract\\Symbol\\Symbols\\AbstractTokenSymbol', array(null, true));
+        $symbol->setRenderer($renderer);
+        $testRenderer = $symbol->getRenderer();
+
+        $this->assertNotNull($testRenderer);
+        $this->assertEquals($renderer, $testRenderer);
+        $this->assertSame($renderer, $testRenderer);
+    }
+    
+    /**
+     * @expectedException \PHPagstract\Exception
+     */
+    public function testGetConfigurationThrowsException() 
+    {
+
+        $symbol = $this->getMockForAbstractClass('PHPagstract\\Symbol\\Symbols\\AbstractTokenSymbol', array(null, true));
+        $testConfiguration = $symbol->getConfiguration();
+    }
+    
+    public function testSetGetConfiguration() 
+    {
+        
+        $configuration = new PageConfig();
+        $symbol = $this->getMockForAbstractClass('PHPagstract\\Symbol\\Symbols\\AbstractTokenSymbol', array(null, true));
+        $symbol->setConfiguration($configuration);
+        $testConfiguration = $symbol->getConfiguration();
+
+        $this->assertNotNull($testConfiguration);
+        $this->assertEquals($configuration, $testConfiguration);
+        $this->assertSame($configuration, $testConfiguration);
+        
+        $testConfig = $symbol->config();
+
+        $this->assertNotNull($testConfig);
+        $this->assertEquals($configuration, $testConfig);
+        $this->assertSame($configuration, $testConfig);
+        
     }
     
 }

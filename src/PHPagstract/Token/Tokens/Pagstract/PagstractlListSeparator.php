@@ -11,13 +11,13 @@ namespace PHPagstract\Token\Tokens;
  * @license   http://www.apache.org/licenses/LICENSE-2.0 Apache License, Version 2.0
  * @copyright copyright (c) 2016 Björn Bartels <coding@bjoernbartels.earth>
  */
-class PagstractListSeperator extends PagstractAbstractToken
+class PagstractListSeparator extends PagstractAbstractToken
 {
     /**
      * @var array the $matching
      */
     public static $matching = array(
-            "start" => "/^\s*<pma:seperator/i", 
+            "start" => "/^\s*<pma:separator/i", 
             "end" => ">"
     );
 
@@ -34,7 +34,7 @@ class PagstractListSeperator extends PagstractAbstractToken
      */
     public function __construct(Token $parent = null, $throwOnError = false)
     {
-        parent::__construct(Token::PAGSTRACTLISTSEPERATOR, $parent, $throwOnError);
+        parent::__construct(Token::PAGSTRACTLISTSEPARATOR, $parent, $throwOnError);
         
     }
 

@@ -3,6 +3,7 @@
 namespace PHPagstract\Symbol\Symbols\Tokens;
 
 use PHPagstract\Symbol\Symbols\AbstractTokenSymbol;
+use PHPagstract\Traits\PropertyResolverAwareTrait;
 
 /**
  * PHPagstract property refrence symbol class
@@ -15,6 +16,7 @@ use PHPagstract\Symbol\Symbols\AbstractTokenSymbol;
  */
 class PagstractPropertyReference extends AbstractTokenSymbol
 {
+    use PropertyResolverAwareTrait;
     
     /**
      */

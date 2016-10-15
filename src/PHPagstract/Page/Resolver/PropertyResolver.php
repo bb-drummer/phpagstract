@@ -1,8 +1,8 @@
 <?php
 namespace PHPagstract\Page\Resolver;
 
-use PHPagstract\Page\ScopesTrait;
-use PHPagstract\Page\StreamTrait;
+use PHPagstract\Traits\ScopesTrait;
+use PHPagstract\Traits\StreamTrait;
 use PHPagstract\Symbol\Symbols\AbstractPropertySymbol;
 
 /**

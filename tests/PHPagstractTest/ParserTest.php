@@ -3,16 +3,16 @@ namespace PHPagstractTest;
 
 use PHPUnit_Framework_TestCase as TestCase;
 
-use \PHPagstract\Parser;
+use PHPagstract\Parser\Parser;
+use PHPagstract\Parser\ParserAbstract;
+use PHPagstract\Symbol\GenericSymbolizer;
+use PHPagstract\Symbol\Exception\SymbolException;
+use PHPagstract\Symbol\Symbols\SymbolCollection;
 use PHPagstract\Token\Tokens\TokenCollection;
 use PHPagstract\Token\AbstractTokenizer;
-use PHPagstract\Symbol\Symbols\SymbolCollection;
-use PHPagstract\Symbol\GenericSymbolizer;
-use PHPagstract\ParserAbstract;
-use PHPagstract\Symbol\Exception\SymbolException;
 
 /**
- * PHPagstract page class tests
+ * PHPagstract parser class tests
  *
  * @package   PHPagstract
  * @author    Björn Bartels <coding@bjoernbartels.earth>
@@ -39,9 +39,9 @@ class ParserTest extends TestCase
         $this->assertNotNull($parser);
         $this->assertNotNull($className);
         
-        $mockParser = $this->createMock("\PHPagstract\Parser");
-        $this->assertInstanceOf("\PHPagstract\ParserAbstract", $mockParser);
-        $this->assertInstanceOf("\PHPagstract\Parser", $mockParser);
+        $mockParser = $this->createMock("\PHPagstract\Parser\Parser");
+        $this->assertInstanceOf("\PHPagstract\Parser\ParserAbstract", $mockParser);
+        $this->assertInstanceOf("\PHPagstract\Parser\Parser", $mockParser);
         
     }
     
@@ -60,7 +60,7 @@ class ParserTest extends TestCase
     {
         
         $parser = $this->getParser();
-        $mockToken = $this->createMock('PHPagstract\\Token\\Tokens\\Text');
+        $mockToken = $this->createMock('PHPagstract\Token\Tokens\Text');
         $token = new \PHPagstract\Token\Tokens\Text(null, false, null);
         $tokens = new TokenCollection();
         $tokens[] = $token; 
@@ -75,7 +75,7 @@ class ParserTest extends TestCase
     {
         
         $parser = $this->getParser();
-        $mockToken = $this->createMock('PHPagstract\\Token\\Tokens\\Text');
+        $mockToken = $this->createMock('PHPagstract\Token\Tokens\Text');
         $token = new \PHPagstract\Token\Tokens\Text(null, false, null);
         $token->setType('BLAH');
         $tokens = new TokenCollection();
@@ -94,7 +94,7 @@ class ParserTest extends TestCase
     {
         
         $parser = $this->getParser(true);
-        $mockToken = $this->createMock('PHPagstract\\Token\\Tokens\\AbstractToken');
+        $mockToken = $this->createMock('PHPagstract\Token\Tokens\AbstractToken');
         $mockToken
             ->method('getType')
             ->willReturn('blah');
@@ -110,22 +110,10 @@ class ParserTest extends TestCase
         $parser = $this->getParser();
         
         $compiled = $parser->parse('');
-        
-        $this->assertEquals($compiled, '');
-        
-    }
-    
-    public function testCompile() 
-    {
-        
-        $parser = $this->getParser();
 
-        $mockSymbol = $this->createMock('PHPagstract\\Symbol\\Symbols\\AbstractSymbol');
-        $mockCollection = new SymbolCollection();
-        $mockCollection[] = $mockSymbol;
-        $compiled = $parser->compile($mockCollection);
-        
-        $this->assertEquals($compiled, '');
+        $this->assertInstanceOf('PHPagstract\Symbol\Symbols\SymbolCollection', $compiled);
+        $this->assertCount(0, $compiled->toArray());
+        //$this->assertEquals($compiled, '');
         
     }
     
@@ -133,11 +121,11 @@ class ParserTest extends TestCase
     {
         
         $parser = $this->getParser();
-        $resolver = $this->createMock('PHPagstract\\Symbol\\GenericSymbolizer');
+        $resolver = $this->createMock('PHPagstract\Symbol\GenericSymbolizer');
         $parser->setResolver($resolver);
         $testResolver = $parser->getResolver();
 
-        $this->assertInstanceOf('PHPagstract\\Symbol\\GenericSymbolizer', $testResolver);
+        $this->assertInstanceOf('PHPagstract\Symbol\GenericSymbolizer', $testResolver);
         $this->assertEquals($resolver, $testResolver);
         
     }
@@ -205,11 +193,11 @@ class ParserTest extends TestCase
     {
         return array(
             "HTML file 01" => array(
-                "tokenizer" => "PHPagstract\\Token\\MarkupTokenizer",
+                "tokenizer" => "PHPagstract\Token\MarkupTokenizer",
                 "filename" => __DIR__."/Token/Html/bootstrap-com.html",
             ),
             "Pagstract file 01" => array(
-                "tokenizer" => "PHPagstract\\Token\\PagstractTokenizer",
+                "tokenizer" => "PHPagstract\Token\PagstractTokenizer",
                 "filename" => __DIR__."/Token/Html/pagstract-test.html",
             ),
         );

@@ -22,5 +22,26 @@ class Php extends AbstractTokenSymbol
     {
         parent::__construct($parent, $throwOnError);
     }
+
+    /**
+     * compile symbol to string representation
+     *
+     * @return string
+     */
+    public function compile()
+    {
+        return $this->toString();
+    }
+    
+    /**
+     * convert symbol to string representation
+     *
+     * @return string
+     */
+    public function toString() 
+    {
+        $result = '<?php '.$this->getValue().'?>';
+        return $result;
+    }
 }
 

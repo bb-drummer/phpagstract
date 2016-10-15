@@ -1,5 +1,7 @@
 <?php
-
+/**
+ * abstract symbol class
+ */
 namespace PHPagstract\Symbol\Symbols;
 
 use PHPagstract\Name\Names\Name;

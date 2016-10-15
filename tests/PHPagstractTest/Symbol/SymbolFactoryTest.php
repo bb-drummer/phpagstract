@@ -1,13 +1,4 @@
 <?php
-/**
- * PHPagstract symbol factory class tests
- *
- * @package   PHPagstract
- * @author    Björn Bartels <coding@bjoernbartels.earth>
- * @link      https://gitlab.bjoernbartels.earth/groups/zf2
- * @license   http://www.apache.org/licenses/LICENSE-2.0 Apache License, Version 2.0
- * @copyright copyright (c) 2016 Björn Bartels <coding@bjoernbartels.earth>
- */
 namespace PHPagstractTest\Symbol;
 
 use PHPagstract\Token\Tokens\Token;
@@ -19,6 +10,15 @@ use PHPagstract\Token\ResourceTokenizer;
 use PHPagstract\Token\MessageTokenizer;
 use PHPagstract\Token\PropertyReferenceTokenizer;
 
+/**
+ * PHPagstract symbol factory class tests
+ *
+ * @package   PHPagstract
+ * @author    Björn Bartels <coding@bjoernbartels.earth>
+ * @link      https://gitlab.bjoernbartels.earth/groups/zf2
+ * @license   http://www.apache.org/licenses/LICENSE-2.0 Apache License, Version 2.0
+ * @copyright copyright (c) 2016 Björn Bartels <coding@bjoernbartels.earth>
+ */
 class SymbolFactoryTest extends \PHPUnit_Framework_TestCase
 {
     
@@ -262,9 +262,9 @@ class SymbolFactoryTest extends \PHPUnit_Framework_TestCase
                 '<pma:footer>some content</pma:footer>',
                 'PHPagstract\\Symbol\\Symbols\\Tokens\\PagstractListFooter'
             ),    
-            "pma:seperator" => array(
-                '<pma:seperator>some content</pma:seperator>',
-                'PHPagstract\\Symbol\\Symbols\\Tokens\\PagstractListSeperator'
+            "pma:separator" => array(
+                '<pma:separator>some content</pma:separator>',
+                'PHPagstract\\Symbol\\Symbols\\Tokens\\PagstractListSeparator'
             ),    
             "pma:first" => array(
                 '<pma:first>some content</pma:first>',
@@ -300,9 +300,9 @@ class SymbolFactoryTest extends \PHPUnit_Framework_TestCase
                 '<pma:modContent>some content</pma:modContent>',
                 'PHPagstract\\Symbol\\Symbols\\Tokens\\PagstractModContent'
             ),    
-            "pma:modSeperator" => array(
-                '<pma:modSeperator>some content</pma:modSeperator>',
-                'PHPagstract\\Symbol\\Symbols\\Tokens\\PagstractModSeperator'
+            "pma:modSeparator" => array(
+                '<pma:modSeparator>some content</pma:modSeparator>',
+                'PHPagstract\\Symbol\\Symbols\\Tokens\\PagstractModSeparator'
             ),
                 
                 

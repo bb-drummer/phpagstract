@@ -1,6 +1,9 @@
 <?php
 namespace PHPagstractTest;
 
+use PHPUnit_Framework_TestCase as TestCase;
+use PHPagstract\Page\Resolver\FilepathResolver;
+
 /**
  * PHPagstract filepath resolver class tests
  *
@@ -10,10 +13,6 @@ namespace PHPagstractTest;
  * @license   http://www.apache.org/licenses/LICENSE-2.0 Apache License, Version 2.0
  * @copyright copyright (c) 2016 Björn Bartels <coding@bjoernbartels.earth>
  */
-
-use PHPUnit_Framework_TestCase as TestCase;
-use PHPagstract\Page\Resolver\FilepathResolver;
-
 class FilepathResolverTest extends TestCase
 {
     

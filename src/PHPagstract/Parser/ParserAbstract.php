@@ -1,6 +1,8 @@
 <?php
-
-namespace PHPagstract;
+/**
+ * parser object abstract
+ */
+namespace PHPagstract\Parser;
 
 use PHPagstract\Parser\Exception as ParserException;
 use PHPagstract\Symbol\GenericSymbolizer;
@@ -13,11 +15,12 @@ use PHPagstract\Token\Tokens\TokenCollection;
 /**
  * parser object abstract
  *
- * @package   PHPagstract
- * @author    Björn Bartels <coding@bjoernbartels.earth>
- * @link      https://gitlab.bjoernbartels.earth/php/phpagstract
- * @license   http://www.apache.org/licenses/LICENSE-2.0 Apache License, Version 2.0
- * @copyright copyright (c) 2016 Björn Bartels <coding@bjoernbartels.earth>
+ * @package    PHPagstract
+ * @subpackage Parser
+ * @author     Björn Bartels <coding@bjoernbartels.earth>
+ * @link       https://gitlab.bjoernbartels.earth/php/phpagstract
+ * @license    http://www.apache.org/licenses/LICENSE-2.0 Apache License, Version 2.0
+ * @copyright  copyright (c) 2016 Björn Bartels <coding@bjoernbartels.earth>
  */
 abstract class ParserAbstract
 {
@@ -73,40 +76,11 @@ abstract class ParserAbstract
     public function parse($content) 
     {
         
-        $tokens = $this->tokenize($content);
+        $parsedTokens = $this->tokenize($content);
 
-        $symbols = $this->symbolize($tokens);
+        $parsedSymbols = $this->symbolize($parsedTokens);
         
-        $compiled = $this->compile($symbols);
-        
-        return $compiled;
-    }
-    
-    /**
-     * comile the content's symbols and return string representation
-     * 
-     * @param  SymbolCollection $symbols
-     * @return string
-     */
-    public function compile(SymbolCollection $symbols) 
-    {
-        $compiled = '';
-        $symbolsIterator = $symbols->getIterator();
-        $symbolsIterator->rewind();
-        $symbol = $symbolsIterator->current();
-        while ($symbol instanceof Symbol) {
-            
-            if (method_exists($symbol, "compile")) {
-                $compiled .= $symbol->compile();
-            }
-            
-            if (method_exists($symbol, "toString")) {
-                $compiled .= $symbol->toString();
-            }
-            $symbol = $symbolsIterator->next();
-        }
-        $compiled = trim($compiled);
-        return $compiled;
+        return $parsedSymbols;
     }
     
     /**
@@ -157,6 +131,7 @@ abstract class ParserAbstract
     public function setTokenizer(AbstractTokenizer $tokenizer) 
     {
         $this->tokenizer = $tokenizer;
+        return $this;
     }
 
     /**
@@ -178,6 +153,7 @@ abstract class ParserAbstract
     public function setResolver($resolver) 
     {
         $this->resolver = $resolver;
+        return $this;
     }
 
     

@@ -1,4 +1,7 @@
 <?php
+/**
+ * generic collection object
+ */
 namespace PHPagstract;
 
 /**

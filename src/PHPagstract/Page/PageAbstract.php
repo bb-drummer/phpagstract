@@ -1,22 +1,28 @@
 <?php
+/**
+ * page generator abstract
+ */
+namespace PHPagstract\Page;
 
-namespace PHPagstract;
-
-use PHPagstract\Page\PageModel;
-use PHPagstract\Page\PageModelAbstract;
-use PHPagstract\Page\Resolver\FilepathResolver;
-use PHPagstract\Page\Resolver\PropertyResolver;
-use PHPagstract\Page\ResourcesConfigurationTrait;
-use PHPagstract\Page\ThemeConfigurationTrait;
+use PHPagstract\Page\Model\PageModel;
+use PHPagstract\Page\Model\PageModelAbstract;
+use PHPagstract\Traits\ResourcesConfigurationTrait;
+use PHPagstract\Traits\ThemeConfigurationTrait;
 use PHPagstract\Streams\DataStream;
 use PHPagstract\Streams\InputStream;
 use PHPagstract\Symbol\PropertyReferenceSymbolizer;
+use PHPagstract\Traits\PropertyResolverAwareTrait;
+use PHPagstract\Traits\FilepathResolverAwareTrait;
+use PHPagstract\Renderer\Renderer;
+use PHPagstract\Page\Config\PageConfig;
+use PHPagstract\AbstractConfiguration;
+use PHPagstract\Renderer\RendererAbstract;
 
 /**
  * page generator object abstract
  *
  * retrieves generator configuration, stores input-stream and data-stream, aka 
- * the template ans property tree, initialze the page-model
+ * the template ans property tree, initialze the page-model, render output
  * 
  * @package   PHPagstract
  * @author    Björn Bartels <coding@bjoernbartels.earth>
@@ -28,6 +34,8 @@ abstract class PageAbstract
 {
     use ThemeConfigurationTrait;
     use ResourcesConfigurationTrait;
+    use PropertyResolverAwareTrait;
+    use FilepathResolverAwareTrait;
     
     //
     // "config" vars
@@ -63,23 +71,23 @@ abstract class PageAbstract
     /**
      * page model instance
      *
+     * @var PageConfig
+     */
+    public $configuration = null;
+    
+    /**
+     * page model instance
+     *
      * @var PageModelAbstract
      */
     public $pageModel = null;
     
     /**
-     * file/path resolver
+     * renderer instance
      *
-     * @var FilepathResolver
+     * @var Renderer
      */
-    public $filepathResolver = null;
-    
-    /**
-     * property reference resolver
-     *
-     * @var PropertyResolver
-     */
-    public $propertyResolver = null;
+    public $renderer = null;
     
     /**
      * property symbolizer
@@ -87,6 +95,7 @@ abstract class PageAbstract
      * @var PropertyReferenceSymbolizer
      */
     public $propertySymbolizer = null;
+    
     
     
     /**
@@ -97,8 +106,10 @@ abstract class PageAbstract
     public function __construct($throwOnError = false) 
     {
         $this->throwOnError = !!($throwOnError);
+        // $this->getConfiguration()->set('throwOnError', $this->throwOnError);
+        $this->getConfiguration()->throwOnError($this->throwOnError);
     }
-    
+
     /**
      * initialize page model instance
      *
@@ -129,12 +140,39 @@ abstract class PageAbstract
     /**
      * set the $pageModel instance
      * 
-     * @param \PHPagstract\Page\PageModelAbstract $pageModel
+     * @param PageModelAbstract $pageModel instance
      */
     public function setPageModel($pageModel) 
     {
         $this->pageModel = $pageModel;
     }
+
+
+
+    /**
+     * get current renderer instance
+     *
+     * @return RendererAbstract $renderer instance
+     */
+    public function getRenderer()
+    {
+        if (!($this->renderer instanceof RendererAbstract)) {
+            $this->renderer = new Renderer($this, $this->throwOnError);
+        }
+        return $this->renderer;
+    }
+    
+    /**
+     * set the $renderer instance
+     * 
+     * @param Renderer $renderer instance
+     */
+    public function setRenderer($renderer) 
+    {
+        $this->renderer = $renderer;
+    }
+    
+    
     
     /**
      * retrieve curent input stream
@@ -150,7 +188,8 @@ abstract class PageAbstract
     }
 
     /**
-     * set input stream
+     * set input stream, tries to resolve string to a file first and sets its 
+     * content
      * 
      * @param  string $inputStream
      * @return self
@@ -167,6 +206,8 @@ abstract class PageAbstract
         $this->inputStream = $stream;
         return $this;
     }
+    
+    
 
     /**
      * retrieve current data stream
@@ -182,95 +223,64 @@ abstract class PageAbstract
     }
 
     /**
-     * set data stream
+     * create abstract property tree and set to data-stream
      * 
      * @param  string|array|\stdClass $dataStream
      * @return self
      */
     public function setDataStream($dataStream) 
     {
+        // make sure, we will handle an object
         if (empty($dataStream)) {
-            $dataStream = (object) [ 
+            // create generic data object
+            $dataStreamToSymbolize = (object) [ 
                 "root" => (object) []    
             ];
         } else if (is_string($dataStream)) {
+            // try to resolve toa filename and/or decode json string
             $filename = $this->getFilepathResolver()->resolveFilepath($dataStream);
             if (($filename !== null) && file_exists($filename)) {
                 // file could be resolved
                 $fileContent = file_get_contents($filename);
-                $dataStream = json_decode($fileContent);
+                $dataStreamToSymbolize = json_decode($fileContent);
             } else {
                 // file could NOT be resolved
                 if (file_exists($dataStream)) {
                     // ... but has been found otherwise
                     $fileContent = file_get_contents($dataStream);
-                    $dataStream = json_decode($fileContent);
+                    $dataStreamToSymbolize = json_decode($fileContent);
                 } else {
                     // ... or is just an ordenary (json) string
-                    $dataStream = json_decode($dataStream);
+                    $dataStreamToSymbolize = json_decode($dataStream);
                 }
             }
+        } else if (is_array($dataStream)) {
+            // create object from simple (assosative) array
+            $dataStreamToSymbolize = (object) [ 
+                "root" => (object) ($dataStream)   
+            ];
         } else if (is_object($dataStream)) {
-            $dataStream = ($dataStream);
+            // nothing special for now
+            $dataStreamToSymbolize = ($dataStream);
         }
-        $symbolizedData = $this->getPropertySymbolizer()->symbolize($dataStream);
+        
+        // now we're sure to handle an object here check for the root property
+        if (!property_exists($dataStreamToSymbolize, 'root') ) {
+            $dataStreamToSymbolize = (object) [ 
+                "root" => ($dataStreamToSymbolize)   
+            ];
+        }
+        
+        // create abstract property tree and store stream object
+        $symbolizedData = $this->getPropertySymbolizer()->symbolize($dataStreamToSymbolize);
         $stream = new DataStream();
         $stream->setStream($symbolizedData);
         $this->dataStream = $stream;
+        
         return $this;
     }
-
-    /**
-     * retrieve a file/path resolver instance
-     * if not set, initialize new instance
-     *
-     * @return \PHPagstract\Page\Resolver\FilepathResolver $filepathResolver
-     */
-    public function getFilepathResolver() 
-    {
-        if (!($this->filepathResolver instanceof FilepathResolver)) {
-            $this->filepathResolver = new FilepathResolver($this->throwOnError);
-            $this->filepathResolver->setBaseDir($this->getBaseDir());
-            $this->filepathResolver->setThemesDir($this->getThemesDir());
-            $this->filepathResolver->setThemeId($this->getThemeId());
-        }
-        return $this->filepathResolver;
-    }
-
-    /**
-     * set the file/path resolver instance
-     * 
-     * @param \PHPagstract\Page\Resolver\FilepathResolver $filepathResolver
-     */
-    public function setFilepathResolver($filepathResolver) 
-    {
-        $this->filepathResolver = $filepathResolver;
-    }
-
-    /**
-     * retrieve a property resolver instance
-     * if not set, initialize new instance
-     *
-     * @return \PHPagstract\Page\Resolver\PropertyResolver $propertyResolver
-     */
-    public function getPropertyResolver() 
-    {
-        if (!($this->propertyResolver instanceof PropertyResolver)) {
-            $this->propertyResolver = new PropertyResolver(null, $this->throwOnError);
-            $this->propertyResolver->setStream($this->getDataStream());
-        }
-        return $this->propertyResolver;
-    }
-
-    /**
-     * set the property resolver instance
-     * 
-     * @param \PHPagstract\Page\Resolver\PropertyResolver $propertyResolver
-     */
-    public function setPropertyResolver($propertyResolver) 
-    {
-        $this->propertyResolver = $propertyResolver;
-    }
+    
+    
     
     /**
      * retrieve a property symbolizer instance
@@ -295,6 +305,57 @@ abstract class PageAbstract
     {
         $this->propertySymbolizer = $propertySymbolizer;
     }
+
+    
+    
+    /**
+     * retrieve a configuration object instance
+     * if not set, initialize new instance with default settings
+     * 
+     * @return PageConfig $configuration
+     */
+    public function getConfiguration() 
+    {
+        if (!($this->configuration instanceof PageConfig)) {
+            $this->configuration = new PageConfig();
+        }
+        return $this->configuration;
+    }
+
+    /**
+     * set the page's configuration as array, stdClass or PageConfig object
+     * 
+     * @param array|PageConfig $configuration
+     */
+    public function setConfiguration($configuration) 
+    {
+        if (($configuration instanceof AbstractConfiguration) ) {
+            $this->configuration = $configuration;
+        } else if (is_array($configuration) ) {
+            $this->getConfiguration()->setConfig($configuration);
+        }
+        return $this;
+    }
+    
+    
+    
+    /**
+     * create string output
+     *
+     * @return string
+     */
+    public function output() 
+    {
+        $model = $this->getPageModel();
+        $processedInput = $model->process();
+
+        $renderer = $this->getRenderer();
+        $output = $renderer->render($processedInput);
+        
+        $output = trim($output);
+        return $output;
+    }
+
 
     
 }

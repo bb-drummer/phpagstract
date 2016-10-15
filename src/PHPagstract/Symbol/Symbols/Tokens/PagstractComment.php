@@ -20,5 +20,16 @@ class PagstractComment extends PagstractMarkup
     {
         parent::__construct();
     }
+    
+    /**
+     * convert symbol to string representation
+     *
+     * @return string
+     */
+    public function toString() 
+    {
+        $result = '<!--- '.$this->getValue().' -->';
+        return $result;
+    }
 }
 

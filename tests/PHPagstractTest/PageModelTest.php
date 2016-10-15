@@ -1,6 +1,13 @@
 <?php
 namespace PHPagstractTest;
 
+use PHPUnit_Framework_TestCase as TestCase;
+
+use PHPagstract\Page\Model\PageModel;
+use PHPagstract\Page\Model\PageModelAbstract;
+use PHPagstract\Token\PagstractTokenizer;
+use PHPagstract\Symbol\GenericSymbolizer;
+
 /**
  * PHPagstract page class tests
  *
@@ -10,14 +17,6 @@ namespace PHPagstractTest;
  * @license   http://www.apache.org/licenses/LICENSE-2.0 Apache License, Version 2.0
  * @copyright copyright (c) 2016 Björn Bartels <coding@bjoernbartels.earth>
  */
-
-use PHPUnit_Framework_TestCase as TestCase;
-
-use PHPagstract\Page\PageModel;
-use PHPagstract\Page\PageModelAbstract;
-use PHPagstract\Token\PagstractTokenizer;
-use PHPagstract\Symbol\GenericSymbolizer;
-
 class PageModelTest extends TestCase
 {
     public function testInstantiateObjectNullSave()
@@ -33,11 +32,11 @@ class PageModelTest extends TestCase
 
         $this->assertNotNull($model);
         $this->assertNotNull($className);
-        $this->assertEquals("PHPagstract\Page\PageModel", $className);
+        $this->assertEquals("PHPagstract\Page\Model\PageModel", $className);
         
-        $mockPageModel = $this->createMock("\PHPagstract\Page\PageModel");
-        $this->assertInstanceOf("\PHPagstract\Page\PageModelAbstract", $mockPageModel);
-        $this->assertInstanceOf("\PHPagstract\Page\PageModel", $mockPageModel);
+        $mockPageModel = $this->createMock("\PHPagstract\Page\Model\PageModel");
+        $this->assertInstanceOf("\PHPagstract\Page\Model\PageModelAbstract", $mockPageModel);
+        $this->assertInstanceOf("\PHPagstract\Page\Model\PageModel", $mockPageModel);
         
     }
     
@@ -45,14 +44,14 @@ class PageModelTest extends TestCase
     {
         
         $model = new PageModel();
-        $resolver = $this->createMock('PHPagstract\\Symbol\\GenericSymbolizer');
+        $resolver = $this->createMock('PHPagstract\Symbol\GenericSymbolizer');
         $tokenizer = $this->createMock('PHPagstract\Token\AbstractTokenizer');
 
-        $parser  = $this->getMockForAbstractClass('PHPagstract\\ParserAbstract', array($tokenizer, $resolver));
+        $parser  = $this->getMockForAbstractClass('PHPagstract\Parser\ParserAbstract', array($tokenizer, $resolver));
         $model->setParser($parser);
         $testParser = $model->getParser();
 
-        $this->assertInstanceOf('PHPagstract\\ParserAbstract', $testParser);
+        $this->assertInstanceOf('PHPagstract\Parser\ParserAbstract', $testParser);
         $this->assertEquals($parser, $testParser);
         
     }
@@ -69,7 +68,7 @@ class PageModelTest extends TestCase
         
         $testParser = $model->getParser();
 
-        $this->assertInstanceOf('PHPagstract\\ParserAbstract', $testParser);
+        $this->assertInstanceOf('PHPagstract\Parser\ParserAbstract', $testParser);
 
         $testSymbolizer = $model->getSymbolizer();
         $this->assertNotNull($testSymbolizer);
@@ -89,11 +88,11 @@ class PageModelTest extends TestCase
         
         $model = new PageModel();
 
-        $page  = $this->getMockForAbstractClass('PHPagstract\\Page');
+        $page  = $this->getMockForAbstractClass('PHPagstract\Page\Page');
         $model->setPage($page);
         $testPage = $model->getPage();
 
-        $this->assertInstanceOf('PHPagstract\\Page', $testPage);
+        $this->assertInstanceOf('PHPagstract\Page\Page', $testPage);
         $this->assertSame($page, $testPage);
         
     }
@@ -172,26 +171,32 @@ class PageModelTest extends TestCase
     public function testPageModelAbstractProcess()
     {
         
-        $model = $this->getMockForAbstractClass('PHPagstract\\Page\\PageModelAbstract');
-        $page  = $this->getMockForAbstractClass('PHPagstract\\Page');
+        $model = $this->getMockForAbstractClass('PHPagstract\Page\Model\PageModelAbstract');
+        $page  = $this->getMockForAbstractClass('PHPagstract\Page\Page');
         $model->setPage($page);
         
         $test = $model->process();
 
-        $this->assertEmpty($test);
+        $this->assertNotNull($test);
+        $this->assertNotEmpty($test);
+        $this->assertInstanceOf('PHPagstract\Symbol\Symbols\SymbolCollection', $test);
+        $this->assertCount(0, $test->toArray());
         
     }
     
     public function testPageModelProcess()
     {
         
-        $model = $this->getMockForAbstractClass('PHPagstract\\Page\\PageModel');
-        $page  = $this->getMockForAbstractClass('PHPagstract\\Page');
+        $model = $this->getMockForAbstractClass('PHPagstract\Page\Model\PageModel');
+        $page  = $this->getMockForAbstractClass('PHPagstract\Page\Page');
         $model->setPage($page);
         
         $test = $model->process();
 
-        $this->assertEmpty($test);
+        $this->assertNotNull($test);
+        $this->assertNotEmpty($test);
+        $this->assertInstanceOf('PHPagstract\Symbol\Symbols\SymbolCollection', $test);
+        $this->assertCount(0, $test->toArray());
         
     }
 

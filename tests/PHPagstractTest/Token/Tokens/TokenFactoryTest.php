@@ -277,9 +277,9 @@ class TokenFactoryTest extends \PHPUnit_Framework_TestCase
                 '<pma:footer>some content</pma:footer>',
                 'PHPagstract\Token\Tokens\PagstractListFooter'
             ),    
-            "pma:seperator" => array(
-                '<pma:seperator>some content</pma:seperator>',
-                'PHPagstract\Token\Tokens\PagstractListSeperator'
+            "pma:separator" => array(
+                '<pma:separator>some content</pma:separator>',
+                'PHPagstract\Token\Tokens\PagstractListSeparator'
             ),    
             "pma:first" => array(
                 '<pma:first>some content</pma:first>',
@@ -315,9 +315,9 @@ class TokenFactoryTest extends \PHPUnit_Framework_TestCase
                 '<pma:modContent>some content</pma:modContent>',
                 'PHPagstract\Token\Tokens\PagstractModContent'
             ),    
-            "pma:modSeperator" => array(
-                '<pma:modSeperator>some content</pma:modSeperator>',
-                'PHPagstract\Token\Tokens\PagstractModSeperator'
+            "pma:modSeparator" => array(
+                '<pma:modSeparator>some content</pma:modSeparator>',
+                'PHPagstract\Token\Tokens\PagstractModSeparator'
             ),
                 
                 

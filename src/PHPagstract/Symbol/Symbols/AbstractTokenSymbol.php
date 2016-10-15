@@ -1,7 +1,12 @@
 <?php
-
+/**
+ * abstract token symbol class
+ */
 namespace PHPagstract\Symbol\Symbols;
 
+use PHPagstract\Traits\ConfigurationAwareTrait;
+use PHPagstract\Traits\RendererAwareTrait;
+use PHPagstract\Traits\PageModelAwareTrait;
 
 /**
  * abstract token symbol class
@@ -14,6 +19,9 @@ namespace PHPagstract\Symbol\Symbols;
  */
 abstract class AbstractTokenSymbol extends AbstractSymbol
 {
+    use ConfigurationAwareTrait;
+    use RendererAwareTrait;
+    use PageModelAwareTrait;
     
     /**
      * is closing tag?
@@ -50,10 +58,11 @@ abstract class AbstractTokenSymbol extends AbstractSymbol
      */
     public function getValue()
     {
-        if (!method_exists($this->getToken(), 'getValue')) {
-            return null;
+        $value = null;
+        if (method_exists($this->getToken(), 'getValue')) {
+            $value = $this->getToken()->getValue();
         }
-        return $this->getToken()->getValue();
+        return $value;
     }
     
     /**
@@ -63,10 +72,11 @@ abstract class AbstractTokenSymbol extends AbstractSymbol
      */
     public function getAttributes()
     {
-        if (!method_exists($this->getToken(), 'getAttributes')) {
-            return array();
+        $attributes = array();
+        if (method_exists($this->getToken(), 'getAttributes')) {
+            $attributes = $this->getToken()->getAttributes();
         }
-        return $this->getToken()->getAttributes();
+        return $attributes;
     }
     
     /**

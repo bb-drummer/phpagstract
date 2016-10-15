@@ -27,7 +27,7 @@ class SymbolFactory
     public static function symbolize($token, $throwOnError = false) 
     {
         
-        // get token name "PHPagstactTokenName", fallback "PHPagstactMarkup"
+        // get token name "PagstactTokenName", fallback "PagstactMarkup" needed ?
         $symbolName = ucfirst($token->getType());
         $symbolClassname = "PHPagstract\\Symbol\\Symbols\\Tokens\\".$symbolName;
         

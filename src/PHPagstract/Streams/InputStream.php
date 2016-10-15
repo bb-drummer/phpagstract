@@ -2,7 +2,7 @@
 
 namespace PHPagstract\Streams;
 
-use PHPagstract\Page\StreamTrait;
+use PHPagstract\Traits\StreamTrait;
 
 /**
  * input stream handling
