@@ -20,16 +20,18 @@
          timeoutForSmallTests="1"
          timeoutForMediumTests="10"
          timeoutForLargeTests="60"
-         verbose="true" >
+         verbose="true"
+         beStrictAboutTestsThatDoNotTestAnything="true"
+         beStrictAboutChangesToGlobalState="true" >
     <testsuite name="[BB] PHPagstract - test suite">
         <directory>./</directory>
     </testsuite>
     <listeners>
-        <listener class="MyListener" file="./MyListener.php">
+        <listener class="_MyListener" file="./MyListener.php">
         </listener>
     </listeners>
     <filter>
-        <whitelist processUncoveredFilesFromWhitelist="true">
+        <whitelist addUncoveredFilesFromWhitelist="true" processUncoveredFilesFromWhitelist="true">
             <directory suffix=".php">../src/</directory>
         </whitelist>
     </filter>

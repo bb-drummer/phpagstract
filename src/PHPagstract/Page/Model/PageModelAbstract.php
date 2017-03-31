@@ -13,6 +13,7 @@ use PHPagstract\Symbol\GenericSymbolizer;
 use PHPagstract\Token\AbstractTokenizer;
 use PHPagstract\Token\MarkupTokenizer;
 use PHPagstract\Traits\PageAwareTrait;
+use PHPagstract\Token\PagstractTokenizer;
 
 
 /**
@@ -102,6 +103,7 @@ abstract class PageModelAbstract
     {
         if (!($this->tokenizer instanceof AbstractTokenizer)) {
             $tokenizer = new MarkupTokenizer($this->throwOnError);
+            $tokenizer = new PagstractTokenizer($this->throwOnError);
             $this->setTokenizer($tokenizer);
         }
         return $this->tokenizer;

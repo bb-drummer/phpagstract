@@ -240,6 +240,14 @@ class TokenFactoryTest extends \PHPUnit_Framework_TestCase
             "pma:value (self-closed)" => array(
                 '<pma:value pma:name=".property" />',
                 'PHPagstract\Token\Tokens\PagstractSimpleValue'
+            ),  
+            "pma:rendered" => array(
+                '<pma:rendered pma:name=".property"></pma:rendered>',
+                'PHPagstract\Token\Tokens\PagstractRendered'
+            ),
+            "pma:rendered (self-closed)" => array(
+                '<pma:rendered pma:name=".property" />',
+                'PHPagstract\Token\Tokens\PagstractRendered'
             ),
 
             

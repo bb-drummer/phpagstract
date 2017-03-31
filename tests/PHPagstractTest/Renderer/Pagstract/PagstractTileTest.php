@@ -38,7 +38,7 @@ class PagstractTileTest extends AbstractPagstractSymbolTest
 
         $assertFunction = 'assert'.ucfirst($assertion);
         if (method_exists($this, $assertFunction)) {
-            echo PHP_EOL; var_dump($testResult); echo PHP_EOL;
+            //echo PHP_EOL; var_dump($testResult); echo PHP_EOL;
             $this->{$assertFunction}($needle, $testResult);
         }
 
@@ -63,7 +63,7 @@ class PagstractTileTest extends AbstractPagstractSymbolTest
 				}</pma:tileVariable</pma:tile>', // markup, pagstract
                         'contains', // assertion verb, ex: 'contains' -> ...->assertContains($needle, $result)
                         'some content in here...', // needle snippet
-                        true, // renderer debug mode
+                        !true, // renderer debug mode
                 ),
 
         );

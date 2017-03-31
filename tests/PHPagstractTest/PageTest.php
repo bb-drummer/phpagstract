@@ -312,7 +312,8 @@ class PageTest extends TestCase
     //
     // simple 'output' test
     //
-    
+
+    /*
     public function testSimpleOutput()
     {
         
@@ -338,7 +339,6 @@ class PageTest extends TestCase
         
     }
     
-    /*
     public function testSimpleOutputWithDebug()
     {
     

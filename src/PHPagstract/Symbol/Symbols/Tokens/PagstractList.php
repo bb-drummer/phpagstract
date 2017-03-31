@@ -1,5 +1,7 @@
 <?php
-
+/**
+ * PHPagstract list token symbol class
+ */
 namespace PHPagstract\Symbol\Symbols\Tokens;
 
 use PHPagstract\Symbol\Symbols\AbstractTokenSymbol;
@@ -7,7 +9,7 @@ use PHPagstract\Token\Tokens\Token;
 use PHPagstract\Symbol\Symbols\Properties\ListProperty;
 
 /**
- * PHPagstract token symbol class
+ * PHPagstract list token symbol class
  *
  * @package   PHPagstract
  * @author    Björn Bartels <coding@bjoernbartels.earth>
@@ -21,15 +23,15 @@ class PagstractList extends PagstractMarkup
     /**
      * class constructor
      * 
-     * @param unknown $parent
-     * @param string $throwOnError
+     * @param AbstractTokenSymbol $parent
+     * @param string              $throwOnError
      */
     public function __construct($parent = null, $throwOnError = false) 
     {
         parent::__construct($parent, $throwOnError);
     }
 
-	/**
+    /**
      * convert symbol to string representation
      *
      * @return string
@@ -39,7 +41,9 @@ class PagstractList extends PagstractMarkup
         
         $attr = ($this->getAttributes());
         
-        /** @var AbstractPropertySymbol $property */
+        /**
+ * @var AbstractPropertySymbol $property 
+*/
         $property = null;
         if (isset($attr['pma:name'])) {
             $property = $this->getPropertyResolver()->getPropertyByReference($attr['pma:name']);

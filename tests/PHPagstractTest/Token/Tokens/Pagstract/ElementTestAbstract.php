@@ -59,6 +59,7 @@ class ElementTestAbstract extends \PHPUnit_Framework_TestCase
      */
     private function createElement($tag, $selfClosing = false)
     {
+        $this->setName('createElement - '.$this->elementClassname);
         $classname = $this->getElementClassname($this->elementClassname);
         $element = new $classname();
         if (!$selfClosing) {
@@ -75,6 +76,7 @@ class ElementTestAbstract extends \PHPUnit_Framework_TestCase
      */
     public function testParse($html, $expectedName, $expectedRemainingHtml, $debug = false)
     {
+        $this->setName('testParse - '.$this->elementClassname);
         $classname = $this->getElementClassname($this->elementClassname);
         $element = new $classname();
         $remainingHtml = $element->parse($html);
@@ -87,6 +89,7 @@ class ElementTestAbstract extends \PHPUnit_Framework_TestCase
 
     public function testAttributes()
     {
+        $this->setName('testAttributes - '.$this->elementClassname);
         $classname = $this->getElementClassname($this->elementClassname);
         $element = new $classname();
         $this->assertFalse($element->hasAttributes());
@@ -100,7 +103,7 @@ class ElementTestAbstract extends \PHPUnit_Framework_TestCase
 
     public function testChildren()
     {
-        if (in_array($this->elementTagname, $this->noChildrenElements)) return ;
+        $this->setName('testChildren - '.$this->elementClassname);
         $classname = $this->getElementClassname($this->elementClassname);
         $element = new $classname();
         if ($element->nested === true ) {
@@ -110,6 +113,10 @@ class ElementTestAbstract extends \PHPUnit_Framework_TestCase
             $element->parse('<' . $this->elementTagname . '>asdf</' . $this->elementTagname . '>');
             $this->assertTrue($element->hasChildren());
             $this->assertEquals(1, count($element->getChildren()));
+        } else {
+            $element = new $classname();
+            $this->assertFalse($element->hasChildren());
+            $this->assertEquals(0, count($element->getChildren()));
         }
     }
     
@@ -118,6 +125,7 @@ class ElementTestAbstract extends \PHPUnit_Framework_TestCase
      */
     public function testExceptionInParse()
     {
+        $this->setName('testExceptionInParse - '.$this->elementClassname);
         $classname = $this->getElementClassname($this->elementClassname);
         $element = new $classname(null, true);
         $element->parse('<' . $this->elementTagname);
@@ -128,6 +136,7 @@ class ElementTestAbstract extends \PHPUnit_Framework_TestCase
      */
     public function testExceptionInParseElementName()
     {
+        $this->setName('testExceptionInParseElementName - '.$this->elementClassname);
         $classname = $this->getElementClassname($this->elementClassname);
         $element = new $classname();
         $this->assertEquals('', $element->parse('<?php'));
@@ -141,6 +150,7 @@ class ElementTestAbstract extends \PHPUnit_Framework_TestCase
      */
     public function testExceptionInParseAttribute()
     {
+        $this->setName('testExceptionInParseAttribute - '.$this->elementClassname);
         $classname = $this->getElementClassname($this->elementClassname);
         $element = new $classname();
         $this->assertEquals('', $element->parse('<' . $this->elementTagname . ' foo=\'bar" />'));
@@ -154,6 +164,7 @@ class ElementTestAbstract extends \PHPUnit_Framework_TestCase
      */
     public function testToArray($html, $expectedArray, $debug = false)
     {
+        $this->setName('testToArray - '.$this->elementClassname);
         $classname = $this->getElementClassname($this->elementClassname);
         $element = new $classname();
         $element->parse($html);
@@ -169,6 +180,7 @@ class ElementTestAbstract extends \PHPUnit_Framework_TestCase
 
     public function testNested()
     {
+        $this->setName('testNested - '.$this->elementClassname);
         $classname = $this->getElementClassname($this->elementClassname);
         $element = new $classname();
         $current = $element->nested();

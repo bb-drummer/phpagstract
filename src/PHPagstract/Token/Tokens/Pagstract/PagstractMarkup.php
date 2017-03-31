@@ -20,7 +20,8 @@ class PagstractMarkup extends PagstractAbstractToken
      */
     public static $matching = array(
             "start" => "/^\s*<[a-z]|^\s*<(?!(\/pma))/i", 
-            // another regex : "/(^\s*<[a-z]|^\s*<\/\s*[a-z])|^\s*<(?!(\/pma))/i", 
+            // another regex : 
+            //"start" => "/(^\s*<[a-z]|^\s*<\/\s*[a-z])|^\s*<(?!(\/pma))/i", 
             "end" => ">"
     );
 

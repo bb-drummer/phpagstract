@@ -1,11 +1,13 @@
 <?php
-
+/**
+ * PHPagstract (external) resource reference symbol class
+ */
 namespace PHPagstract\Symbol\Symbols\Tokens;
 
 use PHPagstract\Symbol\Symbols\AbstractTokenSymbol;
 
 /**
- * PHPagstract resource symbol class
+ * PHPagstract (external) resource reference symbol class
  *
  * @package   PHPagstract
  * @author    Björn Bartels <coding@bjoernbartels.earth>
@@ -17,10 +19,15 @@ class PagstractResource extends AbstractTokenSymbol
 {
     
     /**
+     * class constructor
+     * 
+     * @param AbstractTokenSymbol $parent
+     * @param string              $throwOnError
      */
-    public function __construct() 
+    public function __construct($parent = null, $throwOnError = false) 
     {
-        parent::__construct();
+        parent::__construct($parent, $throwOnError);
     }
+
 }
 

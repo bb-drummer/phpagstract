@@ -23,8 +23,8 @@ class PagstractMarkup extends AbstractTokenSymbol
     /**
      * class constructor
      * 
-     * @param unknown $parent
-     * @param string $throwOnError
+     * @param AbstractTokenSymbol $parent
+     * @param string              $throwOnError
      */
     public function __construct($parent = null, $throwOnError = false) 
     {
@@ -77,8 +77,10 @@ class PagstractMarkup extends AbstractTokenSymbol
         }
 
 
-        // well, this special markup symbol actually does NOT have any children
-        // in its common sence, so we leave this out for now
+        // well, for this special markup symbol actually does NOT have any children
+        // in its common sence, we leave this part out for now
+        // the special tag symbols are responsible of handling their children (aka 
+        // content) for themselves, since they require special interpretation
         //
         // if ($this->hasChildren()) {
         //     $children = $this->getChildren();

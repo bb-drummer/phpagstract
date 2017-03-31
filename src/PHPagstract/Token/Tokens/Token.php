@@ -35,6 +35,7 @@ interface Token
     const PAGSTRACTMESSAGETEXT       = 'PagstractMessageText'; // special 'msg://...' text handling
 
     const PAGSTRACTSIMPLEVALUE       = 'PagstractSimpleValue'; // '<pma:value...'
+    const PAGSTRACTRENDERED          = 'PagstractRendered'; // '<pma:rendered...'
     
     const PAGSTRACTTILE              = 'PagstractTile'; // '<pma:tile filename...'
     const PAGSTRACTTILEVARIABLE      = 'PagstractTileVariable'; // '<pma:tileVariable>{...[json-data]...}</pma:tileVariable>'

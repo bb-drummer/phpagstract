@@ -1,9 +1,11 @@
 <?php
-
+/**
+ * PHPagstract last list item content token symbol class
+ */
 namespace PHPagstract\Symbol\Symbols\Tokens;
 
 /**
- * PHPagstract token symbol class
+ * PHPagstract last list item content token symbol class
  *
  * @package   PHPagstract
  * @author    Björn Bartels <coding@bjoernbartels.earth>
@@ -15,10 +17,15 @@ class PagstractListLast extends PagstractMarkup
 {
     
     /**
+     * class constructor
+     * 
+     * @param AbstractTokenSymbol $parent
+     * @param string              $throwOnError
      */
-    public function __construct() 
+    public function __construct($parent = null, $throwOnError = false) 
     {
-        parent::__construct();
+        parent::__construct($parent, $throwOnError);
     }
+
 }
 

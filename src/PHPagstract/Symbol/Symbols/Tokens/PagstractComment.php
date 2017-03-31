@@ -1,9 +1,11 @@
 <?php
-
+/**
+ * PHPagstract comment token symbol class
+ */
 namespace PHPagstract\Symbol\Symbols\Tokens;
 
 /**
- * PHPagstract token symbol class
+ * PHPagstract comment token symbol class
  *
  * @package   PHPagstract
  * @author    Björn Bartels <coding@bjoernbartels.earth>
@@ -15,20 +17,27 @@ class PagstractComment extends PagstractMarkup
 {
     
     /**
+     * class constructor
+     * 
+     * @param AbstractTokenSymbol $parent
+     * @param string              $throwOnError
      */
-    public function __construct() 
+    public function __construct($parent = null, $throwOnError = false) 
     {
-        parent::__construct();
+        parent::__construct($parent, $throwOnError);
     }
-    
+
     /**
      * convert symbol to string representation
      *
      * @return string
      */
     public function toString() 
-    {
-        $result = '<!--- '.$this->getValue().' -->';
+    { 
+        $result = '';
+        if ($this->config()->debug() ) {
+            $result .= '<!--- '.$this->getValue().' -->';
+        }
         return $result;
     }
 }

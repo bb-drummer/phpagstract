@@ -43,6 +43,7 @@ class PagstractTokenizer extends MarkupTokenizer
         TokenFactory::registerMatching(Token::PAGSTRACTCOMMENT);
         TokenFactory::registerMatching("Comment");
         TokenFactory::registerMatching(Token::PAGSTRACTSIMPLEVALUE);
+        TokenFactory::registerMatching(Token::PAGSTRACTRENDERED);
         
         TokenFactory::registerMatching(Token::PAGSTRACTTILE);
         TokenFactory::registerMatching(Token::PAGSTRACTTILEVARIABLE);

@@ -3,7 +3,7 @@
 namespace PHPagstract\Token\Tokens;
 
 /**
- * PagstractDebug 'pma:debug' token object class
+ * PagstractSimpleValue 'pma:rendered' token object class
  *
  * @package   PHPagstract
  * @author    Björn Bartels <coding@bjoernbartels.earth>
@@ -11,13 +11,13 @@ namespace PHPagstract\Token\Tokens;
  * @license   http://www.apache.org/licenses/LICENSE-2.0 Apache License, Version 2.0
  * @copyright copyright (c) 2016 Björn Bartels <coding@bjoernbartels.earth>
  */
-class PagstractDebug extends PagstractAbstractToken
+class PagstractRendered extends PagstractAbstractToken
 {
     /**
      * @var array the $matching
      */
     public static $matching = array(
-            "start" => "/^\s*<pma:debug[ ]/i", 
+            "start" => "/^\s*<pma:rendered[ ]/i", 
             "end" => ">"
     );
 
@@ -34,7 +34,7 @@ class PagstractDebug extends PagstractAbstractToken
      */
     public function __construct(Token $parent = null, $throwOnError = false)
     {
-        parent::__construct(Token::PAGSTRACTDEBUG, $parent, $throwOnError);
+        parent::__construct(Token::PAGSTRACTRENDERED, $parent, $throwOnError);
         
     }
 

@@ -4,6 +4,7 @@ namespace PHPagstract\Token\Tokens;
 
 use PHPagstract\Token\Exception\TokenFactoryException;
 use PHPagstract\Token\Tokens\Token;
+use PHPagstract\Token\PagstractTokenizer;
 
 /**
  * token factory object class
@@ -55,7 +56,8 @@ class TokenFactory
 
         // Error condition
         if ($throwOnError) {
-            throw new TokenFactoryException("Could not resolve token");
+            $pos = PagstractTokenizer::getPosition($html);
+            throw new TokenFactoryException("Could not resolve token in line: ".$pos['line'].', pos: '.$pos['position']);
         }
 
         return false;

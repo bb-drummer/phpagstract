@@ -5,6 +5,7 @@ namespace PHPagstractTest\Renderer;
 use PHPagstract\Renderer\Renderer;
 use PHPagstract\Symbol\Symbols\SymbolCollection;
 use PHPagstract\Page\Page;
+use PHPagstract\Token\MarkupTokenizer;
 
 /**
  * PHPagstract renderer class tests
@@ -84,8 +85,6 @@ class RendererTest extends \PHPUnit_Framework_TestCase
         
     }
     
-    
-    
     public function renderMarkupSymbols() 
     {
         
@@ -151,14 +150,30 @@ class RendererTest extends \PHPUnit_Framework_TestCase
     
     
     
+    
+    
+    public function testHtmlMarkupRendering() 
+    {
+        $markupPage = $this->getTestPageMarkup();
+
+        $markupFile = __DIR__.'/../Token/Html/bootstrap-com.html';
+        $inputStream = json_decode(file_get_contents($markupFile));
+        
+        $markupPage->setInputStream($inputStream);
+        
+    }
+    
+    
+    
+    
     //
     // test helpers
     //
     
     /**
-     * create and retrieve pre-configured test page object
+     * create and retrieve pre-configured test page object with default (pagstract) tokenizer
      * 
-     * @return PHPagstract\Page\Page
+     * @return \PHPagstract\Page\Page
      */
     private function getTestPage() 
     {
@@ -174,6 +189,19 @@ class RendererTest extends \PHPUnit_Framework_TestCase
         return $page;
     }
     
+    /**
+     * create and retrieve pre-configured test page object with default (pagstract) tokenizer
+     *
+     * @return \PHPagstract\Page\Page
+     */
+    private function getTestPageMarkup()
+    {
+        $page = $this->getTestPage();
+    
+        $page->getPageModel()->setTokenizer(new MarkupTokenizer());
+        
+        return $page;
+    }
     
     
     

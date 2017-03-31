@@ -60,7 +60,7 @@
         <div class="container-narrow">
     
             <div class="masthead">
-                <pma:tile filename="global/header.html" /><pma:tileVariable></pma:tileVariable></pma:tile>
+                <pma:tile filename="global/header.html"><pma:tileVariable></pma:tileVariable></pma:tile>
             </div>
     
             <hr>
@@ -79,7 +79,7 @@
                     <pma:if-visible pma:name=".moreChildren">
                         <pma:bean pma:name=".moreChildren">
                             <div class="span12">
-                                <pma:tile filename="partials/textContent.html" /><pma:tileVariable></pma:tileVariable></pma:tile>
+                                <pma:tile filename="partials/textContent.html" ><pma:tileVariable></pma:tileVariable></pma:tile>
                             </div>
                         </pma:bean>
                     </pma:if-visible>
@@ -89,15 +89,15 @@
                         <div class="span6">
                             <pma:list pma:name=".child.other">
                                 <pma:odd>
-                                    <pma:tile filename="partials/textContent.html" /><pma:tileVariable></pma:tileVariable></pma:tile>
+                                    <pma:tile filename="partials/textContent.html" ><pma:tileVariable></pma:tileVariable></pma:tile>
                                 </pma:odd>
                             </pma:list>
                         </div>
                         <div class="span6">
                             <pma:list pma:name=".child.other">
                                 <pma:even>
-                                    <pma:tile filename="partials/textContent.html" /><pma:tileVariable></pma:tileVariable></pma:tile>
-                                </pma:odd>
+                                    <pma:tile filename="partials/textContent.html" ><pma:tileVariable></pma:tileVariable></pma:tile>
+                                </pma:even>
                             </pma:list>
                         </div>
                     </pma:if-visible>
@@ -108,7 +108,7 @@
             <hr>
     
             <div class="footer">
-                <pma:tile filename="global/footer.html" /><pma:tileVariable></pma:tileVariable></pma:tile>
+                <pma:tile filename="global/footer.html" ><pma:tileVariable></pma:tileVariable></pma:tile>
             </div>
     
         </div> <!-- /container -->
@@ -116,5 +116,8 @@
         <script type="text/javascript" src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
         <script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
+		<script type="text/javascript"><![CDATA[
+			/* here comes some script... */
+		]]></script>
     </body>
 </html>

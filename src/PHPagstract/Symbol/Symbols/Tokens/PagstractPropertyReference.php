@@ -1,5 +1,7 @@
 <?php
-
+/**
+ * PHPagstract property refrence symbol class
+ */
 namespace PHPagstract\Symbol\Symbols\Tokens;
 
 use PHPagstract\Symbol\Symbols\AbstractTokenSymbol;
@@ -19,10 +21,15 @@ class PagstractPropertyReference extends AbstractTokenSymbol
     use PropertyResolverAwareTrait;
     
     /**
+     * class constructor
+     * 
+     * @param AbstractTokenSymbol $parent
+     * @param string              $throwOnError
      */
-    public function __construct() 
+    public function __construct($parent = null, $throwOnError = false) 
     {
-        parent::__construct();
+        parent::__construct($parent, $throwOnError);
     }
+
 }
 

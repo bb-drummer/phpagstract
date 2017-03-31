@@ -222,6 +222,14 @@ class SymbolFactoryTest extends \PHPUnit_Framework_TestCase
                 '<pma:value pma:name=".property" />',
                 'PHPagstract\\Symbol\\Symbols\\Tokens\\PagstractSimpleValue'
             ),
+            "pma:rendered" => array(
+                '<pma:rendered pma:name=".property"></pma:rendered>',
+                'PHPagstract\\Symbol\\Symbols\\Tokens\\PagstractRendered'
+            ),
+            "pma:rendered (self-closed)" => array(
+                '<pma:rendered pma:name=".property" />',
+                'PHPagstract\\Symbol\\Symbols\\Tokens\\PagstractRendered'
+            ),
 
             
             "pagstract comment" => array(

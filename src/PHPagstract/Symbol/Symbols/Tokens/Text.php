@@ -1,11 +1,13 @@
 <?php
-
+/**
+ * PHPagstract generic text token symbol class
+ */
 namespace PHPagstract\Symbol\Symbols\Tokens;
 
 use PHPagstract\Symbol\Symbols\AbstractTokenSymbol;
 
 /**
- * PHPagstract token symbol class
+ * PHPagstract generic text token symbol class
  *
  * @package   PHPagstract
  * @author    Björn Bartels <coding@bjoernbartels.earth>
@@ -17,6 +19,10 @@ class Text extends AbstractTokenSymbol
 {
     
     /**
+     * class constructor
+     * 
+     * @param AbstractTokenSymbol $parent
+     * @param string              $throwOnError
      */
     public function __construct($parent = null, $throwOnError = false) 
     {

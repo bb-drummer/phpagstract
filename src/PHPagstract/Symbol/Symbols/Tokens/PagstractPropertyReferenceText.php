@@ -1,11 +1,13 @@
 <?php
-
+/**
+ * PHPagstract data property reference text symbol class
+ */
 namespace PHPagstract\Symbol\Symbols\Tokens;
 
 use PHPagstract\Symbol\Symbols\AbstractTokenSymbol;
 
 /**
- * PHPagstract property reference text symbol class
+ * PHPagstract data property reference text symbol class
  *
  * @package   PHPagstract
  * @author    Björn Bartels <coding@bjoernbartels.earth>
@@ -17,10 +19,14 @@ class PagstractPropertyReferenceText extends AbstractTokenSymbol
 {
     
     /**
+     * class constructor
+     * 
+     * @param AbstractTokenSymbol $parent
+     * @param string              $throwOnError
      */
-    public function __construct() 
+    public function __construct($parent = null, $throwOnError = false) 
     {
-        parent::__construct();
+        parent::__construct($parent, $throwOnError);
     }
 
     /**

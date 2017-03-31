@@ -5,7 +5,7 @@
 namespace PHPagstract\Token\Tokens;
 
 use PHPagstract\Token\Exception\TokenizerException;
-use PHPagstract\Token\MarkupTokenizer;
+use PHPagstract\Token\PagstractTokenizer;
 
 /**
  * Pagstract token abstract class
@@ -22,8 +22,8 @@ class PagstractAbstractToken extends AbstractToken
      * @var array the $matching
      */
     public static $matching = array(
-            "start" => "/^\s*<pma|^\s*<object |^\s*<a |^\s*<area |^\s*<input |^\s*<select /i", 
-            "end" => ">"
+        "start" => "/^\s*<pma|^\s*<object |^\s*<a |^\s*<area |^\s*<input |^\s*<select /i", 
+        "end" => ">"
     );
 
     /**
@@ -91,13 +91,14 @@ class PagstractAbstractToken extends AbstractToken
         Token::CONTENIDO,
 
         Token::PAGSTRACT,
-        Token::PAGSTRACTMARKUP, // any other markup than pagstract markup ('<pma:...', '<a pma:name...' etc)
+        Token::PAGSTRACTMARKUP, // any other markup than pagstract markup
             
         Token::PAGSTRACTCOMMENT, // special '<!--- ... -->' handling
         Token::PAGSTRACTRESOURCE, // special 'resource(_ext)://...' handling
         Token::PAGSTRACTMESSAGE, // special 'msg://...' handling
-            
+
         Token::PAGSTRACTSIMPLEVALUE,
+        Token::PAGSTRACTRENDERED,
             
         Token::PAGSTRACTTILE,
         Token::PAGSTRACTTILEVARIABLE,
@@ -181,7 +182,7 @@ class PagstractAbstractToken extends AbstractToken
         $html = ltrim($html);
 
         // Get token position.
-        $positionArray = MarkupTokenizer::getPosition($html);
+        $positionArray = PagstractTokenizer::getPosition($html);
         $this->setLine($positionArray['line']);
         $this->setPosition($positionArray['position']);
 
@@ -189,8 +190,10 @@ class PagstractAbstractToken extends AbstractToken
         $this->name = $this->parseElementName($html);
       
         // Parse attributes.
-        $remainingHtml = mb_substr($html, mb_strlen($this->name) + 1 + ($this->isClosing ? 1 : 0));
-        while (mb_strpos($remainingHtml, '>') !== false && preg_match("/^\s*[\/]?>/", $remainingHtml) === 0) {
+        $remainingHtml = mb_substr($html, mb_strlen($this->name) + ($this->isClosing ? 2 : 1));
+        
+        while ( (mb_strpos($remainingHtml, '>') !== false) && 
+                (preg_match("/^\s*[\/]?>/", $remainingHtml) === 0) ) {
             $remainingHtml = $this->parseAttribute($remainingHtml);
         }
 
@@ -198,7 +201,10 @@ class PagstractAbstractToken extends AbstractToken
         $posOfClosingBracket = mb_strpos($remainingHtml, '>');
         if ($posOfClosingBracket === false) {
             if ($this->getThrowOnError()) {
-                throw new TokenizerException('Invalid element: missing closing bracket in line: '.$this->getLine().', position: '.$this->getPosition().'');
+                throw new TokenizerException(
+                    'Invalid element: missing closing bracket '.
+                        'in line: '.$this->getLine().', position: '.$this->getPosition().''
+                );
             }
 
             return '';
@@ -206,12 +212,17 @@ class PagstractAbstractToken extends AbstractToken
 
         // Is self-closing?
         $posOfSelfClosingBracket = mb_strpos($remainingHtml, '/>');
+        
         $remainingHtml = mb_substr($remainingHtml, $posOfClosingBracket + 1);
-        if ($posOfSelfClosingBracket !== false && $posOfSelfClosingBracket == $posOfClosingBracket - 1) {
+        
+        if (($posOfSelfClosingBracket !== false)  
+            && ($posOfSelfClosingBracket == $posOfClosingBracket - 1) 
+        ) {
             // Self-closing element.
             return $remainingHtml;
         }
 
+        
         // Lets close those closed-only elements that are left open.
         $closedOnlyElements = array(
             'area',
@@ -228,9 +239,6 @@ class PagstractAbstractToken extends AbstractToken
             'source',
             'track',
             'wbr'
-                
-            //'area',
-            //'input'
         );
         if (array_search($this->name, $closedOnlyElements) !== false) {
             return $remainingHtml;
@@ -239,7 +247,7 @@ class PagstractAbstractToken extends AbstractToken
         if (!$nested) { 
             return $remainingHtml;
         }
-
+        
         // Open element.
         return $this->parseContents($remainingHtml);
     }
@@ -278,7 +286,10 @@ class PagstractAbstractToken extends AbstractToken
                 );
                 if ($valueMatchSuccessful !== 1) {
                     if ($this->getThrowOnError()) {
-                        throw new TokenizerException('Invalid value encapsulation in line: '.$this->getLine().', position: '.$this->getPosition().'.');
+                        throw new TokenizerException(
+                            'Invalid value encapsulation '.
+                                'in line: '.$this->getLine().', position: '.$this->getPosition().'.'
+                        );
                     }
 
                     return '';
@@ -310,7 +321,7 @@ class PagstractAbstractToken extends AbstractToken
                 );
             }
 
-            $remainingHtml = ltrim($remainingHtml, '\'"/ ');
+            $remainingHtml = ltrim($remainingHtml, '\'" ');
         }
 
         return $remainingHtml;
@@ -325,10 +336,10 @@ class PagstractAbstractToken extends AbstractToken
      */
     private function parseContents($html)
     {
-        if (trim($html) == '') {
+        if (ltrim($html) == '') {
             return '';
         }
-
+        
         /* do we really have tags to omit parsing for?!?
         // Don't parse contents of "iframe" element.
         if ($this->name == 'iframe') {
@@ -348,10 +359,11 @@ class PagstractAbstractToken extends AbstractToken
         
         // Parse contents one token at a time.
         $remainingHtml = $html;
-        while (preg_match("/^<\/\s*".$this->name."\s*>/is", $remainingHtml) === 0) {
+        while (preg_match("/^\s*<\/\s*".$this->name."\s*>/is", $remainingHtml) === 0) {
             $token = TokenFactory::buildFromHtml(
                 $remainingHtml,
                 $this,
+                //false 
                 $this->getThrowOnError()
             );
 

@@ -1,5 +1,7 @@
 <?php
-
+/**
+ * PHPagstract tile token symbol class
+ */
 namespace PHPagstract\Symbol\Symbols\Tokens;
 
 use PHPagstract\Traits\FilepathResolverAwareTrait;
@@ -8,7 +10,7 @@ use PHPagstract\Token\PagstractTokenizer;
 use PHPagstract\Symbol\Symbols\SymbolCollection;
 
 /**
- * PHPagstract token symbol class
+ * PHPagstract tile (aka sub-template) token symbol class
  *
  * @package   PHPagstract
  * @author    Björn Bartels <coding@bjoernbartels.earth>
@@ -23,8 +25,8 @@ class PagstractTile extends PagstractMarkup
     /**
      * class constructor
      * 
-     * @param unknown $parent
-     * @param string $throwOnError
+     * @param AbstractTokenSymbol $parent
+     * @param string              $throwOnError
      */
     public function __construct($parent = null, $throwOnError = false) 
     {

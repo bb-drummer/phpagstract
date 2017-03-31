@@ -1,11 +1,13 @@
 <?php
-
+/**
+ * PHPagstract if-visible token symbol class
+ */
 namespace PHPagstract\Symbol\Symbols\Tokens;
 
 use PHPagstract\Symbol\Symbols\AbstractPropertySymbol;
 
 /**
- * PHPagstract token symbol class
+ * PHPagstract if-visible token symbol class
  *
  * @package   PHPagstract
  * @author    Björn Bartels <coding@bjoernbartels.earth>
@@ -24,24 +26,29 @@ class PagstractIfVisible extends PagstractMarkup
     protected $isVisible = true;
     
     /**
+     * class constructor
+     * 
+     * @param AbstractTokenSymbol $parent
+     * @param string              $throwOnError
      */
-    public function __construct() 
+    public function __construct($parent = null, $throwOnError = false) 
     {
-        parent::__construct();
+        parent::__construct($parent, $throwOnError);
     }
-    
+
     public function compile() 
     {
 
         $attr = ($this->getAttributes());
+        
+        /**
+ * @var AbstractPropertySymbol $property 
+*/
         $property = null;
         if (isset($attr['pma:name'])) {
             $property = $this->getPropertyResolver()->getPropertyByReference($attr['pma:name']);
         }
-        /**
- * @var AbstractPropertySymbol $property 
-*/
-        //echo '<pre>resolved: '.htmlentities(print_r( $property, true )).'</pre>'; flush();
+        
         if ($property !== null) {
             $propertyValue = ($property->getProperty() !== null);
             if ($property->getType() == 'list' ) {

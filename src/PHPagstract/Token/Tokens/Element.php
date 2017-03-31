@@ -276,10 +276,10 @@ class Element extends AbstractToken
      */
     private function parseContents($html)
     {
-        if (trim($html) == '') {
+        if (ltrim($html) == '') {
             return '';
         }
-
+        
         // Don't parse contents of "iframe" element.
         if ($this->name == 'iframe') {
             return $this->parseNoContents('iframe', $html);
