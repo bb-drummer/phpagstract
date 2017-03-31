@@ -27,7 +27,7 @@
         <directory>./</directory>
     </testsuite>
     <listeners>
-        <listener class="_MyListener" file="./MyListener.php">
+        <listener class="MyListener" file="./MyListener.php">
         </listener>
     </listeners>
     <filter>
