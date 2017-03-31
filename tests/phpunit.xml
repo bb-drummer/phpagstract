@@ -26,10 +26,10 @@
     <testsuite name="[BB] PHPagstract - test suite">
         <directory>./</directory>
     </testsuite>
-    <listeners>
+    <!-- listeners>
         <listener class="MyListener" file="./MyListener.php">
         </listener>
-    </listeners>
+    </listeners -->
     <filter>
         <whitelist addUncoveredFilesFromWhitelist="true" processUncoveredFilesFromWhitelist="true">
             <directory suffix=".php">../src/</directory>
