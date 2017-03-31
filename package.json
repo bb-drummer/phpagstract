@@ -1,0 +1,23 @@
+{
+  "name": "phpagstract",
+  "version": "1.0.0",
+  "description": "php port of the Pagstract Templating Framework, a XML template engine",
+  "main": "gulpfile.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Christian Seifert",
+  "license": "BSD-2-Clause",
+  "dependencies": {},
+  "devDependencies": {
+    "gulp": "~3.9.0",
+    "gulp-connect-php": "~0.0.8",
+    "gulp-phpcpd": "~1.0.1",
+    "gulp-phpcs": "~0.7.0",
+    "phplint": "~1.6.1",
+    "gulp-phpunit": "~0.9.1",
+    "gulp-shell": "~0.4.3",
+	"run-sequence": "~1.1.2",
+    "browser-sync": "~2.18.8"
+  }
+}
