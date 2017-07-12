@@ -2,6 +2,7 @@
 
 # prepare gitlab-ci
 before_script:
+- source ~/.bashrc
 - apt-get -y -q update;
 - apt-get -y -q upgrade;
 - apt-get -y -q install git unzip libicu-dev
