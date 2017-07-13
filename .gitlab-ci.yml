@@ -20,6 +20,7 @@ test-php56_job:
   image: php:5.6
   tags: 
   - php56
+  - docker
   script:
   - php -d memory_limit=-1 ./vendor/bin/phpunit --colors --debug --configuration ./tests/phpunit.xml --coverage-text
   allow_failure: false
@@ -30,6 +31,7 @@ test-php70_job:
   image: php:7.0
   tags: 
   - php70
+  - docker
   script:
   - php -d memory_limit=-1 ./vendor/bin/phpunit --colors --debug --configuration ./tests/phpunit.xml --coverage-text
   allow_failure: false
