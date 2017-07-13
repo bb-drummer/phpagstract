@@ -2,8 +2,8 @@
 
 # prepare gitlab-ci
 before_script:
-- "[ -e git ] || ( apt-get -y -q update; apt-get -y -q upgrade; apt-get -y -q install git unzip libicu-dev; )"
-- "[ -e docker-php-ext-install ] && ( docker-php-ext-install intl; )"
+- "[ git ] || ( apt-get -y -q update; apt-get -y -q upgrade; apt-get -y -q install git unzip libicu-dev; )"
+- "[ docker-php-ext-install ] && ( docker-php-ext-install intl; )"
 - php -v
 - curl -sS https://getcomposer.org/installer | php
 - php composer.phar --version
